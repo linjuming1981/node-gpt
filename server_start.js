@@ -30,3 +30,8 @@ app.get('/test', async (req, res) => {
     name: 'hello world'
   })
 })
+
+// 服务监听开启
+app.listen(10000, function(){
+  console.log("listening on port 10000")
+});
