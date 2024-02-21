@@ -3,7 +3,7 @@ const { google } = require("googleapis");
 
 class GoogleSheet {
 
-  auth(){
+  getAuth(){
     return new Promise(resolve => {
       let authClient = new google.auth.JWT(
         privateKey.client_email,
