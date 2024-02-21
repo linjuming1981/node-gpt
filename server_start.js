@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const GoogleSheet = require('./google-sheet/GoogleSheet.js')
 
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
@@ -26,9 +27,13 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/test', async (req, res) => {
-  res.send({
-    name: 'hello world'
-  })
+  // res.send({
+  //   name: 'hello world'
+  // })
+
+  let sheet = new GoogleSheet()
+  let data = await sheet.getSheetData()
+  res.send(data)
 })
 
 // 服务监听开启
