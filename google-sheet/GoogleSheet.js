@@ -28,6 +28,7 @@ class GoogleSheet {
     let sheets = google.sheets("v4");
     let auth = await this.getAuth()
     let data = {aaa: '111111'}
+    console.log('33333333');
     sheets.spreadsheets.values.get(
       {
         auth,
