@@ -1,12 +1,13 @@
 {
-  "name": "node-starter",
+  "name": "node-gpt",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gpt": "node index.js"
+    "start": "node server_start.js"
   },
   "dependencies": {
     "axios": "^1.5.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
     "openai": "^4.10.0"
   }
 }
