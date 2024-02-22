@@ -25,28 +25,28 @@ class GoogleSheet {
   }
 
   async getSheetData(){
-    let sheets = google.sheets("v4");
-    let auth = await this.getAuth()
-    let data = {aaa: '111111'}
-    console.log('33333333');
-    sheets.spreadsheets.values.get(
-      {
-        auth,
-  
-        // 对应google sheet地址：https://docs.google.com/spreadsheets/d/1SDq6dHqGbQ7YqgqW_FC5sgKQDdKlyQ3iql_uxSx6D-Y/edit#gid=0
-        spreadsheetId: "1SDq6dHqGbQ7YqgqW_FC5sgKQDdKlyQ3iql_uxSx6D-Y",
-        range: "Sheet1",
-      },
-      (error, response) => {
-        if (error) {
-          console.log("Error getting data from sheet:", error);
-        } else {
-          console.log("Data from sheet:", response.data.values);
-        }
-      },
-    );
-    return data
-  
+    return new Promise(async resolve => {
+      let sheets = google.sheets("v4");
+      let auth = await this.getAuth()
+      sheets.spreadsheets.values.get(
+        {
+          auth,
+    
+          // 对应google sheet地址：https://docs.google.com/spreadsheets/d/1SDq6dHqGbQ7YqgqW_FC5sgKQDdKlyQ3iql_uxSx6D-Y/edit#gid=0
+          spreadsheetId: "1SDq6dHqGbQ7YqgqW_FC5sgKQDdKlyQ3iql_uxSx6D-Y",
+          range: "Sheet1",
+        },
+        (error, response) => {
+          if (error) {
+            console.log("Error getting data from sheet:", error);
+            resolve(false)
+          } else {
+            console.log("Data from sheet:", response.data.values);
+            resolve(resolve.data.values)
+          }
+        },
+      );
+    })
   }
 
 }
