@@ -42,7 +42,7 @@ class GoogleSheet {
             resolve(false)
           } else {
             console.log("Data from sheet:", response.data.values);
-            resolve(resolve.data.values)
+            resolve(response.data.values)
           }
         },
       );
