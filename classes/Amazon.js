@@ -1,0 +1,26 @@
+const axios = require('axios');
+const cheerio = require('cheerio');
+
+class Amazon {
+  async collectPage(url){
+    const response = await axios.get(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
+      }
+    });
+    console.log(11, response);
+    const $ = cheerio.load(response.data);
+    
+    // 这里你可以进一步解析页面内容，如获取标题,价格等：
+    let title = $('#productTitle').text().trim();
+    let price = $('#priceblock_ourprice').text().trim();
+    
+    console.log(title);
+    console.log(price);
+
+  }
+}
+
+let amazon = new Amazon();
+let url = 'https://www.amazon.com/dp/B006IE2IO8/'
+amazon.collectPage(url)
