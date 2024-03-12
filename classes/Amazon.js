@@ -13,14 +13,12 @@ class Amazon {
     
     // 这里你可以进一步解析页面内容，如获取标题,价格等：
     let title = $('#productTitle').text().trim();
-    let price = $('#priceblock_ourprice').text().trim();
-    
     console.log(title);
-    console.log(price);
+    return title
 
   }
 }
 
-let amazon = new Amazon();
-let url = 'https://www.amazon.com/dp/B006IE2IO8/'
-amazon.collectPage(url)
+// let amazon = new Amazon();
+// let url = 'https://www.amazon.com/dp/B006IE2IO8/'
+// amazon.collectPage(url)
