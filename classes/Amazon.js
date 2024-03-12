@@ -19,6 +19,8 @@ class Amazon {
   }
 }
 
+module.exports = Amazon;
+
 // let amazon = new Amazon();
 // let url = 'https://www.amazon.com/dp/B006IE2IO8/'
 // amazon.collectPage(url)
