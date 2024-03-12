@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const GoogleSheet = require('./google-sheet/GoogleSheet.js')
+const Amazon = require('./classes/Amazon.js')
 
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
@@ -31,8 +32,13 @@ app.get('/test', async (req, res) => {
   //   name: 'hello world'
   // })
 
-  let sheet = new GoogleSheet()
-  let data = await sheet.getSheetData()
+  // let sheet = new GoogleSheet()
+  // let data = await sheet.getSheetData()
+  // res.send(data)
+
+  let amazon = new Amazon();
+  let url = 'https://www.amazon.com/dp/B006IE2IO8/'
+  let data = amazon.collectPage(url)
   res.send(data)
 })
 
