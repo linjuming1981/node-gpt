@@ -11,10 +11,20 @@ class Amazon {
     // console.log(11, response);
     const $ = cheerio.load(response.data);
     
-    // 这里你可以进一步解析页面内容，如获取标题,价格等：
+    // 标题
     let title = $('#productTitle').text().trim();
     console.log(title);
-    return title
+    
+    // 功能清单
+    let featurebullets = []
+    $('#featurebullets_feature_div li').each((i, n) => {
+      featurebullets.push($(n).text().trim())
+    })
+    
+    return {
+      title,
+      featurebullets,
+    }
 
   }
 }
