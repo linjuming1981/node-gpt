@@ -10,7 +10,21 @@ class Amazon {
     })
   }
 
-  async collectPage(url){
+  // 获取页面中所有产品连接
+  async getProductList(url){
+    let html = await this.getPageHtml(url)
+    let $page = $(html)
+
+    let productLinks = $page.find('a')
+      .filter((i,n) => n.href.includes('/dp/'))
+      .toArray()
+      .map(n => n.href.replace(/ref=.*/, ''))
+    productLinks = Array.from(new Set(productLinks))
+    console.log(productLinks)
+    return productLinks
+  }
+
+  async collectDetail(url){
     let html = await this.getPageHtml(url)
     let $page = $(html)
 
@@ -72,6 +86,8 @@ class Amazon {
   let amazon = new Amazon();
   let url = 'https://www.amazon.com/dp/B006IE2IO8/'
   url = location.href
-  let res = await amazon.collectPage(url)
+  let res
+  res = await amazon.getProductList(url)
+  res = await amazon.collectDetail(res[0])
   // console.log(res)
 })();
