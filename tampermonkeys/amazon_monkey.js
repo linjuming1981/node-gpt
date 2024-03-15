@@ -17,6 +17,12 @@ class Amazon {
     // 标题
     let productTitle = $page.find('#productTitle').text().trim();
 
+    // 描述
+    let productDescription = $page.find('#productDescription').text().trim()
+
+    // 价格
+    let cost = $page.find('#corePriceDisplay_desktop_feature_div .aok-offscreen').eq(0).text().trim()
+
     // 书籍描述（书籍类型才有）
     let bookDescription = $page.find('#bookDescription_feature_div').text().trim()
     
@@ -36,17 +42,29 @@ class Amazon {
       detailBullets.push(text)
     })
 
-    let imgs = $page.find('#imgTagWrapperId img').attr('data-a-dynamic-image')
-    console.log(JSON.parse(imgs))
-
-    return {
+    // 图片
+    let fromStr = "'colorImages': "
+    let fromI = html.indexOf(fromStr)
+    let endI = html.indexOf("'colorToAsin':")
+    let imgCode = html.slice(fromI + fromStr.length, endI).trim().replace(/,$/, '').replace(/'/g, '"')
+    let imgs = JSON.parse(imgCode)
+    imgs = imgs.initial.map(n => {
+      return Object.keys(n.main)[0]
+    })
+    
+    let res = {
       productTitle,
+      productDescription,
+      cost,
       bookDescription,
       featurebullets,
       editorialReviews,
       detailBullets,
+      imgs,
     }
-      
+    console.log(res)
+    return res
+    
   }
 }
 
