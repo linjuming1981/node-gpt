@@ -59,19 +59,34 @@ class GoogleSheet {
   }
 
   // 插入新数据
-  async addSheetDatas(sheetId, sheetTabName='Sheet1', datas){
+  async addSheetDatas(sheetId, sheetTabName='Sheet1', datas=[]){
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
       let auth = await this.getAuth()
 
       let existingRows = await this.getSheetDatas(sheetId, 'Sheet1')
+      let header = existingRows[0] // ['name', 'value', 'age']
+
+      let dataRows = datas.map(obj => header.map(key => obj[key]))
+
       const addRowOptions = {
         spreadsheetId: sheetId,
-        range: `Sheet!A${existingRows.length + 1}`,
+        range: `${sheetTabName}!A${existingRows.length + 2}`,
         valueInputOption: 'USER_ENTERED',
-        resource: {}
+        resource: {
+          values: dataRows
+        }
       }
 
+      sheets.spreadsheets.values.append(auth, addRowOptions, function(err, response) {
+        if(err) {
+          console.log('The API returned an error: ' + err);
+          return reject(err);
+        }
+        console.log(response);
+        resolve(response);
+      });
+      
     })
   }
 
