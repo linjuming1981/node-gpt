@@ -65,7 +65,7 @@ class GoogleSheet {
       let auth = await this.getAuth()
 
       let existingRows = await this.getSheetDatas(sheetId, 'Sheet1')
-      let header = existingRows[0] // ['name', 'value', 'age']
+      let header = existingRows[0] // ['name', 'value', 'age']  
 
       let dataRows = datas.map(obj => header.map(key => obj[key]))
 
