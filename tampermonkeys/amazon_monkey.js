@@ -69,12 +69,12 @@ class Amazon {
     let res = {
       productTitle,
       productDescription,
-      cost,
-      bookDescription,
       featurebullets,
-      editorialReviews,
       detailBullets,
       imgs,
+      cost,
+      bookDescription,
+      editorialReviews,
     }
     console.log(res)
     return res
@@ -82,12 +82,12 @@ class Amazon {
   }
 }
 
-(async () => {
-  let amazon = new Amazon();
-  let url = 'https://www.amazon.com/dp/B006IE2IO8/'
-  url = location.href
-  let res
-  res = await amazon.getProductList(url)
-  res = await amazon.collectDetail(res[0])
-  // console.log(res)
-})();
+// (async () => {
+//   let amazon = new Amazon();
+//   let url = 'https://www.amazon.com/dp/B006IE2IO8/'
+//   url = location.href
+//   let res
+//   res = await amazon.getProductList(url)
+//   res = await amazon.collectDetail(res[0])
+//   // console.log(res)
+// })();
