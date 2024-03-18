@@ -60,7 +60,7 @@ class GoogleSheet {
 
   // 插入新数据
   async addSheetDatas(sheetId, sheetTabName='Sheet1', datas=[]){
-    return new Promise(async resolve => {
+    return new Promise(async (resolve, reject) => {
       let sheets = google.sheets("v4");
       let auth = await this.getAuth()
 
@@ -86,7 +86,7 @@ class GoogleSheet {
         console.log(response);
         resolve(response);
       });
-      
+
     })
   }
 
