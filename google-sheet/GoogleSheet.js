@@ -48,7 +48,7 @@ class GoogleSheet {
         (error, response) => {
           if (error) {
             console.log("Error getting data from sheet:", error);
-            resolve(false)
+            resolve([])
           } else {
             console.log("Data from sheet:", response.data.values);
             resolve(response.data.values)
@@ -63,9 +63,14 @@ class GoogleSheet {
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
       let auth = await this.getAuth()
-      // 做到这里，实在太困了
 
       let existingRows = await this.getSheetDatas(sheetId, 'Sheet1')
+      const addRowOptions = {
+        spreadsheetId: sheetId,
+        range: `Sheet!A${existingRows.length + 1}`,
+        valueInputOption: 'USER_ENTERED',
+        resource: {}
+      }
 
     })
   }
