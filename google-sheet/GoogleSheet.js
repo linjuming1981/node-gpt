@@ -71,7 +71,7 @@ class GoogleSheet {
 
       const addRowOptions = {
         spreadsheetId: sheetId,
-        range: `${sheetTabName}!A${existingRows.length + 2}`,
+        range: `${sheetTabName}!A${existingRows.length + 1}`,
         valueInputOption: 'USER_ENTERED',
         resource: {
           values: dataRows
