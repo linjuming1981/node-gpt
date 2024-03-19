@@ -78,7 +78,11 @@ class GoogleSheet {
         }
       }
 
-      sheets.spreadsheets.values.append(auth, addRowOptions, function(err, response) {
+      sheets.spreadsheets.values.append(
+        {
+          auth, 
+          ...addRowOptions, 
+        },function(err, response) {
         if(err) {
           console.log('The API returned an error: ' + err);
           return reject(err);
