@@ -49,7 +49,7 @@ app.get('/test', async (req, res) => {
     detailBullets: 'detailBullets',
     imgs: 'imgs',
   }]
-  let ret = gSheet.addSheetDatas(datas)
+  let ret = gSheet.addSheetDatas(sheetId, sheetTabName, datas)
   res.send(ret)
 
   // let amazon = new Amazon();
