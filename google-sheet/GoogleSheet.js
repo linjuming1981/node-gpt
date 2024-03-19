@@ -87,7 +87,6 @@ class GoogleSheet {
           console.log('The API returned an error: ' + err);
           return reject(err);
         }
-        console.log(response);
         resolve(response);
       });
 
