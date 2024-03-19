@@ -37,6 +37,7 @@ app.get('/test', async (req, res) => {
   let sheetTabName = '工作表1'
   let datas = await gSheet.getSheetDatas(sheetId, sheetTabName)
   console.log(datas)
+  res.send(datas)
 
   // let amazon = new Amazon();
   // let url = 'https://www.amazon.com/dp/B006IE2IO8/'
