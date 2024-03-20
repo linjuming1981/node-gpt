@@ -59,7 +59,7 @@ app.get('/test', async (req, res) => {
 })
 
 app.post('/addProductToSheet', async (req, res) => {
-  console.log(222)
+  console.log(222, req.body)
   res.send(req.body)
 })
 
