@@ -2,7 +2,7 @@ class Amazon {
   constructor(){
     // 谷歌cloude shell接口连接
     this.apiBaseUrl = 'https://8080-cs-ceb9bb12-1924-4701-ad3e-b0b3b2c6173d.cs-asia-southeast1-bool.cloudshell.dev'
-  },
+  }
 
   async getPageHtml(url){
     return new Promise(resolve => {
@@ -87,19 +87,31 @@ class Amazon {
   }
 
   async addProductToSheet(proInfo){
-    $.ajax({
+    // $.ajax({
+    //   url: `${this.apiBaseUrl}/addProductToSheet`,
+    //   type: 'post',
+    //   data: proInfo,
+    //   success: res => {
+    //     console.log(2222, res)
+    //   }
+    // })
+
+    GM_xmlhttpRequest({
+      method: "POST", 
       url: `${this.apiBaseUrl}/addProductToSheet`,
-      type: 'post',
-      data: proInfo,
-      success: res => {
-        console.log(1111, res)
+      data : proInfo,
+      headers: {"Content-Type": "application/x-www-form-urlencoded"},  // 设置请求头
+      onload: function(response) {
+        console.log(2222, response.responseText);
       }
-    })
+    });
+
   }
 
 }
 
 (async () => {
+  console.log(1111)
   let amazon = new Amazon();
   url = location.href
   let res
