@@ -58,6 +58,11 @@ app.get('/test', async (req, res) => {
   // res.send(data)
 })
 
+app.post('/addProductToSheet', async (req, res) => {
+  console.log(222)
+  res.send(req.body)
+})
+
 // 服务监听开启
 const port = 8080
 app.listen(port, function(){

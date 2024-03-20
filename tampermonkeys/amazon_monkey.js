@@ -1,4 +1,9 @@
 class Amazon {
+  constructor(){
+    // 谷歌cloude shell接口连接
+    this.apiBaseUrl = 'https://8080-cs-ceb9bb12-1924-4701-ad3e-b0b3b2c6173d.cs-asia-southeast1-bool.cloudshell.dev'
+  },
+
   async getPageHtml(url){
     return new Promise(resolve => {
       $.ajax({
@@ -80,14 +85,25 @@ class Amazon {
     return res
     
   }
+
+  async addProductToSheet(proInfo){
+    $.ajax({
+      url: `${this.apiBaseUrl}/addProductToSheet`,
+      type: 'post',
+      data: proInfo,
+      success: res => {
+        console.log(1111, res)
+      }
+    })
+  }
+
 }
 
-// (async () => {
-//   let amazon = new Amazon();
-//   let url = 'https://www.amazon.com/dp/B006IE2IO8/'
-//   url = location.href
-//   let res
-//   res = await amazon.getProductList(url)
-//   res = await amazon.collectDetail(res[0])
-//   // console.log(res)
-// })();
+(async () => {
+  let amazon = new Amazon();
+  url = location.href
+  let res
+  res = await amazon.getProductList(url)
+  proInfo = await amazon.collectDetail(res[0])
+  amazon.addProductToSheet(proInfo)
+})();
