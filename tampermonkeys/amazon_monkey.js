@@ -99,8 +99,8 @@ class Amazon {
     GM_xmlhttpRequest({
       method: "POST", 
       url: `${this.apiBaseUrl}/addProductToSheet`,
-      data : proInfo,
-      headers: {"Content-Type": "application/x-www-form-urlencoded"},  // 设置请求头
+      data : JSON.stringify(proInfo),
+      headers: {"Content-Type": "application/json"},
       onload: function(response) {
         console.log(2222, response.responseText);
       }

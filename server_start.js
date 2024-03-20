@@ -60,6 +60,16 @@ app.get('/test', async (req, res) => {
 
 app.post('/addProductToSheet', async (req, res) => {
   console.log(222, req.body)
+  let proInfo = req.body
+  for(let i in proInfo){
+    if(Array.isArray(proInfo[i])){
+      proInfo[i] = JSON.parse(proInfo[i])
+    }
+  }
+  const gSheet = new GoogleSheet()
+  let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  let sheetTabName = '工作表1'
+  await gSheet.addSheetDatas(sheetId, sheetTabName, [proInfo])
   res.send(req.body)
 })
 
