@@ -33,6 +33,8 @@ class Amazon {
     let html = await this.getPageHtml(url)
     let $page = $(html)
 
+    let productId = url.match(/\/dp\/([^/]+)/)[1]; //B01N05APQY
+
     // 标题
     let productTitle = $page.find('#productTitle').text().trim();
 
@@ -72,6 +74,7 @@ class Amazon {
     })
     
     let res = {
+      productId,
       productTitle,
       productDescription,
       featurebullets,

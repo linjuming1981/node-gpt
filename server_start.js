@@ -63,7 +63,7 @@ app.post('/addProductToSheet', async (req, res) => {
   let proInfo = req.body
   for(let i in proInfo){
     if(Array.isArray(proInfo[i])){
-      proInfo[i] = JSON.parse(proInfo[i])
+      proInfo[i] = JSON.stringify(proInfo[i])
     }
   }
   const gSheet = new GoogleSheet()
