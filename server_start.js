@@ -59,6 +59,7 @@ app.get('/test', async (req, res) => {
 })
 
 // 服务监听开启
-app.listen(10000, function(){
-  console.log("listening on port 10000")
+const port = 8080
+app.listen(port, function(){
+  console.log(`node-gpt: http://localhost:${port}`)
 });
