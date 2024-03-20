@@ -88,12 +88,12 @@ class Amazon {
 
 module.exports = Amazon;
 
-(async () => {
-  let amazon = new Amazon();
-  let url = 'https://www.amazon.com/dp/B006IE2IO8/'
-  let res = await amazon.collectPage(url)
-  console.log(res)
-})();
+// (async () => {
+//   let amazon = new Amazon();
+//   let url = 'https://www.amazon.com/dp/B006IE2IO8/'
+//   let res = await amazon.collectPage(url)
+//   console.log(res)
+// })();
 
 // authority:www.amazon.com
 // accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
