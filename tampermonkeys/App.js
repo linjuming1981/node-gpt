@@ -23,6 +23,19 @@ const App = {
 
       console.log('productsUrls', productUrls)
       console.log('products', products)
+      
+      // let products = [{
+      //   productId: 'kkkk',
+      //   productTitle: 'title',
+      //   productDescription: 'kk desc',
+      //   cost: 11,
+      //   bookDescription: 'bookDescription',
+      //   featurebullets: 'featurebullets',
+      //   editorialReviews: 'editorialReviews',
+      //   detailBullets: 'detailBullets',
+      //   imgs: 'imgs',
+      // }]
+      
       let res = await amazon.addProductsToSheet(products)
       return res
     }

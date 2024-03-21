@@ -26,8 +26,19 @@ class Amazon {
       .toArray()
       .map(n => n.href.replace(/^(.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/, '$1'))
     productLinks = Array.from(new Set(productLinks))
-    console.log('productLinks', productLinks)
-    return productLinks
+
+    let productIds = []
+    let filterLinks = []
+    productLinks.forEach(n => {
+      let productId = n.match(/\/dp\/([^/]+)/)[1]; //B01N05APQY
+      if(!productIds.includes(productId)){
+        filterLinks.push(n)
+        productIds.push(productId)
+      }
+    })
+
+    console.log('productLinks', filterLinks)
+    return filterLinks
   }
 
   async collectDetail(url){
@@ -81,6 +92,7 @@ class Amazon {
     
     let res = {
       productId,
+      productLink: url,
       productTitle,
       productDescription,
       featurebullets,
