@@ -8,12 +8,11 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=amazon.com
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
+// @grant        unsafeWindow
 // @require      https://unpkg.com/vue@3.2.26/dist/vue.global.prod.js
-// @require      https://unpkg.com/element-plus@1.2.0-beta.4/lib/index.full.js
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\amazon_monkey.js
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\amazon_vue.js
 // ==/UserScript==
-
 
 
 class Amazon {
