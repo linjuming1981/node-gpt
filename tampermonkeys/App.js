@@ -1,6 +1,6 @@
 const template = `
   <div class="amazon_app">
-    <button type="primary" @click="addProductToSheet">收集</button>
+    <button type="primary" @click="addProductsToSheet">收集</button>
   </div>
 `
 const App = {
@@ -11,7 +11,7 @@ const App = {
     }
   },
   methods: {
-    async addProductToSheet(){
+    async addProductsToSheet(){
       let amazon = new Amazon()
       let url = location.href
       let productUrls = await amazon.getProductList(url)

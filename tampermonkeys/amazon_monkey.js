@@ -23,7 +23,7 @@
 //   let res
 //   res = await amazon.getProductList(url)
 //   proInfo = await amazon.collectDetail(res[0])
-//   amazon.addProductToSheet(proInfo)
+//   amazon.addProductsToSheet(proInfo)
 // })();
 
 

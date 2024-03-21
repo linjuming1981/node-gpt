@@ -98,7 +98,7 @@ class Amazon {
   async addProductsToSheet(products){
     GM_xmlhttpRequest({
       method: "POST", 
-      url: `${this.apiBaseUrl}/addProductToSheet`,
+      url: `${this.apiBaseUrl}/addProductsToSheet`,
       data : JSON.stringify(products),
       headers: {"Content-Type": "application/json"},
       onload: function(response) {
