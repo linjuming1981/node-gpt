@@ -7,37 +7,33 @@ GM_addStyle(`
 
 (function () {
   console.log(111)
-  //等待页面加载
-  window.addEventListener('load', () => {
-    var el = document.createElement('div');
-    document.body.appendChild(el);
+  if (unsafeWindow.Vue === undefined) {
+    unsafeWindow.Vue = Vue;
+  }
 
-    const { createApp, reactive } = Vue;
-    const { ElButton } = ElementPlus;
+  var el = document.createElement('div');
+  document.body.appendChild(el);
+  const { createApp } = Vue;
 
-    const App = {
-      components: {
-        ElButton
-      },
-      setup() {
-        const state = reactive({
-          count: 0
-        });
+  var App = {
+    data: function() {
+      return {
+        count: 0
+      };
+    },
+    methods: {
+      increment: function() {
+        this.count++;
+      }
+    },
+    template: `
+      <div>
+          <button type="primary" @click="increment">点击我</button>
+          <p>点击了 {{ count }} 次</p>
+      </div>
+    `
+  };
 
-        function increment() {
-          state.count++;
-        }
+  createApp(App).mount(el);
 
-        return { state, increment };
-      },
-      template: `
-        <div>
-            <el-button type="primary" @click="increment">点击我</el-button>
-            <p>点击了 {{ state.count }} 次</p>
-        </div>
-    `,
-    };
-
-    createApp(App).mount(el);
-  });
 })();
