@@ -24,9 +24,9 @@ class Amazon {
     let productLinks = $page.find('a')
       .filter((i,n) => n.href.includes('/dp/'))
       .toArray()
-      .map(n => n.href.replace(/ref=.*/, ''))
+      .map(n => n.href.replace(/^(.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/, '$1'))
     productLinks = Array.from(new Set(productLinks))
-    console.log(productLinks)
+    console.log('productLinks', productLinks)
     return productLinks
   }
 
@@ -38,6 +38,9 @@ class Amazon {
 
     // 标题
     let productTitle = $page.find('#productTitle').text().trim();
+    if(!productTitle){
+      return null
+    }
 
     // 描述
     let productDescription = $page.find('#productDescription').text().trim()
@@ -67,6 +70,8 @@ class Amazon {
     // 图片
     let fromStr = "'colorImages': "
     let fromI = html.indexOf(fromStr)
+    if(fromI === -1) return null;
+
     let endI = html.indexOf("'colorToAsin':")
     let imgCode = html.slice(fromI + fromStr.length, endI).trim().replace(/,$/, '').replace(/'/g, '"')
     let imgs = JSON.parse(imgCode)
