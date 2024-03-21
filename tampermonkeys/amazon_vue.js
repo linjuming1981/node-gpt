@@ -6,6 +6,7 @@ GM_addStyle(`
 `);
 
 (function () {
+  console.log(111)
   //等待页面加载
   window.addEventListener('load', () => {
     var el = document.createElement('div');
