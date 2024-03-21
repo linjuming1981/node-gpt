@@ -90,11 +90,11 @@ class Amazon {
     
   }
 
-  async addProductToSheet(proInfo){
+  async addProductsToSheet(products){
     GM_xmlhttpRequest({
       method: "POST", 
       url: `${this.apiBaseUrl}/addProductToSheet`,
-      data : JSON.stringify(proInfo),
+      data : JSON.stringify(products),
       headers: {"Content-Type": "application/json"},
       onload: function(response) {
         console.log(2222, response.responseText);
@@ -111,5 +111,5 @@ class Amazon {
 //   let res
 //   res = await amazon.getProductList(url)
 //   proInfo = await amazon.collectDetail(res[0])
-//   amazon.addProductToSheet(proInfo)
+//   amazon.addProductsToSheet(proInfo)
 // })();

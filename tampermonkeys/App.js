@@ -1,7 +1,6 @@
 const template = `
-  <div>
-    <button type="primary" @click="increment">点击我</button>
-    <p>点击了 {{ count }} 次</p>
+  <div class="amazon_app">
+    <button type="primary" @click="addProductToSheet">收集</button>
   </div>
 `
 const App = {
@@ -12,16 +11,22 @@ const App = {
     }
   },
   methods: {
-    increment: function() {
-      this.count++;
+    async addProductToSheet(){
+      let amazon = new Amazon()
+      let url = location.href
+      let products = await amazon.getProductList(url)
+      let res = await amazon.addProductsToSheet(products)
+      return res
     }
   }
 }
 
 GM_addStyle(`
-  /* 这里添加你自定义的 CSS 样式 */
-  .el-button {
-    margin: 5px;
+  .amazon_app {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    top: 20%;
   }
 `);
 
