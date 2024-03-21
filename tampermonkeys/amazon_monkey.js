@@ -90,15 +90,6 @@ class Amazon {
   }
 
   async addProductToSheet(proInfo){
-    // $.ajax({
-    //   url: `${this.apiBaseUrl}/addProductToSheet`,
-    //   type: 'post',
-    //   data: proInfo,
-    //   success: res => {
-    //     console.log(2222, res)
-    //   }
-    // })
-
     GM_xmlhttpRequest({
       method: "POST", 
       url: `${this.apiBaseUrl}/addProductToSheet`,
@@ -108,7 +99,6 @@ class Amazon {
         console.log(2222, response.responseText);
       }
     });
-
   }
 
 }
