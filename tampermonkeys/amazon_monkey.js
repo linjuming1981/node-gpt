@@ -9,6 +9,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        unsafeWindow
+// @require      https://code.jquery.com/jquery-3.5.1.min.js
 // @require      https://unpkg.com/vue@3.2.26/dist/vue.global.prod.js
 // @require      file://D:\www\leb\node-gpt\classes/Amazon.js
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\App.js

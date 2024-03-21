@@ -63,16 +63,18 @@ app.get('/test', async (req, res) => {
 
 app.post('/addProductToSheet', async (req, res) => {
   console.log(222, req.body)
-  let proInfo = req.body
-  for(let i in proInfo){
-    if(Array.isArray(proInfo[i])){
-      proInfo[i] = JSON.stringify(proInfo[i])
+  let products = req.body
+  products.forEach(n => {
+    for(let i in n){
+      if(Array.isArray(n[i])){
+        n[i] = JSON.stringify(n[i])
+      }
     }
-  }
+  });
   const gSheet = new GoogleSheet()
   let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
   let sheetTabName = '工作表1'
-  await gSheet.addSheetDatas(sheetId, sheetTabName, [proInfo])
+  await gSheet.addSheetDatas(sheetId, sheetTabName, products)
   res.send(req.body)
 })
 
