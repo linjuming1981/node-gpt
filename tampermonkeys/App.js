@@ -14,8 +14,9 @@ const App = {
     async addProductToSheet(){
       let amazon = new Amazon()
       let url = location.href
-      let products = await amazon.getProductList(url)
-      console.log('products', products)
+      let productUrls = await amazon.getProductList(url)
+      console.log('products', productUrls)
+      proInfo = await amazon.collectDetail(productUrls[0])
       let res = await amazon.addProductsToSheet(products)
       return res
     }
