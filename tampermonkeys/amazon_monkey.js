@@ -1,3 +1,21 @@
+// ==UserScript==
+// @name         amazon
+// @namespace    http://tampermonkey.net/
+// @version      2024-03-21
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.amazon.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=amazon.com
+// @grant        GM_xmlhttpRequest
+// @grant        GM_addStyle
+// @require      https://unpkg.com/vue@3.2.26/dist/vue.global.prod.js
+// @require      https://unpkg.com/element-plus@1.2.0-beta.4/lib/index.full.js
+// @require      file://D:\www\leb\node-gpt\tampermonkeys\amazon_monkey.js
+// @require      file://D:\www\leb\node-gpt\tampermonkeys\amazon_vue.js
+// ==/UserScript==
+
+
+
 class Amazon {
   constructor(){
     // 谷歌cloude shell接口连接
@@ -103,12 +121,12 @@ class Amazon {
 
 }
 
-(async () => {
-  console.log(1111)
-  let amazon = new Amazon();
-  url = location.href
-  let res
-  res = await amazon.getProductList(url)
-  proInfo = await amazon.collectDetail(res[0])
-  amazon.addProductToSheet(proInfo)
-})();
+// (async () => {
+//   console.log(1111)
+//   let amazon = new Amazon();
+//   url = location.href
+//   let res
+//   res = await amazon.getProductList(url)
+//   proInfo = await amazon.collectDetail(res[0])
+//   amazon.addProductToSheet(proInfo)
+// })();
