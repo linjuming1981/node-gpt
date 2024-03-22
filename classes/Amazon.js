@@ -108,6 +108,7 @@ class Amazon {
   }
 
   async addProductsToSheet(products){
+    console.log('GM_xmlhttpRequest', products)
     GM_xmlhttpRequest({
       method: "POST", 
       url: `${this.apiBaseUrl}/addProductsToSheet`,
