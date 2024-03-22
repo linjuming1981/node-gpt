@@ -18,7 +18,13 @@ const App = {
       let ps = productUrls.map(n => {
         return amazon.collectDetail(n)
       })
-      let products = await Promise.all(ps)
+      
+      let products = []
+      try {
+        products = await Promise.all(ps)
+      } catch (err) {
+        console.error('An error occurred:', err)
+      }
       products = products.filter(n => n)
 
       console.log('productsUrls', productUrls)
