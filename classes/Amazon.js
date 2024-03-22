@@ -21,10 +21,11 @@ class Amazon {
     let html = await this.getPageHtml(url)
     let $page = $(html)
 
+    let regex = /^(https:\/\/www.amazon.com.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/
     let productLinks = $page.find('a')
-      .filter((i,n) => n.href.includes('/dp/'))
+      .filter((i,n) => n.href.match(regex))
       .toArray()
-      .map(n => n.href.replace(/^(https:\/\/www.amazon.com.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/, '$1'))
+      .map(n => n.href.replace(regex, '$1'))
     productLinks = Array.from(new Set(productLinks))
 
     let productIds = []
