@@ -19,7 +19,7 @@
 // (async () => {
 //   console.log(1111)
 //   let amazon = new Amazon();
-//   url = location.href
+//   url = location.href 
 //   let res
 //   res = await amazon.getProductList(url)
 //   proInfo = await amazon.collectDetail(res[0])
