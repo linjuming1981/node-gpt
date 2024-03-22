@@ -24,7 +24,7 @@ class Amazon {
     let productLinks = $page.find('a')
       .filter((i,n) => n.href.includes('/dp/'))
       .toArray()
-      .map(n => n.href.replace(/^https:\/\/www.amazon.com(.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/, '$1'))
+      .map(n => n.href.replace(/^(https:\/\/www.amazon.com.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/, '$1'))
     productLinks = Array.from(new Set(productLinks))
 
     let productIds = []
