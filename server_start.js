@@ -31,34 +31,30 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/test', async (req, res) => {
-  // res.send({
-  //   name: 'hello world'
-  // })
-
   const gSheet = new GoogleSheet()
   let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
   let sheetTabName = '工作表1'
-  // let datas = await gSheet.getSheetDatas(sheetId, sheetTabName)
-  // console.log(datas)
 
-  let datas = [{
-    productId: 'kkkk',
-    productTitle: 'title',
-    productDescription: 'kk desc',
-    cost: 11,
-    bookDescription: 'bookDescription',
-    featurebullets: 'featurebullets',
-    editorialReviews: 'editorialReviews',
-    detailBullets: 'detailBullets',
-    imgs: 'imgs',
-  }]
-  let ret = gSheet.addSheetDatas(sheetId, sheetTabName, datas)
-  res.send(ret)
+  // 查询数据调试
+  let datas = await gSheet.getSheetDatas(sheetId, sheetTabName, ['productId', 'postedToBlogger'])
+  console.log(datas)
+  res.send(datas)
 
-  // let amazon = new Amazon();
-  // let url = 'https://www.amazon.com/dp/B006IE2IO8/'
-  // let data = amazon.collectPage(url)
-  // res.send(data)
+  // 新增数据调试
+  // let datas = [{
+  //   productId: 'kkkk',
+  //   productTitle: 'title',
+  //   productDescription: 'kk desc',
+  //   cost: 11,
+  //   bookDescription: 'bookDescription',
+  //   featurebullets: 'featurebullets',
+  //   editorialReviews: 'editorialReviews',
+  //   detailBullets: 'detailBullets',
+  //   imgs: 'imgs',
+  // }]
+  // let ret = gSheet.addSheetDatas(sheetId, sheetTabName, datas)
+  // res.send(ret)
+  
 })
 
 app.post('/addProductsToSheet', async (req, res) => {

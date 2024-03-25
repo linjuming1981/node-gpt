@@ -72,14 +72,14 @@ class GoogleSheet {
       }).join(',');
 
       // 传参
-      let prams = {
+      let params = {
         auth,
         spreadsheetId: sheetId,
       }
       if(columns.length){
-        params.columnsRange = columnsRange
+        params.range = sheetTabName + '!' + columnsRange;
       } else {
-        params.range = sheetTabName
+        params.range = sheetTabName;
       }
 
       let sheets = google.sheets("v4");
