@@ -36,7 +36,8 @@ app.get('/test', async (req, res) => {
   let sheetTabName = '工作表1'
 
   // 查询数据调试
-  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
+  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
   console.log(datas)
   res.send(datas)
 

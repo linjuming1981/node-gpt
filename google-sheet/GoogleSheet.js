@@ -59,8 +59,12 @@ class GoogleSheet {
  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = []}) {
     return new Promise(async resolve => {
       // 获取表头 B:B,E:E
-      let header = await this.getSheetHeaders({sheetId, sheetTabName});
+      if(!columns.length){
+        let allDatas = await this.getAllDatas({sheetId, sheetTabName})
+        return resolve(allDatas)
+      }
       
+      let header = await this.getSheetHeaders({sheetId, sheetTabName});
       let datas = await Promise.all(columns.map(async column => {
         let index = header.indexOf(column);
         if(index !== -1) {
@@ -76,6 +80,38 @@ class GoogleSheet {
       let formattedDatas = this.formatColumnData(datas, columns);
 
       resolve(formattedDatas);
+    })
+  }
+
+  async getAllDatas({sheetId, sheetTabName}){
+    return new Promise(async resolve => {
+      let sheets = google.sheets("v4");
+      let auth = await this.getAuth()
+      let params = {
+        auth,
+        spreadsheetId: sheetId,
+        range: sheetTabName,
+      }
+
+      sheets.spreadsheets.values.get(
+        params,
+        (error, response) => {
+          if (error) {
+            console.log("Error getting data from sheet:", error);
+            resolve([]);
+          } else {
+            let [headerRow, ...dataRows] = response.data.values;
+            let datas = dataRows.map(row => {
+              return row.reduce((obj, value, index) => {
+                obj[headerRow[index]] = value;
+                return obj;
+              }, {});
+            });
+
+            resolve(datas);
+          }
+        }
+      );
     })
   }
 
@@ -156,10 +192,10 @@ class GoogleSheet {
 
 module.exports = GoogleSheet;
 
-// (async () => {
-//   const gSheet = new GoogleSheet()
-//   let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
-//   let sheetTabName = '工作表1'
-//   let datas = await gSheet.getSheetDatas(sheetId, sheetTabName)
-//   console.log(datas, 222)
-// })();
+(async () => {
+  const gSheet = new GoogleSheet()
+  let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  let sheetTabName = '工作表1'
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
+  console.log(datas, 222)
+})();
