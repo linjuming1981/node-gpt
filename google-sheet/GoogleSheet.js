@@ -59,6 +59,9 @@ class GoogleSheet {
   // 获取excel表中所有数据
   async getSheetDatas(sheetId, sheetTabName='Sheet1', columns = []){
     return new Promise(async resolve => {
+      let sheets = google.sheets("v4");
+      let auth = await this.getAuth()
+ 
 
       // 获取表头 B:B,E:E
       let header = await this.getSheetHeaders({ sheetId, sheetTabName });
@@ -82,8 +85,6 @@ class GoogleSheet {
         params.range = sheetTabName;
       }
 
-      let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
       sheets.spreadsheets.values.get(
         params,
         (error, response) => {
