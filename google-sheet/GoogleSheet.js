@@ -56,49 +56,66 @@ class GoogleSheet {
     })
   }
 
-  // 获取excel表中所有数据
-  async getSheetDatas(sheetId, sheetTabName='Sheet1', columns = []){
+ async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = []}) {
     return new Promise(async resolve => {
-      let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
- 
-
       // 获取表头 B:B,E:E
-      let header = await this.getSheetHeaders({ sheetId, sheetTabName });
-      let columnsRange = columns.map(column => {
+      let header = await this.getSheetHeaders({sheetId, sheetTabName});
+      
+      let datas = await Promise.all(columns.map(async column => {
         let index = header.indexOf(column);
         if(index !== -1) {
           let columnLetter = String.fromCharCode('A'.charCodeAt(0) + index);
-          return columnLetter + ':' + columnLetter;
-        }
-        return '';
-      }).join(',');
+          let columnRange = columnLetter + ':' + columnLetter;
 
-      // 传参
+          return this.getDataByColumn(sheetId, sheetTabName, columnRange);
+        } else {
+          return Promise.resolve([]);
+        }
+      }));
+
+      let formattedDatas = this.formatColumnData(datas, columns);
+
+      resolve(formattedDatas);
+    })
+  }
+
+  async getDataByColumn(sheetId, sheetTabName, columnRange) {
+    return new Promise(async resolve => {
+      let sheets = google.sheets("v4");
+      let auth = await this.getAuth()
+  
       let params = {
         auth,
         spreadsheetId: sheetId,
+        range: sheetTabName + '!' + columnRange,
       }
-      if(columns.length){
-        params.range = sheetTabName + '!' + columnsRange;
-      } else {
-        params.range = sheetTabName;
-      }
-
+  
       sheets.spreadsheets.values.get(
         params,
         (error, response) => {
           if (error) {
             console.log("Error getting data from sheet:", error);
-            resolve([])
+            resolve([]);
           } else {
             console.log("Data from sheet:", response.data.values);
-            resolve(response.data.values)
+            resolve(response.data.values);
           }
-        },
+        }
       );
-    })
+    });
   }
+
+  formatColumnData(datas, columns) {
+    let maxLength = Math.max(...datas.map(data => data.length));
+
+    return Array.from({length: maxLength}).map((_, index) => {
+      return columns.reduce((obj, column, i) => {
+        obj[column] = datas[i][index] ? datas[i][index][0] : '';  // Get the value, if exist
+        return obj;
+      }, {});
+    });
+  }
+
 
   // 插入新数据
   async addSheetDatas(sheetId, sheetTabName='Sheet1', datas=[]){
