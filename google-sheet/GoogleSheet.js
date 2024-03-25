@@ -98,7 +98,7 @@ class GoogleSheet {
             resolve([]);
           } else {
             console.log("Data from sheet:", response.data.values);
-            resolve(response.data.values);
+            resolve(response.data.values.slice(1)); // Here we remove the header row
           }
         }
       );
