@@ -32,19 +32,60 @@ class GoogleSheet {
     })
   }
 
-  // 获取excel表中所有数据
-  async getSheetDatas(sheetId, sheetTabName='Sheet1'){
+  async getSheetHeaders({ sheetId, sheetTabName = 'Sheet1' }){
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
+      let auth = await this.getAuth();
       sheets.spreadsheets.values.get(
         {
           auth,
-    
-          // 对应google sheet地址：https://docs.google.com/spreadsheets/d/1SDq6dHqGbQ7YqgqW_FC5sgKQDdKlyQ3iql_uxSx6D-Y/edit#gid=0
           spreadsheetId: sheetId,
-          range: sheetTabName,
+          range: sheetTabName + '!1:1',
         },
+        (error, response) => {
+          if (error) {
+            console.log("Error getting header from sheet:", error);
+            resolve([]);
+          } else {
+            let header = response.data.values[0];
+            console.log("Header from sheet: ", header);
+            resolve(header);
+          }
+        }
+      );
+    })
+  }
+
+  // 获取excel表中所有数据
+  async getSheetDatas(sheetId, sheetTabName='Sheet1', columns = []){
+    return new Promise(async resolve => {
+
+      // 获取表头 B:B,E:E
+      let header = await this.getSheetHeaders({ sheetId, sheetTabName });
+      let columnsRange = columns.map(column => {
+        let index = header.indexOf(column);
+        if(index !== -1) {
+          let columnLetter = String.fromCharCode('A'.charCodeAt(0) + index);
+          return columnLetter + ':' + columnLetter;
+        }
+        return '';
+      }).join(',');
+
+      // 传参
+      let prams = {
+        auth,
+        spreadsheetId: sheetId,
+      }
+      if(columns.length){
+        params.columnsRange = columnsRange
+      } else {
+        params.range = sheetTabName
+      }
+
+      let sheets = google.sheets("v4");
+      let auth = await this.getAuth()
+      sheets.spreadsheets.values.get(
+        params,
         (error, response) => {
           if (error) {
             console.log("Error getting data from sheet:", error);

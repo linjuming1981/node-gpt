@@ -16,18 +16,6 @@
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\amazon_monkey.js
 // ==/UserScript==
 
-// (async () => {
-//   console.log(1111)
-//   let amazon = new Amazon();
-//   url = location.href 
-//   let res
-//   res = await amazon.getProductList(url)
-//   proInfo = await amazon.collectDetail(res[0])
-//   amazon.addProductsToSheet(proInfo)
-// })();
-
-
-
 (async () => {
   console.log(111)
   if (unsafeWindow.Vue === undefined) {

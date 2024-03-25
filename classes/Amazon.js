@@ -102,6 +102,9 @@ class Amazon {
       cost,
       bookDescription,
       editorialReviews,
+      markdownCode: '',
+      htmlCode: '',
+      postedToBlogger: 0,
     }
     console.log(res)
     return res
