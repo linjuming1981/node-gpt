@@ -35,11 +35,14 @@ app.get('/test', async (req, res) => {
   let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
   let sheetTabName = '工作表1'
 
+  // 调通测试
+  res.send({data: [{name:'a', value: 111}]})
+
   // 查询数据调试
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
-  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
-  console.log(datas)
-  res.send(datas)
+  // // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
+  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
+  // console.log(datas)
+  // res.send(datas)
 
   // 新增数据调试
   // let datas = [{
