@@ -85,7 +85,7 @@ app.get('/getAllSheetRows', async (req, res) => {
   res.send({code: 200, data: datas})
 })
 
-app.post('getSheetRows', async (req, res) => {
+app.post('/getSheetRows', async (req, res) => {
   const gSheet = new GoogleSheet()
   let filter = req.body.filter
   let sheetId = AMAZON_SHEET_ID
