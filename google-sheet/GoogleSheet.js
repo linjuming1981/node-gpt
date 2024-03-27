@@ -56,30 +56,37 @@ class GoogleSheet {
     })
   }
 
- async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = []}) {
+ async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}}) {
     return new Promise(async resolve => {
-      // 获取表头 B:B,E:E
-      if(!columns.length){
-        let allDatas = await this.getAllDatas({sheetId, sheetTabName})
-        return resolve(allDatas)
+      let datas = []
+
+      if(!columns.length){  // 全量数据
+        datas = await this.getAllDatas({sheetId, sheetTabName})
+      } else { // 指定列数据
+        // 获取表头 B:B,E:E
+        let header = await this.getSheetHeaders({sheetId, sheetTabName});
+        datas = await Promise.all(columns.map(async column => {
+          let index = header.indexOf(column);
+          if(index !== -1) {
+            let columnLetter = String.fromCharCode('A'.charCodeAt(0) + index);
+            let columnRange = columnLetter + ':' + columnLetter;
+  
+            return this.getDataByColumn(sheetId, sheetTabName, columnRange);
+          } else {
+            return Promise.resolve([]);
+          }
+        }));
+        datas = this.formatColumnData(datas, columns);
       }
-      
-      let header = await this.getSheetHeaders({sheetId, sheetTabName});
-      let datas = await Promise.all(columns.map(async column => {
-        let index = header.indexOf(column);
-        if(index !== -1) {
-          let columnLetter = String.fromCharCode('A'.charCodeAt(0) + index);
-          let columnRange = columnLetter + ':' + columnLetter;
 
-          return this.getDataByColumn(sheetId, sheetTabName, columnRange);
-        } else {
-          return Promise.resolve([]);
-        }
-      }));
+      // 过滤数据
+      if(Object.keys(filter).length){
+        datas = datas.filter(n => {
+          return Object.keys(filter).every(key => n[key] === filter[key])
+        })
+      }
 
-      let formattedDatas = this.formatColumnData(datas, columns);
-
-      resolve(formattedDatas);
+      resolve(datas);
     })
   }
 

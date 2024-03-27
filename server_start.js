@@ -5,7 +5,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const GoogleSheet = require('./google-sheet/GoogleSheet.js')
-const Amazon = require('./classes/Amazon.js')
+const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+
 
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
@@ -32,7 +33,7 @@ app.all('*', function(req, res, next) {
 
 app.get('/test', async (req, res) => {
   const gSheet = new GoogleSheet()
-  let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
 
   // 调通测试
@@ -70,18 +71,27 @@ app.post('/addProductsToSheet', async (req, res) => {
     }
   });
   const gSheet = new GoogleSheet()
-  let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
   await gSheet.addSheetDatas(sheetId, sheetTabName, products)
   res.send(req.body)
 })
 
-app.get('/allSheetRows', async (req, res) => {
+app.get('/getAllSheetRows', async (req, res) => {
   const gSheet = new GoogleSheet()
-  let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
-  res.send(datas)  
+  res.send({code: 200, data: datas})
+})
+
+app.post('getSheetRows', async (req, res) => {
+  const gSheet = new GoogleSheet()
+  let filter = req.body.filter
+  let sheetId = AMAZON_SHEET_ID
+  let sheetTabName = '工作表1'
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter})
+  res.send({code: 200, data: datas})
 })
 
 // 服务监听开启
