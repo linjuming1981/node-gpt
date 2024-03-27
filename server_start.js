@@ -76,6 +76,14 @@ app.post('/addProductsToSheet', async (req, res) => {
   res.send(req.body)
 })
 
+app.get('/allSheetRows', async (req, res) => {
+  const gSheet = new GoogleSheet()
+  let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  let sheetTabName = '工作表1'
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
+  res.send(datas)  
+})
+
 // 服务监听开启
 const port = 8080
 app.listen(port, function(){
