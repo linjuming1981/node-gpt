@@ -48,7 +48,6 @@ class GoogleSheet {
             resolve([]);
           } else {
             let header = response.data.values[0];
-            console.log("Header from sheet: ", header);
             resolve(header);
           }
         }
@@ -140,7 +139,6 @@ class GoogleSheet {
             console.log("Error getting data from sheet:", error);
             resolve([]);
           } else {
-            console.log("Data from sheet:", response.data.values);
             resolve(response.data.values.slice(1)); // Here we remove the header row
           }
         }
