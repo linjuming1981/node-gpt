@@ -81,7 +81,7 @@ class GoogleSheet {
       // 过滤数据
       if(Object.keys(filter).length){
         datas = datas.filter(n => {
-          return Object.keys(filter).every(key => n[key] === filter[key])
+          return Object.keys(filter).every(key => n[key] === filter[key].trim())
         })
       }
 
