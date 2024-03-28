@@ -89,6 +89,9 @@ app.post('/getSheetRows', async (req, res) => {
   console.log('/getSheetRows', req.body)
   const gSheet = new GoogleSheet()
   let filter = req.body.filter
+  if(typeof filter === 'string'){
+    filter = JSON.parse(filter)
+  }
   let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter})
