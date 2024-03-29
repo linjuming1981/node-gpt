@@ -197,7 +197,7 @@ class GoogleSheet {
       let sheets = google.sheets("v4");
       let auth = await this.getAuth()
 
-      let existingRows = await this.getSheetDatas(sheetId, sheetTabName)
+      let existingRows = await this.getSheetDatas({sheetId, sheetTabName})
       let dataRows = datas.map(obj => this.header.map(key => obj[key]))
 
       const addRowOptions = {
