@@ -62,6 +62,7 @@ app.get('/test', async (req, res) => {
 })
 
 app.post('/addProductsToSheet', async (req, res) => {
+  console.log(11111, req.body)
   let products = req.body
   products.forEach(n => {
     for(let i in n){
