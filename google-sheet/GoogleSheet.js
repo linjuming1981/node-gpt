@@ -55,7 +55,9 @@ class GoogleSheet {
     })
   }
 
- async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}}) {
+
+
+  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}}) {
     return new Promise(async resolve => {
       let datas = []
 
@@ -89,6 +91,36 @@ class GoogleSheet {
     })
   }
 
+  async getHeader({sheetId, sheetTabName = 'Sheet1'}){
+    return new Promise(async resolve => {
+      if(this.header){
+        return resolve(this.header)
+      }
+      
+      let sheets = google.sheets("v4");
+      let auth = await this.getAuth()
+      let params = {
+        auth,
+        spreadsheetId: sheetId,
+        range: `${sheetTabName}!A0:Z0`,
+      }
+
+      sheets.spreadsheets.values.get(
+        params,
+        (error, response) => {
+          if (error) {
+            console.log("Error getting data from sheet:", error);
+            resolve([]);
+          } else {
+            let [headerRow] = response.data.values;
+            this.header = headerRow
+            resolve(headerRow);
+          }
+        }
+      );
+    })
+  }
+
   async getAllDatas({sheetId, sheetTabName}){
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
@@ -107,6 +139,7 @@ class GoogleSheet {
             resolve([]);
           } else {
             let [headerRow, ...dataRows] = response.data.values;
+            this.header = headerRow;
             let datas = dataRows.map(row => {
               return row.reduce((obj, value, index) => {
                 obj[headerRow[index]] = value;
@@ -158,7 +191,7 @@ class GoogleSheet {
   }
 
 
-  // 插入新数据
+  // 插入新数据 有问题，需要更正 todo
   async addSheetDatas(sheetId, sheetTabName='Sheet1', datas=[]){
     return new Promise(async (resolve, reject) => {
       let sheets = google.sheets("v4");
@@ -191,6 +224,32 @@ class GoogleSheet {
       });
 
     })
+  }
+
+  async updateRow(sheetId, sheetTabName='Sheet1', product={}){
+    let auth = await this.getAuth()
+    let existingRows = await this.getAllDatas(sheetId, sheetTabName)
+    let rowI = existingRows.findIndex(n => n.productId === product.productId)
+    let row = existingRows[rowI]
+    for(let i in product){
+      row[i] = product[i]
+    }
+    let rowData = this.header.map(n => row[n])
+
+    const request = {
+      spreadsheetId: sheetId,
+      range: `${sheetTabName}!A${rowI}:O${rowI}`,
+      valueInputOption: 'USER_ENTERED',
+      resource: {
+        values: [rowData],
+      },
+      auth: auth,
+    };
+    
+    let sheets = google.sheets("v4");
+    await sheets.spreadsheets.values.update(request);
+    return true
+
   }
 
 }
