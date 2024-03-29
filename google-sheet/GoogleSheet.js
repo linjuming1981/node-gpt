@@ -198,6 +198,8 @@ class GoogleSheet {
       let auth = await this.getAuth()
 
       let existingRows = await this.getSheetDatas({sheetId, sheetTabName})
+      let existingIds = existingRows.map(n => n.productId)
+      datas = datas.filter(n => !existingIds.includes(n.productId))
       let dataRows = datas.map(obj => this.header.map(key => obj[key]))
 
       const addRowOptions = {
