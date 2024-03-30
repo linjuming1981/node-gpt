@@ -228,7 +228,7 @@ class GoogleSheet {
 
   async updateRow(sheetId, sheetTabName='Sheet1', product={}){
     let auth = await this.getAuth()
-    let existingRows = await this.getAllDatas(sheetId, sheetTabName)
+    let existingRows = await this.getAllDatas({sheetId, sheetTabName})
     let rowI = existingRows.findIndex(n => n.productId === product.productId)
     let row = existingRows[rowI]
     for(let i in product){
@@ -238,7 +238,7 @@ class GoogleSheet {
 
     const request = {
       spreadsheetId: sheetId,
-      range: `${sheetTabName}!A${rowI}:O${rowI}`,
+      range: `${sheetTabName}!A${rowI+2}:O${rowI+2}`,
       valueInputOption: 'USER_ENTERED',
       resource: {
         values: [rowData],
