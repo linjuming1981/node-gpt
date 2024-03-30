@@ -113,6 +113,19 @@ app.post('/getOneRow', async (req, res) => {
   res.send({code: 200, data: item})
 })
 
+app.post('/updateRow', async (req, res) => {
+  console.log('/updateRow', req.body)
+  const gSheet = new GoogleSheet()
+  let sheetId = AMAZON_SHEET_ID
+  let sheetTabName = '工作表1'
+  let product = req.body.product
+  if(typeof product === 'string'){
+    product = JSON.parse(product)
+  }
+  gSheet.updateRow(sheetId, sheetTabName, product)
+  res.send({code: 200, data: product})
+})
+
 // 服务监听开启
 const port = 8080
 app.listen(port, function(){
