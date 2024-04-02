@@ -76,7 +76,7 @@ class Amazon {
     // 编辑评论
     let editorialReviews = $page.find('#editorialReviews-btf-ri_feature_div').text().trim()
 
-    // 书籍详情清单
+    // 详情属性清单
     let detailBullets = []
     $page.find('#detailBullets_feature_div li').each((i, n) => {
       let text = $(n).text().trim().replace(/\s{2,}/g, '')
@@ -94,6 +94,19 @@ class Amazon {
     imgs = imgs.initial.map(n => {
       return Object.keys(n.main)[0]
     })
+
+    // 优点
+    let aplus = []
+    $page.find('#aplus_feature_div celwidget').each((i, n) => {
+      let imgEl = $(n).find('img')[0]
+      let img = imgEl?.src
+      let imgDescription = $(n).text().trim() || imgEl?.alt
+      let item = {
+        img,
+        imgDescription
+      }
+      aplus.push(item)
+    })
     
     let res = {
       productId,
@@ -105,6 +118,7 @@ class Amazon {
       imgs,
       cost,
       bookDescription,
+      aplus,
       editorialReviews,
       markdownCode: '',
       htmlCode: '',
