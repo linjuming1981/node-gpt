@@ -37,7 +37,7 @@ async function updateProduct(auth, product) {
 
   let row = values.findIndex(row => row[0] === product.productId) + 1;  // rowIndex is 0-based
   
-  // Step 2: Update the row with the new product information
+  // Step 2: Update the row with the new product information  
   if (row) {
     const request = {
       spreadsheetId: 'my-spreadsheet-id',
