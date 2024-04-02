@@ -1,6 +1,6 @@
 const template = `
   <div class="amazon_app">
-    <button type="primary" @click="addProductsToSheet">收集one</button>
+    <button type="primary" @click="addOneToSheet">收集one</button>
     <button type="primary" @click="addProductsToSheet">收集all</button>
   </div>
 `
