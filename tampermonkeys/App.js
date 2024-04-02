@@ -1,6 +1,7 @@
 const template = `
   <div class="amazon_app">
-    <button type="primary" @click="addProductsToSheet">收集</button>
+    <button type="primary" @click="addProductsToSheet">收集one</button>
+    <button type="primary" @click="addProductsToSheet">收集all</button>
   </div>
 `
 const App = {
@@ -11,6 +12,15 @@ const App = {
     }
   },
   methods: {
+    async addOneToSheet(){
+      let amazon = new Amazon()
+      let url = location.href
+      let product = await amazon.collectDetail(url)
+      console.log('product', product)
+      let res = await amazon.addProductsToSheet([product])
+      return res
+    },
+
     async addProductsToSheet(){
       let amazon = new Amazon()
       let url = location.href
@@ -29,19 +39,6 @@ const App = {
 
       console.log('productsUrls', productUrls)
       console.log('products', products)
-      
-      // let products = [{
-      //   productId: 'kkkk',
-      //   productTitle: 'title',
-      //   productDescription: 'kk desc',
-      //   cost: 11,
-      //   bookDescription: 'bookDescription',
-      //   featurebullets: 'featurebullets',
-      //   editorialReviews: 'editorialReviews',
-      //   detailBullets: 'detailBullets',
-      //   imgs: 'imgs',
-      // }]
-      
       let res = await amazon.addProductsToSheet(products)
       return res
     }
@@ -54,6 +51,9 @@ GM_addStyle(`
     z-index: 1000;
     right: 0;
     top: 20%;
+  }
+  .amazon_app button{
+    display: block;
   }
 `);
 
