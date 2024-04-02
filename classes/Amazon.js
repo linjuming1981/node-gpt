@@ -49,6 +49,8 @@ class Amazon {
     // html = html.replace(/<style[^>]*[^/]?>[\s\S]*?<\/style>/g, '')
     html = html.replace(/<script>[\s\S]*?<\/script>/g, '')
     let $page = $(html)
+    $page.find('style').remove()
+    $page.find('script').remove()
 
     let productId = url.match(/\/dp\/([^/]+)/)[1]; //B01N05APQY
 
