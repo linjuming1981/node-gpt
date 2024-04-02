@@ -97,7 +97,7 @@ class Amazon {
 
     // 优点
     let aplus = []
-    $page.find('#aplus_feature_div celwidget').each((i, n) => {
+    $page.find('#aplus_feature_div .celwidget').each((i, n) => {
       let imgEl = $(n).find('img')[0]
       let img = imgEl?.src
       let imgDescription = $(n).text().trim() || imgEl?.alt
