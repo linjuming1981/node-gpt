@@ -102,7 +102,8 @@ class Amazon {
     $page.find('#aplus_feature_div .celwidget').each((i, n) => {
       let imgEl = $(n).find('img')[0]
       let img = imgEl?.src
-      let imgDescription = $(n).text().replace(/<img[^>]+\/>/g, '').trim() || imgEl?.alt
+      let imgDescription = $(n).text().replace(/<img[^>]+\/>/g, '').trim().replace(/ +/g, ' ')
+      imgDescription = imgDescription || imgEl?.alt
       let item = {
         img,
         imgDescription
