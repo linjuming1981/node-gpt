@@ -48,7 +48,7 @@ class Amazon {
     let html = oHtml.replace(/<noscript>[\s\S]*?<\/noscript>/g, '')
     let $page = $(html)
     $page.find('style').remove()
-    $page.find('script').remove()
+    // $page.find('script').remove()
 
     let productId = url.match(/\/dp\/([^/]+)/)[1]; //B01N05APQY
 
