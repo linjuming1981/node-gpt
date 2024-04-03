@@ -78,7 +78,7 @@ class Amazon {
     // 编辑评论
     let editorialReviews = $page.find('#editorialReviews-btf-ri_feature_div').text().trim()
 
-    // 详情属性清单
+    // 详情属性清单  
     let detailBullets = []
     $page.find('#detailBullets_feature_div li').each((i, n) => {
       let text = $(n).text().trim().replace(/\s{2,}/g, '')
