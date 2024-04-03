@@ -44,10 +44,8 @@ class Amazon {
   }
 
   async collectDetail(url){
-    let html = await this.getPageHtml(url)
-    // html = html.replace(/<script[^>]*[^/]?>[\s\S]*?<\/script>/g, '')
-    // html = html.replace(/<style[^>]*[^/]?>[\s\S]*?<\/style>/g, '')
-    html = html.replace(/<script>[\s\S]*?<\/script>/g, '')
+    let oHtml = await this.getPageHtml(url)
+    html = oHtml.replace(/<noscript>[\s\S]*?<\/noscript>/g, '')
     let $page = $(html)
     $page.find('style').remove()
     $page.find('script').remove()
@@ -87,11 +85,11 @@ class Amazon {
 
     // 图片
     let fromStr = "'colorImages': "
-    let fromI = html.indexOf(fromStr)
+    let fromI = oHtml.indexOf(fromStr)
     if(fromI === -1) return null;
 
-    let endI = html.indexOf("'colorToAsin':")
-    let imgCode = html.slice(fromI + fromStr.length, endI).trim().replace(/,$/, '').replace(/'/g, '"')
+    let endI = oHtml.indexOf("'colorToAsin':")
+    let imgCode = oHtml.slice(fromI + fromStr.length, endI).trim().replace(/,$/, '').replace(/'/g, '"')
     let imgs = JSON.parse(imgCode)
     imgs = imgs.initial.map(n => {
       return Object.keys(n.main)[0]
