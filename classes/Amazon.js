@@ -114,7 +114,6 @@ class Amazon {
       htmlCode: '',
       postedToBlogger: 0,
     }
-    console.log(res)
     return res
     
   }
@@ -168,7 +167,6 @@ class Amazon {
       });
     });
     
-    console.log(results);
     return results
   }
 
