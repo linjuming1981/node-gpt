@@ -45,7 +45,7 @@ class Amazon {
 
   async collectDetail(url){
     let oHtml = await this.getPageHtml(url)
-    html = oHtml.replace(/<noscript>[\s\S]*?<\/noscript>/g, '')
+    let html = oHtml.replace(/<noscript>[\s\S]*?<\/noscript>/g, '')
     let $page = $(html)
     $page.find('style').remove()
     $page.find('script').remove()
