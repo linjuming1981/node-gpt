@@ -186,7 +186,7 @@ class Amazon {
       data : JSON.stringify(products),
       headers: {"Content-Type": "application/json"},
       onload: function(response) {
-        // console.log('server back', response.responseText);
+        console.log('server back', response);
       }
     });
   }
