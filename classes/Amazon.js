@@ -120,6 +120,7 @@ class Amazon {
       featurebullets,
       detailBullets,
       previewImgs,
+      detailImgs,
       cost,
       bookDescription,
       aplus,
