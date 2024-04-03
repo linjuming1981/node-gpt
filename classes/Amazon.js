@@ -48,7 +48,7 @@ class Amazon {
     let html = oHtml.replace(/<noscript>[\s\S]*?<\/noscript>/g, '')
     let $page = $(html)
     $page.find('style').remove()
-    // $page.find('script').remove()
+    $page.find('script').remove()
 
     let productId = url.match(/\/dp\/([^/]+)/)[1]; //B01N05APQY
 
@@ -124,7 +124,7 @@ class Amazon {
     
     let results = [];
     contBoxes.forEach(n => {
-      let $boxEl = $(n)
+      let $boxEl = $page.find(n)
       $boxEl.find('img').each((i, n) => {
         let $img = $(n);
         let $currElement = $img.parent();
@@ -149,7 +149,10 @@ class Amazon {
           
           // 获取纯文本内容并去除所有空格和换行
           let textContent = $currElement
-            .text().replace(/<img[^\>]+\/>/g, '').replace(/\n/g, '').replace(/ +/g, ' ').trim();
+            .text()
+            .replace(/<img[^\>]+\/>/g, '')
+            .replace(/\n/g, '')
+            .replace(/ +/g, ' ').trim();
           
           if (textContent !== '') {
             results.push({
