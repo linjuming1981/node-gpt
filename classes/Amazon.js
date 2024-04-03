@@ -83,17 +83,20 @@ class Amazon {
       detailBullets.push(text)
     })
 
-    // 图片
+    // 预览小图片
     let fromStr = "'colorImages': "
     let fromI = oHtml.indexOf(fromStr)
     if(fromI === -1) return null;
 
     let endI = oHtml.indexOf("'colorToAsin':")
     let imgCode = oHtml.slice(fromI + fromStr.length, endI).trim().replace(/,$/, '').replace(/'/g, '"')
-    let imgs = JSON.parse(imgCode)
-    imgs = imgs.initial.map(n => {
+    let previewImgs = JSON.parse(imgCode)
+    previewImgs = previewImgs.initial.map(n => {
       return Object.keys(n.main)[0]
     })
+
+    // 产品描述图片
+    let detailImgs = this.getDetailImgs($page)
 
     // 优点
     let aplus = []
@@ -116,7 +119,7 @@ class Amazon {
       productDescription,
       featurebullets,
       detailBullets,
-      imgs,
+      previewImgs,
       cost,
       bookDescription,
       aplus,
@@ -129,6 +132,60 @@ class Amazon {
     return res
     
   }
+
+  // 获取产品描述图片
+  getDetailImgs($page){
+    let contBoxes = ['#aplus_feature_div']
+    
+    let results = [];
+    contBoxes.forEach(n => {
+      let $boxEl = $(n)
+      $boxEl.find('img').each((i, n) => {
+        let $img = $(n);
+        let $currElement = $img.parent();
+        let layerCount = 0;
+        let imgUrl = $img.attr('src')
+        // https://m.media-amazon.com/images/S/aplus-media-library-service-media/a0037239-36de-491b-babd-f1aae297f746.__CR0,0,970,600_PT0_SX970_V1___.jpg
+        let imgWidth = imgUrl.match(/_PT0_SX(\d+)_/)?.[1]*1
+        if(!imgWidth){
+          return true;
+        }
+        
+        while ($currElement.length > 0 && layerCount < 5) {
+          // 如果父元素包含其他图片，停止寻找
+          if($currElement.find('img').toArray().filter(n => n.src.includes('_PT0_SX')).length > 1) {
+            results.push({
+              imgWidth,
+              imgUrl,
+              description: $img.attr('alt'),
+            });
+            break;
+          }
+          
+          // 获取纯文本内容并去除所有空格和换行
+          let textContent = $currElement
+            .text().replace(/<img[^\>]+\/>/g, '').replace(/\n/g, '').replace(/ +/g, ' ').trim();
+          
+          if (textContent !== '') {
+            results.push({
+              imgWidth,
+              imgUrl,
+              description: textContent
+            });
+            break;
+          }
+          
+          // 移动到上一级父元素并更新层数
+          $currElement = $currElement.parent();
+          layerCount++;
+        }
+      });
+    });
+    
+    console.log(results);
+    return results
+  }
+
 
   async addProductsToSheet(products){
     console.log('GM_xmlhttpRequest', products)
