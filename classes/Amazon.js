@@ -136,7 +136,7 @@ class Amazon {
           return true;
         }
         
-        while ($currElement.length > 0 && layerCount < 5) {
+        while ($currElement.length > 0 && layerCount < 3) {
           // 如果父元素包含其他图片，停止寻找
           if($currElement.find('img').toArray().filter(n => n.src.includes('_PT0_SX')).length > 1) {
             results.push({
