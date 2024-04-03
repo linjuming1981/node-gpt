@@ -98,20 +98,6 @@ class Amazon {
     // 产品描述图片
     let detailImgs = this.getDetailImgs($page)
 
-    // 优点
-    let aplus = []
-    $page.find('#aplus_feature_div .celwidget').each((i, n) => {
-      let imgEl = $(n).find('img')[0]
-      let img = imgEl?.src
-      let imgDescription = $(n).text().replace(/<img[^>]+\/>/g, '').trim().replace(/ +/g, ' ')
-      imgDescription = imgDescription || imgEl?.alt
-      let item = {
-        img,
-        imgDescription
-      }
-      aplus.push(item)
-    })
-    
     let res = {
       productId,
       productLink: url,
@@ -123,7 +109,6 @@ class Amazon {
       detailImgs,
       cost,
       bookDescription,
-      aplus,
       editorialReviews,
       markdownCode: '',
       htmlCode: '',
@@ -196,7 +181,7 @@ class Amazon {
       data : JSON.stringify(products),
       headers: {"Content-Type": "application/json"},
       onload: function(response) {
-        console.log('server back', response.responseText);
+        // console.log('server back', response.responseText);
       }
     });
   }
