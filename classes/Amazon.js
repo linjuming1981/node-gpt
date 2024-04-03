@@ -129,7 +129,7 @@ class Amazon {
         let $img = $(n);
         let $currElement = $img.parent();
         let layerCount = 0;
-        let imgUrl = $img.attr('src')
+        let imgUrl = $img.attr('data-src') || $img.attr('src')
         // https://m.media-amazon.com/images/S/aplus-media-library-service-media/a0037239-36de-491b-babd-f1aae297f746.__CR0,0,970,600_PT0_SX970_V1___.jpg
         let imgWidth = imgUrl.match(/_PT0_SX(\d+)_/)?.[1]*1
         if(!imgWidth){
