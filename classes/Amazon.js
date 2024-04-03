@@ -118,6 +118,11 @@ class Amazon {
     
   }
 
+  getImgUrl(el){
+    let imgUrl = $(el).attr('data-src') || $(el).attr('src')
+    return imgUrl
+  }
+
   // 获取产品描述图片
   getDetailImgs($page){
     let contBoxes = ['#aplus_feature_div']
@@ -129,7 +134,7 @@ class Amazon {
         let $img = $(n);
         let $currElement = $img.parent();
         let layerCount = 0;
-        let imgUrl = $img.attr('data-src') || $img.attr('src')
+        let imgUrl = this.getImgUrl(n)
         // https://m.media-amazon.com/images/S/aplus-media-library-service-media/a0037239-36de-491b-babd-f1aae297f746.__CR0,0,970,600_PT0_SX970_V1___.jpg
         let imgWidth = imgUrl.match(/_PT0_SX(\d+)_/)?.[1]*1
         if(!imgWidth){
@@ -138,7 +143,7 @@ class Amazon {
         
         while ($currElement.length > 0 && layerCount < 5) {
           // 如果父元素包含其他图片，停止寻找
-          if($currElement.find('img').toArray().filter(n => n.src.includes('_PT0_SX')).length > 1) {
+          if($currElement.find('img').toArray().filter(n1 => this.getImgUrl(n1).includes('_PT0_SX')).length > 1) {
             results.push({
               imgWidth,
               imgUrl,
