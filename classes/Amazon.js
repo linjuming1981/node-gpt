@@ -2,7 +2,7 @@
 class Amazon {
   constructor(){
     // 谷歌cloude shell接口连接
-    this.apiBaseUrl = 'https://8080-cs-239467590834-default.cs-us-west1-wolo.cloudshell.dev/'
+    this.apiBaseUrl = 'https://8080-cs-239467590834-default.cs-us-west1-wolo.cloudshell.dev'
   }
 
   async getPageHtml(url){
