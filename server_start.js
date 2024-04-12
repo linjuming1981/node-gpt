@@ -41,7 +41,7 @@ app.get('/test', async (req, res) => {
 
   // 查询数据调试
   // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
-  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, dealJson:true})
   res.send(datas)
 
   // 新增数据调试

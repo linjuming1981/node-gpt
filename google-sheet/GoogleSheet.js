@@ -57,7 +57,7 @@ class GoogleSheet {
 
 
 
-  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}}) {
+  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}, dealJson=false}) {
     return new Promise(async resolve => {
       let datas = []
 
@@ -84,6 +84,15 @@ class GoogleSheet {
       if(Object.keys(filter).length){
         datas = datas.filter(n => {
           return Object.keys(filter).every(key => n[key] === filter[key].trim())
+        })
+      }
+
+      // 字段只如果是json，转换成对象或数据
+      if(dealJson){
+        datas.forEach((n,i) => {
+          if(n.startsWith('"[') || n.startsWith('"{')){
+            datas[i] = JSON.parse(n)
+          }
         })
       }
 
