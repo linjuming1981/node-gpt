@@ -89,9 +89,13 @@ class GoogleSheet {
 
       // 字段只如果是json，转换成对象或数据
       if(dealJson){
-        datas.forEach((n,i) => {
-          if(n.startsWith('"[') || n.startsWith('"{')){
-            datas[i] = JSON.parse(n)
+        datas.forEach((n, i) => {
+          for(let key in n){
+            if(n[key].startsWith('[') || n[key].startsWith('{')){
+              try{
+                n[key] = JSON.parse(n[key])
+              }catch(e){}
+            }
           }
         })
       }
