@@ -1,3 +1,6 @@
+// 403报错，还需要再参考https://github.com/googleapis/google-api-nodejs-client分析
+
+
 const GoogleAuthHelper = require('./GoogleAuthHelper');
 const { google } = require("googleapis");
 const config = require('../config.js');
