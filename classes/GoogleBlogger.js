@@ -35,11 +35,11 @@ module.exports = GoogleBlogger;
 
 // ---------- 调试
 (async () => {
-  // const blogger = new GoogleBlogger()
-  // let post = {
-  //   title: 'aaaa',
-  //   content: 'bbbbb'
-  // }
-  // await blogger.createPost(post)
+  const blogger = new GoogleBlogger()
+  let post = {
+    title: 'aaaa',
+    content: 'bbbbb'
+  }
+  await blogger.createPost(post)
   console.log(22222)
 })();
