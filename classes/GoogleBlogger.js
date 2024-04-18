@@ -31,7 +31,7 @@ class GoogleBlogger {
   }
 }
 
-module.exports = GoogleBlogger;
+// module.exports = GoogleBlogger;
 
 // ---------- 调试
 (async () => {
