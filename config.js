@@ -25,7 +25,7 @@ module.exports = {
     client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/node-987%40test-link-sheet.iam.gserviceaccount.com",
     universe_domain: "googleapis.com"
   },
-  blogger: { // kkk33333
+  blogger: { // kkk33333333aaa
     blogId: '1772335673285626984',           
   }
 }
