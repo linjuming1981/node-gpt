@@ -12,7 +12,7 @@ class GoogleBlogger {
 
   async getBloggerService() {
     const authClient = await this.authHelper.getAuthClient();
-    return google.blogger({ version: 'v3', auth: authClient });
+    return google.blogger({ version: 'v3', auth: 'AIzaSyD4ufL3MFPjRMan0gVTAFcEzA0YVBuAECU' });
   }
 
   async createPost({title, content }) {
