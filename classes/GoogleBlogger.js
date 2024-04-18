@@ -1,7 +1,6 @@
 const GoogleAuthHelper = require('./GoogleAuthHelper');
 const { google } = require("googleapis");
 const config = require('../config.js');
-const { content } = require('googleapis/build/src/apis/content');
 
 class GoogleBlogger {
   constructor() {
