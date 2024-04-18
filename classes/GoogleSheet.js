@@ -1,41 +1,15 @@
-const privateKey = require('./google-token.json')
+const GoogleAuthHelper = require('./GoogleAuthHelper.js');
 const { google } = require("googleapis");
 
 class GoogleSheet {
   constructor(){
-    this.auth = null
-  }
-
-  getAuth(){
-    return new Promise(resolve => {
-      if(this.auth){
-        return resolve(this.auth)
-      }
-
-      let authClient = new google.auth.JWT(
-        privateKey.client_email,
-        null,
-        privateKey.private_key,
-        ["https://www.googleapis.com/auth/spreadsheets"],
-      );
-      
-      authClient.authorize((error, tokens) => {
-        if (error) {
-          console.log("Error connecting to Google Sheets API:", error);
-          resolve(false)
-        } else {
-          console.log("Connected to Google Sheets API successfully!");
-          this.auth = authClient
-          resolve(authClient)
-        }
-      });
-    })
+    this.authHelper = new GoogleAuthHelper(["https://www.googleapis.com/auth/spreadsheets"]);
   }
 
   async getSheetHeaders({ sheetId, sheetTabName = 'Sheet1' }){
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
-      let auth = await this.getAuth();
+      let auth = await this.authHelper.getAuthClient()
       sheets.spreadsheets.values.get(
         {
           auth,
@@ -54,8 +28,6 @@ class GoogleSheet {
       );
     })
   }
-
-
 
   async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}, dealJson=false}) {
     return new Promise(async resolve => {
@@ -111,7 +83,7 @@ class GoogleSheet {
       }
       
       let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
+      let auth = await this.authHelper.getAuthClient();
       let params = {
         auth,
         spreadsheetId: sheetId,
@@ -137,7 +109,7 @@ class GoogleSheet {
   async getAllDatas({sheetId, sheetTabName}){
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
+      let auth = await this.authHelper.getAuthClient();
       let params = {
         auth,
         spreadsheetId: sheetId,
@@ -170,7 +142,7 @@ class GoogleSheet {
   async getDataByColumn(sheetId, sheetTabName, columnRange) {
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
+      let auth = await this.authHelper.getAuthClient();
   
       let params = {
         auth,
@@ -208,7 +180,7 @@ class GoogleSheet {
   async addSheetDatas(sheetId, sheetTabName='Sheet1', datas=[]){
     return new Promise(async (resolve, reject) => {
       let sheets = google.sheets("v4");
-      let auth = await this.getAuth()
+      let auth = await this.authHelper.getAuthClient();
 
       let existingRows = await this.getSheetDatas({sheetId, sheetTabName})
       let existingIds = existingRows.map(n => n.productId)
@@ -240,7 +212,7 @@ class GoogleSheet {
   }
 
   async updateRow(sheetId, sheetTabName='Sheet1', product={}){
-    let auth = await this.getAuth()
+    let auth = await this.authHelper.getAuthClient()
     let existingRows = await this.getAllDatas({sheetId, sheetTabName})
     let rowI = existingRows.findIndex(n => n.productId === product.productId)
     let row = existingRows[rowI]

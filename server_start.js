@@ -4,7 +4,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const GoogleSheet = require('./google-sheet/GoogleSheet.js')
+const GoogleSheet = require('./classes/GoogleSheet.js')
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
 
 
