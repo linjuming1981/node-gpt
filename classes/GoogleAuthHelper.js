@@ -14,9 +14,9 @@ class GoogleAuthHelper {
       }
 
       this.authClient = new google.auth.JWT(
-        config.googleToken.client_email,
+        config.googleToken2.client_email,
         null,
-        config.googleToken.private_key,
+        config.googleToken2.private_key,
         this.scopes,
       );
 
