@@ -41,5 +41,6 @@ module.exports = GoogleBlogger;
     title: 'aaaa',
     content: 'bbbbb'
   }
-  blogger.createPost(post)
+  await blogger.createPost(post)
+  console.log(22222)
 })
