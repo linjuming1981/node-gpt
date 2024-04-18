@@ -13,6 +13,6 @@ module.exports = {
     universe_domain: "googleapis.com"
   },
   blogger: {
-    blogId: 1772335673285626984,
+    blogId: '1772335673285626984',
   }
 }
