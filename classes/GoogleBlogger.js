@@ -17,7 +17,7 @@ class GoogleBlogger {
 
   async createPost({title, content }) {
     let blogId = config.blogger.blogId
-    // console.log('blogId', blogId)
+    // console.log('blogId', blogId)  
     try {
       const blogger = await this.getBloggerService();
       const res = await blogger.posts.insert({
