@@ -1,19 +1,16 @@
 const path = require('path');
 const {google} = require('googleapis');
-const {authenticate} = require('@google-cloud/local-auth');
-
 const blogger = google.blogger('v3');
 
 async function runSample() {
-  // Obtain user credentials to use for the request
-  console.log(111)
-  const auth = await authenticate({
-    // keyfilePath: path.join(__dirname, '../oauth2.keys.json'),
-    keyfilePath: path.join(__dirname, './config/google-oauth2.json'),
+  const auth = new google.auth.GoogleAuth({
+    keyFilename: path.join(__dirname, './config/service.json'),
     scopes: 'https://www.googleapis.com/auth/blogger',
   });
-  console.log(222)
-  google.options({auth});
+
+  const authClient = await auth.getClient();
+
+  google.options({auth: authClient});
 
   const res = await blogger.posts.insert({
     blogId: '8563811807642467410',
@@ -28,6 +25,6 @@ async function runSample() {
 }
 
 if (module === require.main) {
-  runSample().catch(console.error);
-}
-module.exports = runSample;
+    runSample().catch(console.error);
+  }
+  module.exports = runSample;
