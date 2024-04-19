@@ -26,6 +26,6 @@ module.exports = {
     universe_domain: "googleapis.com"
   },
   blogger: { // kkk33333333aaa
-    blogId: '1772335673285626984',           
+    blogId: '8563811807642467410',           
   }
 }
