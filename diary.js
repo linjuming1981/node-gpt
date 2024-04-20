@@ -8,3 +8,5 @@ Brian Clark - Copyblogger的创始人，聚焦于在线内容创建和内容营�
 
 --------------
 
+blogger发帖：
+https://github.com/johnnyreilly/blog.johnnyreilly.com/blob/725f4b2f1e840dd1695c6e511fba98ac4c411abd/from-docusaurus-to-blogger/README.md
