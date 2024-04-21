@@ -4,7 +4,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const GoogleSheet = require('./classes/GoogleSheet.js')
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
 
 
@@ -31,7 +30,10 @@ app.all('*', function(req, res, next) {
   next();
 });
 
+app.use(express.static('public'));
+
 app.get('/test', async (req, res) => {
+  const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
   let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
@@ -71,6 +73,7 @@ app.post('/addProductsToSheet', async (req, res) => {
       }
     }
   });
+  const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
   let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
@@ -88,6 +91,7 @@ app.get('/getAllSheetRows', async (req, res) => {
 
 app.post('/getSheetRows', async (req, res) => {
   console.log('/getSheetRows', req.body)
+  const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
   let filter = req.body.filter
   if(typeof filter === 'string'){
@@ -101,6 +105,7 @@ app.post('/getSheetRows', async (req, res) => {
 
 app.post('/getOneRow', async (req, res) => {
   console.log('/getOneRow', req.body)
+  const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
   let filter = req.body.filter
   if(typeof filter === 'string'){
@@ -115,6 +120,7 @@ app.post('/getOneRow', async (req, res) => {
 
 app.post('/updateRow', async (req, res) => {
   console.log('/updateRow', req.body)
+  const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
   let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
