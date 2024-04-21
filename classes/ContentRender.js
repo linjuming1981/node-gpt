@@ -4,7 +4,7 @@ class ContentRender {
   constructor(){}
 
   markdownToHtml(md){
-    let html = marked(md)
+    let html = marked.parse(md)
     return html
   }
 }
