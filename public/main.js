@@ -1,20 +1,35 @@
-import { createApp } from 'vue'
-import ElementPlus from 'element-plus'
-import Home from './components/home/index.js'
-import {fixTpl} from './utils/util.js'
+const { loadModule } = window['vue3-sfc-loader'];
 
-const renderApp = async () => {
-  const App = {
-    components: {
-      Home: await fixTpl(Home, './components/home'),
+// 配置
+const options = {
+  moduleCache: {
+    vue: Vue
+  },
+
+  async getFile(url) {
+    const res = await fetch(url);
+    if ( !res.ok ){
+      throw Object.assign(new Error(res.statusText + ' ' + url), { res });
     }
-  };
+    return {
+      getContentData: asBinary => asBinary ? res.arrayBuffer() : res.text(),
+    }
+  },
 
-  const app = createApp(App);
-  app.use(ElementPlus);
-  app.mount('#app');
+  addStyle(textContent) {
+    const style = Object.assign(document.createElement('style'), { textContent });
+    const ref = document.head.getElementsByTagName('style')[0] || null;
+    document.head.insertBefore(style, ref);
+  },
 }
 
-renderApp()
+// 渲染
+const app = Vue.createApp({
+  components: {
+    Home: Vue.defineAsyncComponent( () => loadModule('./components/home/index.vue', options) )
+  },
+  template: '<Home></Home>'
+});
 
-
+app.use(ElementPlus)
+app.mount('#app');
