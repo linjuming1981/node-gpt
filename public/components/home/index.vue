@@ -12,7 +12,19 @@ export default {
     }
   },
   methods: {
-
+    async getSheetRows(){
+      let rows = await axios({
+        url: '/getSheetRows',
+        method: 'post',
+        data: {
+          filter: {}
+        }
+      })
+      console.log(111, rows)
+    }
+  },
+  mounted(){
+    this.getSheetRows();
   }
 }
 </script>
