@@ -3,14 +3,14 @@
     <el-button>test</el-button>
     <el-table :data="products" style="width: 100%">
       <el-table-column prop="productId" label="productId" width="180" />
-      <el-table-column prop="productTitile" label="productTitile" width="300" >
+      <el-table-column prop="productTitle" label="productTitle" width="300" >
         <template #default="scope">
-          <a :href="scope.row.productLink" target="_blank">{{scope.row.productTitile}}</a>
+          <a :href="scope.row.productLink" target="_blank">{{scope.row.productTitle}}</a>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
-          <el-button link type="primary" size="small" @click="handleClick">
+          <el-button link type="primary" size="small" @click="preview(scope.row)">
             Detail
           </el-button>
           <el-button link type="primary" size="small">Edit</el-button>
@@ -36,6 +36,9 @@ export default {
         }
       })
       this.products = res.data.data
+    },
+    preview(product){
+      
     }
   },
   mounted(){
