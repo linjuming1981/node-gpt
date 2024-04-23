@@ -1,12 +1,9 @@
 // Consolas, 'Courier New', monospace
-
-
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const app = express()
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
-
 
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
@@ -140,6 +137,21 @@ app.post('/updateRow', async (req, res) => {
   }
   gSheet.updateRow(sheetId, sheetTabName, product)
   res.send({code: 200, data: product})
+})
+
+app.get('/preview', async (req, res) => {
+  const productId = req.query.id
+  const GoogleSheet = require('./classes/GoogleSheet.js')
+  const gSheet = new GoogleSheet()
+
+  let sheetId = AMAZON_SHEET_ID
+  let sheetTabName = '工作表1'
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter:{productId}})
+  const ContentRender = require('./classes/ContentRender.js')
+  const render = new ContentRender()
+  let html = render.markdownToHtml(datas[0].markdownCode)
+  res.set('Content-Type', 'text/html');
+  res.send(html);
 })
 
 // 服务监听开启

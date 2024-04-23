@@ -37,8 +37,11 @@ export default {
       })
       this.products = res.data.data
     },
-    preview(product){
-      
+    async preview(product){
+      let res = await axios({
+        url: `/preview?id=${product.productId}`,
+      })
+      console.log(1212, res)
     }
   },
   mounted(){
