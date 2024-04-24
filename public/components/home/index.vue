@@ -10,7 +10,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
-          <a :href="`/preview/${scrope.row.productId}`" target="_blank">Preview</a>
+          <a :href="`/preview/${scope.row.productId}`" target="_blank">Preview</a>
           <el-button link type="primary" size="small">Edit</el-button>
         </template>
       </el-table-column>
