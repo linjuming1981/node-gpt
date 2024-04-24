@@ -139,8 +139,8 @@ app.post('/updateRow', async (req, res) => {
   res.send({code: 200, data: product})
 })
 
-app.get('/preview', async (req, res) => {
-  const productId = req.query.id
+app.get('/preview/:id', async (req, res) => {
+  const productId = req.params.id
   const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
 
