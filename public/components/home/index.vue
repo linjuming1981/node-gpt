@@ -10,9 +10,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
-          <el-button link type="primary" size="small" @click="preview(scope.row)">
-            Detail
-          </el-button>
+          <a :href="`/preview/${scrope.row.productId}`" target="_blank">Preview</a>
           <el-button link type="primary" size="small">Edit</el-button>
         </template>
       </el-table-column>
@@ -37,12 +35,6 @@ export default {
       })
       this.products = res.data.data
     },
-    async preview(product){
-      let res = await axios({
-        url: `/preview?id=${product.productId}`,
-      })
-      console.log(1212, res)
-    }
   },
   mounted(){
     this.getSheetRows();
