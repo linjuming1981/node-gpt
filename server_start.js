@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const app = express()
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
 
+let oauth2Code = ''
+
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
 app.use(express.static('public'));
@@ -152,6 +154,12 @@ app.get('/preview/:id', async (req, res) => {
   let html = render.markdownToHtml(datas[0].markdownCode)
   res.set('Content-Type', 'text/html');
   res.send(html);
+})
+
+app.get('/saveOauth2Code', async (req, res) => {
+  oauth2Code = req.query.code
+  console.log('oauth2Code', oauth2Code)
+  res.send({code: 200, oauth2Code})
 })
 
 // 服务监听开启

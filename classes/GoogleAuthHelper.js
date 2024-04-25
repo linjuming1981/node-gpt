@@ -1,5 +1,6 @@
 const { google } = require("googleapis");
 const config = require('../config.js');
+const oauth2Conf = require('../config/oauth2.json')
 
 class GoogleAuthHelper {
   constructor(scopes){
@@ -31,6 +32,22 @@ class GoogleAuthHelper {
       });
     });
   }
+
+  getOAuthClient() {
+    const {client_id, client_secret, redirect_uris} = oauth2Conf
+    return new OAuth2(client_id, client_secret, redirect_uris[0]);
+  }
+
+  getOAuthUrl() {
+    var oauth2Client = this.getOAuthClient();
+    var url = oauth2Client.generateAuthUrl({
+      access_type: 'online',
+      scope: 'https://www.googleapis.com/auth/blogger'
+    });
+    return url;
+  }
+
+
 }
 
 module.exports = GoogleAuthHelper;
