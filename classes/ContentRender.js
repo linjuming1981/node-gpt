@@ -9,6 +9,7 @@ class ContentRender {
   }
 }
 
+// -------- 调试
 if(module === require.main){
   let render = new ContentRender()
   let html = render.markdownToHtml('## title')
