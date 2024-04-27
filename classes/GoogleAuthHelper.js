@@ -1,13 +1,18 @@
+// 参考文章： https://github.com/andrejnsimoes/pocket-to-blogger/blob/784b0bcab1a95ad62f307ddf7e7f998233484bf6/src/blogger.js#L72
+
+
 const { google } = require("googleapis");
+const fs = require('fs')
 const config = require('../config.js');
-const oauth2Conf = require('../config/oauth2.json')
 
 class GoogleAuthHelper {
   constructor(scopes){
     this.scopes = scopes;
     this.authClient = null;
+    this.oauthConf = this.getOAuthConf()
   }
 
+  // --- 服务账号认证用
   async getAuthClient() {
     return new Promise((resolve, reject) => {
       if (this.authClient) {
@@ -33,20 +38,37 @@ class GoogleAuthHelper {
     });
   }
 
+  // --- oauth2.0认证用
+  getOAuthConf(){
+    const json = fs.readFileSync('../config/oauth2.json', 'utf8');
+    return JSON.parse(json)
+  }
+  
   getOAuthClient() {
-    const {client_id, client_secret, redirect_uris} = oauth2Conf
+    const {client_id, client_secret, redirect_uris} = this.oauthConf
     return new OAuth2(client_id, client_secret, redirect_uris[0]);
   }
 
   getOAuthUrl() {
-    var oauth2Client = this.getOAuthClient();
-    var url = oauth2Client.generateAuthUrl({
+    let oauth2Client = this.getOAuthClient();
+    let url = oauth2Client.generateAuthUrl({
       access_type: 'online',
       scope: 'https://www.googleapis.com/auth/blogger'
     });
     return url;
   }
 
+  getOAuthToken(code){
+    let oauth2Client = this.getOAuthClient();
+    oauth2Client.getToken(code, (err, tokens) => {
+      if (!err) {
+        oauth2Client.setCredentials(tokens);
+        console.log({tokens})
+      } else {
+        console.log("error getting token", err);
+      }
+    })
+  }
 
 }
 
