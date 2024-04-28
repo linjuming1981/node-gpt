@@ -4,13 +4,16 @@ class Tool{
     let html = `
       <div class="shell_diy">
         <style>
-          .toolbar-container{
-            height: 2px !important;
-            min-height: 2px !important;
+          standalone-header{
+            height: 0px;
+            min-height: 0px;
+            padding-top: 5px;
+            background-color: #007acc;
+            overflow: hidden;
           }
-          .toolbar-container:hover{
-            height: 42px !important;
-            min-height: 42px !important;
+          standalone-header:hover{
+            height: 48px !important;
+            min-height: 48px !important;
           }
         </style>
       </div>
