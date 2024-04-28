@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-button>test</el-button>
+    <el-button @click="googleOauth">google OAuth2</el-button>
     <el-table :data="products" style="width: 100%">
       <el-table-column prop="productId" label="productId" width="180" />
       <el-table-column prop="productTitle" label="productTitle" width="300" >
@@ -35,6 +35,14 @@ export default {
       })
       this.products = res.data.data
     },
+    async googleOauth(){
+      let res = await aixos({
+        url: '/googleOauth',
+        method: 'get'
+      })
+      let url = res.data.data.url
+      window.location.href = url
+    }
   },
   mounted(){
     this.getSheetRows();
