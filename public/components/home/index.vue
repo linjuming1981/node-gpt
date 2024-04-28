@@ -36,7 +36,7 @@ export default {
       this.products = res.data.data
     },
     async googleOauth(){
-      let res = await aixos({
+      let res = await axios({
         url: '/googleOauth',
         method: 'get'
       })

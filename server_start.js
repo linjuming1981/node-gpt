@@ -157,7 +157,7 @@ app.get('/preview/:id', async (req, res) => {
 })
 
 app.get('/googleOauth', (req, res) => {
-  const GoogleAuthHelper = require('./GoogleAuthHelper.js');
+  const GoogleAuthHelper = require('./classes/GoogleAuthHelper.js');
   const authHelper = new GoogleAuthHelper()
   let url = authHelper.getOAuthUrl()
   res.send({code: 200, url})  
@@ -165,7 +165,7 @@ app.get('/googleOauth', (req, res) => {
 
 app.get('/saveOauthToken', async (req, res) => {
   code = req.query.code
-  const GoogleAuthHelper = require('./GoogleAuthHelper.js');
+  const GoogleAuthHelper = require('./classes/GoogleAuthHelper.js');
   const authHelper = new GoogleAuthHelper()
   let tokens = await authHelper.getOAuthToken(code)
 

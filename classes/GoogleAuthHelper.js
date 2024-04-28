@@ -4,7 +4,7 @@
 const { google } = require("googleapis");
 const fs = require('fs')
 const config = require('../config.js');
-
+const path = require('path')
 
 class GoogleAuthHelper {
   constructor(scopes=[]){
@@ -50,20 +50,22 @@ class GoogleAuthHelper {
 
   // --- oauth2.0认证用
   getOAuthConf(){
-    const json = fs.readFileSync('../config/oauth2.json', 'utf8');
+    const file = path.resolve(__dirname, '../config/oauth2.json');
+    const json = fs.readFileSync(file, 'utf8');
     return JSON.parse(json)
   }
   
   getOAuthClient() {
     const {client_id, client_secret, redirect_uris} = this.oauthConf
-    return new OAuth2(client_id, client_secret, redirect_uris[0]);
+    return new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
   }
 
   getOAuthUrl() {
     let oauth2Client = this.getOAuthClient();
     let url = oauth2Client.generateAuthUrl({
-      access_type: 'online',
-      scope: 'https://www.googleapis.com/auth/blogger'
+      access_type: 'offline',
+      scope: 'https://www.googleapis.com/auth/blogger',
+      prompt: 'consent',
     });
     return url;
   }
