@@ -68,14 +68,18 @@ class GoogleAuthHelper {
   }
 
   getOAuthToken(code){
-    let oauth2Client = this.getOAuthClient();
-    oauth2Client.getToken(code, (err, tokens) => {
-      if (!err) {
-        oauth2Client.setCredentials(tokens);
-        console.log({tokens})
-      } else {
-        console.log("error getting token", err);
-      }
+    return new Promise((resolve, reject) => {
+      let oauth2Client = this.getOAuthClient();
+      oauth2Client.getToken(code, (err, tokens) => {
+        if (!err) {
+          oauth2Client.setCredentials(tokens);
+          console.log({tokens})
+          resolve(tokens)
+        } else {
+          console.log("error getting token", err);
+          resolve({})
+        }
+      })
     })
   }
 

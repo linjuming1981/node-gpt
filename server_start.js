@@ -160,13 +160,17 @@ app.get('/googleOauth', (req, res) => {
   const GoogleAuthHelper = require('./GoogleAuthHelper.js');
   const authHelper = new GoogleAuthHelper()
   let url = authHelper.getOAuthUrl()
-  res.send({code: 200, data: {url}})  
+  res.send({code: 200, url})  
 })
 
-app.get('/saveOauth2Code', async (req, res) => {
-  oauth2Code = req.query.code
-  console.log('oauth2Code', oauth2Code)
-  res.send({code: 200, oauth2Code})
+app.get('/saveOauthToken', async (req, res) => {
+  code = req.query.code
+  const GoogleAuthHelper = require('./GoogleAuthHelper.js');
+  const authHelper = new GoogleAuthHelper()
+  let tokens = await authHelper.getOAuthToken(code)
+
+  console.log({code, tokens})
+  res.send({code: 200, oauth2Code:code, tokens})
 })
 
 // 服务监听开启

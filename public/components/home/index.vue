@@ -40,7 +40,7 @@ export default {
         url: '/googleOauth',
         method: 'get'
       })
-      let url = res.data.data.url
+      let url = res.data.url
       window.location.href = url
     }
   },
