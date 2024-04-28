@@ -6,10 +6,19 @@ const fs = require('fs')
 const config = require('../config.js');
 
 class GoogleAuthHelper {
-  constructor(scopes){
-    this.scopes = scopes;
+  constructor(scopes=[]){
+    this.scopes = []
+    this.setScopes(scopes)
     this.authClient = null;
     this.oauthConf = this.getOAuthConf()
+  }
+
+  setScopes(scopes){
+    this.scopes = [
+      'https://www.googleapis.com/auth/spreadsheets',
+      'https://www.googleapis.com/auth/blogger',
+      ...scopes
+    ]
   }
 
   // --- 服务账号认证用

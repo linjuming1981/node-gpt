@@ -156,6 +156,13 @@ app.get('/preview/:id', async (req, res) => {
   res.send(html);
 })
 
+app.get('/googleOauth', (req, res) => {
+  const GoogleAuthHelper = require('./GoogleAuthHelper.js');
+  const authHelper = new GoogleAuthHelper()
+  let url = authHelper.getOAuthUrl()
+  res.send({code: 200, data: {url}})  
+})
+
 app.get('/saveOauth2Code', async (req, res) => {
   oauth2Code = req.query.code
   console.log('oauth2Code', oauth2Code)
