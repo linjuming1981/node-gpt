@@ -3,7 +3,7 @@
 
 const GoogleAuthHelper = require('./GoogleAuthHelper');
 const { google } = require("googleapis");
-const config = require('../config.js');
+const config = require('../config/config.js');
 
 class GoogleBlogger {
   constructor() {
@@ -16,18 +16,16 @@ class GoogleBlogger {
   }
 
   async createPost({title, content }) {
-    let blogId = config.blogger.blogId
-    // console.log('blogId', blogId)  
     try {
-      // const blogger = await this.getBloggerService();
       const oauthClient = this.authHelper.getOAuthClient()
       const tokens = this.authHelper.getOAuthToken()
       oauthClient.setCredentials(tokens)
+
       const blogger = google.blogger('v3')
       const res = await blogger.posts.insert({
         auth: oauthClient,
-        blogId,
-        requestBody: {
+        blogId: config.blogId,
+        resource: {
           title: title,
           content: content,
         }

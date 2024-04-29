@@ -173,6 +173,18 @@ app.get('/saveOauthToken', async (req, res) => {
   res.send({code: 200, oauth2Code:code, tokens})
 })
 
+app.post('/createBlogPost', async (req, res) => {
+  const {product} = req.body
+  const ContentRender = require('./classes/ContentRender.js')
+  const render = new ContentRender()
+  const html = render.markdownToHtml(product.markdownCode)
+  const title = 'test'
+  const GoogleBlogger = require('./classes/GoogleBlogger.js') 
+  const blogger = new GoogleBlogger()
+  const res = blogger.createPost({title, content: html})
+  res.send({code: 200, res})
+})
+
 // 服务监听开启  
 const port = 8080
 app.listen(port, function(){
