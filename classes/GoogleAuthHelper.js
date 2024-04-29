@@ -11,6 +11,7 @@ class GoogleAuthHelper {
     this.scopes = []
     this.setScopes(scopes)
     this.authClient = null;
+    this.oauthConfFile = path.resolve(__dirname, '../config/oauth2.json')
     this.oauthConf = this.getOAuthConf()
   }
 
@@ -50,8 +51,7 @@ class GoogleAuthHelper {
 
   // --- oauth2.0认证用
   getOAuthConf(){
-    const file = path.resolve(__dirname, '../config/oauth2.json');
-    const json = fs.readFileSync(file, 'utf8');
+    const json = fs.readFileSync(this.oauthConfFile, 'utf8');
     return JSON.parse(json)
   }
   
@@ -84,6 +84,13 @@ class GoogleAuthHelper {
         }
       })
     })
+  }
+
+  saveOAuthToken(tokens){
+    const oauthConf = this.getOAuthConf()
+    oauthConf.tokens = tokens
+    let json = JSON.stringify(oauthConf, null, 2)
+    fs.writeFileSync(this.oauthConfFile, json)
   }
 
 }
