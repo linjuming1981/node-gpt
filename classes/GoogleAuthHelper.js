@@ -69,6 +69,13 @@ class GoogleAuthHelper {
     });
     return url;
   }
+  
+  saveOAuthToken(tokens){
+    const oauthConf = this.getOAuthConf()
+    oauthConf.tokens = tokens
+    let json = JSON.stringify(oauthConf, null, 2)
+    fs.writeFileSync(this.oauthConfFile, json)
+  }
 
   getOAuthToken(code){
     return new Promise((resolve, reject) => {
@@ -76,6 +83,7 @@ class GoogleAuthHelper {
       oauth2Client.getToken(code, (err, tokens) => {
         if (!err) {
           oauth2Client.setCredentials(tokens);
+          this.saveOAuthToken(tokens)
           console.log({tokens})
           resolve(tokens)
         } else {
@@ -84,13 +92,6 @@ class GoogleAuthHelper {
         }
       })
     })
-  }
-
-  saveOAuthToken(tokens){
-    const oauthConf = this.getOAuthConf()
-    oauthConf.tokens = tokens
-    let json = JSON.stringify(oauthConf, null, 2)
-    fs.writeFileSync(this.oauthConfFile, json)
   }
 
   refreshOAuthToken(refresh_token){
@@ -103,6 +104,7 @@ class GoogleAuthHelper {
           reject(err);
         } else {
           oauth2Client.setCredentials(tokens);
+          this.saveOAuthToken(tokens)
           console.log('Access token refreshed: ', tokens);
           resolve(tokens);
         }
