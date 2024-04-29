@@ -52,7 +52,8 @@ class GoogleAuthHelper {
   // --- oauth2.0认证用
   getOAuthConf(){
     const json = fs.readFileSync(this.oauthConfFile, 'utf8');
-    return JSON.parse(json)
+    const conf = JSON.parse(json)
+    return conf
   }
   
   getOAuthClient() {
@@ -79,6 +80,11 @@ class GoogleAuthHelper {
 
   getOAuthToken(code){
     return new Promise((resolve, reject) => {
+      if(!code){
+        let {tokens} = this.getOAuthConf()
+        resolve(tokens)
+      }
+
       let oauth2Client = this.getOAuthClient();
       oauth2Client.getToken(code, (err, tokens) => {
         if (!err) {

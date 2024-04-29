@@ -19,8 +19,13 @@ class GoogleBlogger {
     let blogId = config.blogger.blogId
     // console.log('blogId', blogId)  
     try {
-      const blogger = await this.getBloggerService();
+      // const blogger = await this.getBloggerService();
+      const oauthClient = this.authHelper.getOAuthClient()
+      const tokens = this.authHelper.getOAuthToken()
+      oauthClient.setCredentials(tokens)
+      const blogger = google.blogger('v3')
       const res = await blogger.posts.insert({
+        auth: oauthClient,
         blogId,
         requestBody: {
           title: title,
