@@ -93,6 +93,23 @@ class GoogleAuthHelper {
     fs.writeFileSync(this.oauthConfFile, json)
   }
 
+  refreshOAuthToken(refresh_token){
+    return new Promise((resolve, reject) => {
+      let oauth2Client = this.getOAuthClient();
+      oauth2Client.setCredentials({refresh_token});
+      oauth2Client.refreshAccessToken((err, tokens) => {
+        if(err){
+          console.error('Error refreshing access token: ', err);
+          reject(err);
+        } else {
+          oauth2Client.setCredentials(tokens);
+          console.log('Access token refreshed: ', tokens);
+          resolve(tokens);
+        }
+      })
+    })
+  }
+
 }
 
 module.exports = GoogleAuthHelper;
