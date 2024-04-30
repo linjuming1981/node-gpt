@@ -131,5 +131,4 @@ export default {
   margin-left: 20px;
   color: #45940a;
 }
-}
 </style>
