@@ -11,7 +11,7 @@
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
           <a :href="`/preview/${scope.row.productId}`" target="_blank">Preview</a>
-          <el-button link type="primary" size="small">Edit</el-button>
+          <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">Edit</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,6 +42,13 @@ export default {
       })
       let url = res.data.url
       window.location.href = url
+    },
+    async createBlogPost(product){
+      let res = await axios({
+        url: '/createBlogPost',
+        method: 'post'
+      })
+      console.log({res})
     }
   },
   mounted(){
