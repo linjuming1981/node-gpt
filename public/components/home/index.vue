@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <el-button @click="googleOauth">google OAuth2</el-button>
+    <el-button @click="googleOauth">Google OAuth2</el-button>
+    <el-button @click="editOauth">Edit OAuth2 Config</el-button>
     <el-table :data="products" style="width: 100%">
       <el-table-column prop="productId" label="productId" width="180" />
       <el-table-column prop="productTitle" label="productTitle" width="300" >
@@ -15,13 +16,45 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog
+      v-model="oauthDialogVisible"
+      :title="$v14s('common.advancedLinkageSettings')"
+      width="1100px"
+      append-to-body
+      :destroy-on-close="true"
+      :close-on-click-modal="false"
+      @close="canelEditOauth()"
+    >
+      <el-input
+        ref="oauthConfig"
+        v-model="oauthConfig"
+        size="default"
+        type="textarea"
+        autosize
+      ></el-input>
+      <template #footer>
+        <span>
+          <el-button
+            size="default"
+            @click="canelEditOauth()"
+          >取消</el-button>
+          <el-button
+            type="primary"
+            size="default"
+            @click="doEditOauth()"
+          >保存</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data(){
     return {
-      products: []
+      products: [],
+      oauthDialogVisible: false,
+      oauthConfig: '',
     }
   },
   methods: {
@@ -49,6 +82,26 @@ export default {
         method: 'post'
       })
       console.log({res})
+    },
+    async editOauth(){
+      this.oauthDialogVisible = true
+      let res = await axios({
+        url: '/getOauthConf'
+      })
+      this.oauthConfig = res.data.config
+    },
+    async doEditOauth(){
+      let res = await axios({
+        url: '/saveOauthConf',
+        method: 'post',
+        data: {
+          config: this.oauthConfig
+        }
+      })
+      this.oauthDialogVisible = false
+    },
+    canelEditOauth(){
+      this.oauthDialogVisible = false
     }
   },
   mounted(){
