@@ -71,7 +71,10 @@ export default {
     async googleOauth(){
       let res = await axios({
         url: '/googleOauth',
-        method: 'get'
+        method: 'post',
+        data: {
+          baseUrl: location.origin,
+        }
       })
       let url = res.data.url
       window.location.href = url
@@ -88,7 +91,10 @@ export default {
       let res = await axios({
         url: '/getOauthConf'
       })
-      this.oauthConfig = res.data.config
+      let config = JSON.parse(res.data.config)
+      config.redirect_uris = [`${location.origin}/saveOauthToken`]
+      config = JSON.stringify(config, null, 2)
+      this.oauthConfig = res.config
     },
     async doEditOauth(){
       let res = await axios({

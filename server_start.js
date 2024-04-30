@@ -157,7 +157,8 @@ app.get('/preview/:id', async (req, res) => {
   res.send(html);
 })
 
-app.get('/googleOauth', (req, res) => {
+app.post('/googleOauth', (req, res) => {
+  const baseUrl = req.body.baseUrl
   const GoogleAuthHelper = require('./classes/GoogleAuthHelper.js');
   const authHelper = new GoogleAuthHelper()
   let url = authHelper.getOAuthUrl()

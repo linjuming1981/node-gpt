@@ -56,13 +56,17 @@ class GoogleAuthHelper {
     return conf
   }
   
-  getOAuthClient() {
+  getOAuthClient(baseUrl) {
     const {client_id, client_secret, redirect_uris} = this.oauthConf
-    return new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
+    let redirect_uri = redirect_uris[0]
+    if(baseUrl){
+      redirect_uri = `${baseUrl}/saveOauthToken`
+    }
+    return new google.auth.OAuth2(client_id, client_secret, redirect_uri);
   }
 
-  getOAuthUrl() {
-    let oauth2Client = this.getOAuthClient();
+  getOAuthUrl(baseUrl) {
+    let oauth2Client = this.getOAuthClient(baseUrl);
     let url = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: 'https://www.googleapis.com/auth/blogger',
