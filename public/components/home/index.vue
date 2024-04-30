@@ -18,7 +18,7 @@
     </el-table>
     <el-dialog
       v-model="oauthDialogVisible"
-      :title="$v14s('common.advancedLinkageSettings')"
+      title="编辑Oauth2"
       width="1100px"
       append-to-body
       :destroy-on-close="true"
