@@ -94,7 +94,7 @@ export default {
       let config = JSON.parse(res.data.config)
       config.redirect_uris = [`${location.origin}/saveOauthToken`]
       config = JSON.stringify(config, null, 2)
-      this.oauthConfig = res.config
+      this.oauthConfig = config
     },
     async doEditOauth(){
       let res = await axios({
