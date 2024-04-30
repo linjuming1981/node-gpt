@@ -14,8 +14,10 @@
       </el-table-column>
       <el-table-column fixed="right" label="Operations" width="120">
         <template #default="scope">
-          <a :href="`/preview/${scope.row.productId}`" target="_blank">Preview</a>
-          <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">Edit</el-button>
+          <div class="action">
+            <a class="preview" :href="`/preview/${scope.row.productId}`" target="_blank">预览</a>
+            <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -86,7 +88,10 @@ export default {
     async createBlogPost(product){
       let res = await axios({
         url: '/createBlogPost',
-        method: 'post'
+        method: 'post',
+        data: {
+          product
+        }
       })
       console.log({res})
     },
@@ -130,5 +135,12 @@ export default {
 .top a{
   margin-left: 20px;
   color: #45940a;
+}
+.action{
+  display: flex;
+  align-items: center;
+}
+.action .preview{
+  margin-right: 10px;
 }
 </style>
