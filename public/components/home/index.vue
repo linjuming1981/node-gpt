@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <el-button @click="googleOauth">Google OAuth2</el-button>
-    <el-button @click="editOauth">Edit OAuth2 Config</el-button>
+    <div class="top">
+      <el-button type="primary" @click="googleOauth">Google OAuth2</el-button>
+      <el-button type="primary" @click="editOauth">Edit OAuth2 Config</el-button>
+      <a href="https://console.cloud.google.com/apis/credentials/oauthclient/149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com?project=test-link-sheet" target="_blank">Oauth2</a>
+    </div>
     <el-table :data="products" style="width: 100%">
       <el-table-column prop="productId" label="productId" width="180" />
       <el-table-column prop="productTitle" label="productTitle" width="300" >
@@ -35,6 +38,7 @@
       <template #footer>
         <span>
           <el-button
+            type="primary"
             size="default"
             @click="canelEditOauth()"
           >取消</el-button>
@@ -117,6 +121,10 @@ export default {
 </script>
 <style>
 .home {
-  color: red;
+}
+.top{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 </style>
