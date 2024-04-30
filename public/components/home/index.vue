@@ -140,7 +140,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.action .preview{
+.action .preview{ 
   margin-right: 10px;
 }
 </style>
