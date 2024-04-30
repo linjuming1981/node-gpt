@@ -5,15 +5,25 @@ class Tool{
       <div class="shell_diy">
         <style>
           standalone-header{
-            height: 0px;
-            min-height: 0px;
-            padding-top: 5px;
-            background-color: #007acc;
-            overflow: hidden;
+            background-color: #303030;
+            position: absolute;
+            left: 0;
+            z-index: 2;
+            top: 416px;
+            padding-left: 5px;
+            height: 48px;
           }
-          standalone-header:hover{
-            height: 48px !important;
-            min-height: 48px !important;
+          standalone-header .toolbar-container{
+            display: none!important;
+          }
+          standalone-header:hover .toolbar-container{
+            display: flex!important;
+          }
+          cloudshell-editor-controls{
+            display: none;
+          }
+          standalone-header .gmat-headline-6{
+            display: none;
           }
         </style>
       </div>
