@@ -164,7 +164,7 @@ app.get('/googleOauth', (req, res) => {
   res.send({code: 200, url})  
 })
 
-app.get('/getOauthConf', (req, res) => {
+app.get('/getOauthConf', (req, res) => { 
   const file = './config/oauth2.json'
   const config = fs.readFileSync(file).toString()
   res.send({code: 200, config})
