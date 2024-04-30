@@ -48,29 +48,9 @@ app.get('/test', async (req, res) => {
   let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
 
-  // 调通测试
-  // res.send({data: [{name:'a', value: 111}]})
-
   // 查询数据调试
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, dealJson:true})
   res.send(datas)
-
-  // 新增数据调试
-  // let datas = [{
-  //   productId: 'kkkk',
-  //   productTitle: 'title',
-  //   productDescription: 'kk desc',
-  //   cost: 11,
-  //   bookDescription: 'bookDescription',
-  //   featurebullets: 'featurebullets',
-  //   editorialReviews: 'editorialReviews',`
-  //   detailBullets: 'detailBullets',
-  //   imgs: 'imgs',
-  // }]
-  // let ret = gSheet.addSheetDatas(sheetId, sheetTabName, datas)
-  // res.send(ret)  
-  
 })
 
 app.post('/addProductsToSheet', async (req, res) => {
@@ -190,13 +170,16 @@ app.get('/saveOauthToken', async (req, res) => {
 
 app.post('/createBlogPost', async (req, res) => {
   const {product} = req.body
+
   const ContentRender = require('./classes/ContentRender.js')
   const render = new ContentRender()  
   const html = render.markdownToHtml(product.markdownCode)
   const title = 'test'
+
   const GoogleBlogger = require('./classes/GoogleBlogger.js') 
   const blogger = new GoogleBlogger()
   const ret = await blogger.createPost({title, content: html})
+  
   res.send({code: 200, ret})
 })
 
