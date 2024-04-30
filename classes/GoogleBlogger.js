@@ -18,7 +18,7 @@ class GoogleBlogger {
   async createPost({title, content }) {
     try {
       const oauthClient = this.authHelper.getOAuthClient()
-      const tokens = this.authHelper.getOAuthToken()
+      const tokens = await this.authHelper.getOAuthToken()
       oauthClient.setCredentials(tokens)
 
       const blogger = google.blogger('v3')
