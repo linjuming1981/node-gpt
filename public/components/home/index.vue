@@ -141,6 +141,7 @@ export default {
   align-items: center;
 }
 .action .preview{ 
+  font-size: 12px;
   margin-right: 10px;
 }
 </style>
