@@ -196,8 +196,8 @@ app.post('/createBlogPost', async (req, res) => {
   const title = 'test'
   const GoogleBlogger = require('./classes/GoogleBlogger.js') 
   const blogger = new GoogleBlogger()
-  const res = blogger.createPost({title, content: html})
-  res.send({code: 200, res})
+  const ret = blogger.createPost({title, content: html})
+  res.send({code: 200, ret})
 })
 
 
