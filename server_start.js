@@ -64,7 +64,7 @@ app.get('/test', async (req, res) => {
   //   cost: 11,
   //   bookDescription: 'bookDescription',
   //   featurebullets: 'featurebullets',
-  //   editorialReviews: 'editorialReviews',
+  //   editorialReviews: 'editorialReviews',`
   //   detailBullets: 'detailBullets',
   //   imgs: 'imgs',
   // }]

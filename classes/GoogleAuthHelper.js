@@ -87,6 +87,7 @@ class GoogleAuthHelper {
       if(!code){
         let {tokens} = this.getOAuthConf()
         resolve(tokens)
+        return
       }
 
       let oauth2Client = this.getOAuthClient();
