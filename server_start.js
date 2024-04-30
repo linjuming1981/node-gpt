@@ -1,6 +1,7 @@
 // Consolas, 'Courier New', monospace
 const express = require('express')
 const path = require('path')
+const fs = require('fs')
 const bodyParser = require('body-parser')
 const app = express()
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
@@ -163,6 +164,19 @@ app.get('/googleOauth', (req, res) => {
   res.send({code: 200, url})  
 })
 
+app.get('/getOauthConf', (req, res) => {
+  const file = './config/oauth2.json'
+  const config = fs.readFileSync(file).toString()
+  res.send({code: 200, config})
+})
+
+app.post('/saveOauthConf', (req, res) => {
+  const config = req.body.config
+  const file = './config/oauth2.json'
+  fs.writeFileSync(file, config)
+  res.send({code: 200})
+})
+
 app.get('/saveOauthToken', async (req, res) => {
   code = req.query.code
   const GoogleAuthHelper = require('./classes/GoogleAuthHelper.js');
@@ -184,6 +198,7 @@ app.post('/createBlogPost', async (req, res) => {
   const res = blogger.createPost({title, content: html})
   res.send({code: 200, res})
 })
+
 
 // 服务监听开启  
 const port = 8080
