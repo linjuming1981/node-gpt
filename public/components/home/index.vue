@@ -127,4 +127,9 @@ export default {
   align-items: center;
   margin-bottom: 20px;
 }
+.top a{
+  margin-left: 20px;
+  color: #45940a;
+}
+}
 </style>
