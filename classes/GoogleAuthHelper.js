@@ -51,7 +51,8 @@ class GoogleAuthHelper {
 
   // --- oauth2.0认证用
   static getOAuthConf(){
-    const json = fs.readFileSync(this.oauthConfFile, 'utf8');
+    const oauthConfFile = path.resolve(__dirname, '../config/oauth2.json')
+    const json = fs.readFileSync(oauthConfFile, 'utf8');
     const conf = JSON.parse(json)
     return conf
   }

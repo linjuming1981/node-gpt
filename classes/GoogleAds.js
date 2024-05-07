@@ -30,7 +30,7 @@ class GoogleAds {
 
     this.customer = customer
     return customer
-  },
+  }
 
   async queryKeywords(keyword){
     const query = `
@@ -45,19 +45,21 @@ class GoogleAds {
         keyword_idea_text = '${keyword}'
     `
 
+    const customer = this.getCustomer()
     const response = await customer.query(query)
     console.log('keywords', response)
     return response
   }
 }
 
-module.exports = GoogleAds
+module.exports = GoogleAds;
 
 
 // -------------- 调试
 if(module === require.main){
   (async () => {
+    console.log(11)
     const googleAds = new GoogleAds()
     googleAds.queryKeywords('green tea')
-  })
+  })()
 }
