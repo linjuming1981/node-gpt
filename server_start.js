@@ -168,7 +168,7 @@ app.get('/saveOauthToken', async (req, res) => {
   res.send({code: 200, oauth2Code:code, tokens})
 })
 
-app.post('/createBlogPost', async (req, res) => {
+app.post('/createBlogPost', async (req, res) => {  
   const {product} = req.body
 
   const ContentRender = require('./classes/ContentRender.js')
