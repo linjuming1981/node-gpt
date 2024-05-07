@@ -1,5 +1,6 @@
 // https://ads.google.com/aw/apicenter?ocid=6566300093&ascid=6566300093&uscid=6566300093&__c=5583143957&euid=1003573194&__u=5885811706&cmpnInfo=%7B%228%22%3A%22a6ec43f1-e695-4620-a5f3-5cd4ae736ae1%22%7D
 // 开发者令牌 xVdIHYEyuBur3x4KlrcYjA
+// 创建 mcc账号 https://www.youtube.com/watch?v=60w_pGGVk98
 
 const { GoogleAdsApi } = require('google-ads-api')
 const GoogleAuthHelper = require('./GoogleAuthHelper.js')
