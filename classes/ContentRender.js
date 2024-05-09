@@ -7,10 +7,27 @@ class ContentRender {
     this.tplPath = path.resolve(__dirname, '../public/blogger_tpl.html');
   }
 
-  markdownToHtml(md){
-    let mdHtml = marked.parse(md)
+  productToHtml(product){
     let html = fs.readFileSync(this.tplPath).toString()
+
+    // markdown生成的html
+    let mdHtml = marked.parse(product.markdownCode)
+
+    // 视频html
+    let arr = product.videoImgs.map(n => {
+      let itHtml = `
+        <div class="item">
+          <img src="${n.imgUrl}" alt="${n.imgDesc}" />
+          <h4>${imgDesc}</h4>
+        </div>
+      `
+      return itHtml
+    })
+    let videosHtml = arr.join('\n')
+
+    // 替换模板
     html = html.replace('{{mdHtml}}', mdHtml)
+    html = html.replace('{{videosHtml}}', videosHtml)
     return html
   }
 }
