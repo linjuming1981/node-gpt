@@ -152,7 +152,7 @@ app.get('/preview/:id', async (req, res) => {
   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter:{productId}})
   const ContentRender = require('./classes/ContentRender.js')
   const render = new ContentRender()
-  let html = render.markdownToHtml(datas[0].markdownCode)
+  let html = render.productToHtml(datas[0])
   res.set('Content-Type', 'text/html');
   res.send(html);
 })
