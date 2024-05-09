@@ -12,7 +12,7 @@ class GoogleAuthHelper {
     this.setScopes(scopes)
     this.authClient = null;
     this.oauthConfFile = path.resolve(__dirname, '../config/oauth2.json')
-    this.oauthConf = this.getOAuthConf()
+    this.oauthConf = GoogleAuthHelper.getOAuthConf()
   }
 
   setScopes(scopes){
