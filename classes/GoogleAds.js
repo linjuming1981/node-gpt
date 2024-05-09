@@ -24,7 +24,7 @@ class GoogleAds {
     })
 
     const customer = client.Customer({
-      customer_id: '584-184-7482',
+      customer_id: '789-857-2070',
       refresh_token: tokens.refresh_token, 
     })
 
