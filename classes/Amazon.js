@@ -97,6 +97,17 @@ class Amazon {
     // 产品描述图片
     let detailImgs = this.getDetailImgs($page)
 
+    // 视频描述图片
+    let videoImgs = []
+    $page.find('h4._vse-vw-dp-card_style_vseVideoTitleText__1lJWI').each((i, n) => {
+      let $box = $(n).closest('[data-elementid=vse-cards-video-thumbnail]')
+      const imgUrl = $box.find('img').attr('data-src')
+      const imgDesc = $(n).text()
+      videoImgs.push({imgUrl, imgDesc})
+    })
+
+    console.log(2222222);
+
     let res = {
       productId,
       productLink: url,
@@ -106,6 +117,7 @@ class Amazon {
       detailBullets,
       previewImgs,
       detailImgs,
+      videoImgs,
       cost,
       bookDescription,
       editorialReviews,
