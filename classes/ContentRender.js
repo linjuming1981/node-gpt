@@ -14,11 +14,13 @@ class ContentRender {
     let mdHtml = marked.parse(product.markdownCode)
 
     // 视频html
-    let arr = product.videoImgs.map(n => {
+    let arr = JSON.parse(product.videoImgs).map(n => {
       let itHtml = `
         <div class="item">
-          <img src="${n.imgUrl}" alt="${n.imgDesc}" />
-          <h4>${imgDesc}</h4>
+          <div class="imgBox">
+            <img src="${n.imgUrl}" alt="${n.imgDesc}" />
+          </div>
+          <h4>${n.imgDesc}</h4>
         </div>
       `
       return itHtml

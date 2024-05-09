@@ -35,8 +35,33 @@
   border-radius: 7px; 
 }
 .root a{}
-.videos{}
-.videos .item{}
-.videos .item img{}
+.videos{
+  display: flex;
+}
+.videos .item{
+  flex: 1;
+  width: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+.videos .item .imgBox{
+  position: relative;
+}
+.videos .item .imgBox::before{
+  background: url(https://m.media-amazon.com/images/G/01/vse/Discovery/elements-play-button2x.png);
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-size: contain;
+  left: 0;
+  content: ' ';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+.videos .item .imgBox img{
+  width: -webkit-fill-available;
+}
 .videos .item h4{}
 </style>
