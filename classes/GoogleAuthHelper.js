@@ -51,7 +51,14 @@ class GoogleAuthHelper {
 
   // --- oauth2.0认证用
   static getOAuthConf(){
-    const oauthConfFile = path.resolve(__dirname, '../config/oauth2.json')
+    const configDir = path.resolve(__dirname, '../config'); // 配置目录路径
+    const oauthConfFile = path.join(configDir, 'oauth2.json'); // 配置文件路径
+    
+    // 检查配置目录是否存在，不存在则创建
+    if (!fs.existsSync(configDir)) {
+      fs.mkdirSync(configDir, { recursive: true }); // 使用 { recursive: true } 确保多级目录创建
+    }
+
     if (!fs.existsSync(oauthConfFile)) {
       fs.writeFileSync(oauthConfFile, JSON.stringify({}, null, 2), 'utf8');
     }
