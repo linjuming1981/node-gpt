@@ -217,7 +217,11 @@ class GoogleSheet {
     let rowI = existingRows.findIndex(n => n.productId === product.productId)
     let row = existingRows[rowI]
     for(let i in product){
-      row[i] = product[i]
+      let n = product[i]
+      if(typeof n === 'object'){
+        n = JSON.parse(n, null, 2)
+      }
+      row[i] = n
     }
     let rowData = this.header.map(n => row[n])
 
