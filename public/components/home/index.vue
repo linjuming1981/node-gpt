@@ -4,6 +4,7 @@
       <el-button type="primary" @click="googleOauth">Google OAuth2</el-button>
       <el-button type="primary" @click="editOauth">Edit OAuth2 Config</el-button>
       <a href="https://console.cloud.google.com/apis/credentials/oauthclient/149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com?project=test-link-sheet" target="_blank">Oauth2</a>
+      <el-button type="primary" @click="updateRow">测试更新记录接口</el-button>
     </div>
     <el-table :data="products" style="width: 100%">
       <el-table-column prop="productId" label="productId" width="180" />
@@ -74,6 +75,7 @@ export default {
       })
       this.products = res.data.data
     },
+
     async googleOauth(){
       let res = await axios({
         url: '/googleOauth',
@@ -85,6 +87,7 @@ export default {
       let url = res.data.url
       window.location.href = url
     },
+
     async createBlogPost(product){
       let res = await axios({
         url: '/createBlogPost',
@@ -95,6 +98,7 @@ export default {
       })
       console.log({res})
     },
+
     async editOauth(){
       this.oauthDialogVisible = true
       let res = await axios({
@@ -105,6 +109,7 @@ export default {
       config = JSON.stringify(config, null, 2)
       this.oauthConfig = config
     },
+
     async doEditOauth(){
       let res = await axios({
         url: '/saveOauthConf',
@@ -115,8 +120,20 @@ export default {
       })
       this.oauthDialogVisible = false
     },
+
     canelEditOauth(){
       this.oauthDialogVisible = false
+    },
+
+    async updateRow(){
+      let res = await axios({
+        url: '/updateRow',
+        method: 'post',
+        data: {
+          product: {productId: 'kkkk'}
+        }
+      })
+      console.log({res})
     }
   },
   mounted(){
