@@ -219,7 +219,7 @@ class GoogleSheet {
     for(let i in product){
       let n = product[i]
       if(typeof n === 'object'){
-        n = JSON.parse(n, null, 2)
+        n = JSON.stringify(n, null, 2)
       }
       row[i] = n
     }
