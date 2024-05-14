@@ -129,19 +129,17 @@ app.post('/getOneRow', async (req, res) => {
 })
 
 app.post('/updateRow', async (req, res) => {
-  console.log(123123123);
-  res.send({code:200, data: 'kkkk'})
-  // console.log('/updateRow', req.body)
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
-  // const gSheet = new GoogleSheet()
-  // let sheetId = AMAZON_SHEET_ID
-  // let sheetTabName = '工作表1'
-  // let product = req.body.product
-  // if(typeof product === 'string'){
-  //   product = JSON.parse(product)
-  // }
-  // gSheet.updateRow(sheetId, sheetTabName, product)
-  // res.send({code: 200, data: product})
+  console.log('/updateRow', req.body)
+  const GoogleSheet = require('./classes/GoogleSheet.js')
+  const gSheet = new GoogleSheet()
+  let sheetId = AMAZON_SHEET_ID
+  let sheetTabName = '工作表1'
+  let product = req.body.product
+  if(typeof product === 'string'){
+    product = JSON.parse(product)
+  }
+  gSheet.updateRow(sheetId, sheetTabName, product)
+  res.send({code: 200, data: product})
 })
 
 app.get('/preview/:id', async (req, res) => {

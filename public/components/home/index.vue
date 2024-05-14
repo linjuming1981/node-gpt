@@ -4,7 +4,6 @@
       <el-button type="primary" @click="googleOauth">Google OAuth2</el-button>
       <el-button type="primary" @click="editOauth">Edit OAuth2 Config</el-button>
       <a href="https://console.cloud.google.com/apis/credentials/oauthclient/149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com?project=test-link-sheet" target="_blank">Oauth2</a>
-      <el-button type="primary" @click="updateRow">测试更新记录接口</el-button>
     </div>
     <el-table :data="products" style="width: 100%">
       <el-table-column prop="productId" label="productId" width="180" />
@@ -125,7 +124,7 @@ export default {
       this.oauthDialogVisible = false
     },
 
-    async updateRow(){
+    async updateRow(){ // 调试，暂时没用
       let res = await axios({
         url: '/updateRow',
         method: 'post',
@@ -135,6 +134,7 @@ export default {
       })
       console.log({res})
     }
+
   },
   mounted(){
     this.getSheetRows();
