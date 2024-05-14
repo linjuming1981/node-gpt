@@ -212,43 +212,60 @@ class GoogleSheet {
   }
 
   async updateRow(sheetId, sheetTabName='Sheet1', product={}){
-    let auth = await this.authHelper.getAuthClient()
-    let existingRows = await this.getAllDatas({sheetId, sheetTabName})
-    let rowI = existingRows.findIndex(n => n.productId === product.productId)
-    let row = existingRows[rowI]
-    for(let i in product){
-      let n = product[i]
-      if(typeof n === 'object'){
-        n = JSON.stringify(n, null, 2)
+    let auth = await this.authHelper.getAuthClient();
+    let existingRows = await this.getAllDatas({sheetId, sheetTabName});
+    let rowI = existingRows.findIndex(n => n.productId === product.productId);
+    let row = existingRows[rowI];
+    for (let i in product) {
+      let n = product[i];
+      if (typeof n === 'object') {
+        n = JSON.stringify(n, null, 2);
       }
-      row[i] = n
+      row[i] = n;
     }
-    let rowData = this.header.map(n => row[n])
-
+    let rowData = this.header.map(n => row[n]);
+  
+    // 列转换函数，将列的索引转换为对应的字母
+    const columnToLetter = (column) => {
+      let letter = '', temp;
+      while (column > 0) {
+        temp = (column - 1) % 26;
+        letter = String.fromCharCode(temp + 65) + letter;
+        column = (column - temp - 1) / 26;
+      }
+      return letter;
+    };
+  
+    let endColumnLetter = columnToLetter(this.header.length); // 使用列转换函数获取结束列的字母
+  
     const request = {
       spreadsheetId: sheetId,
-      range: `${sheetTabName}!A${rowI+2}:O${rowI+2}`,
+      range: `${sheetTabName}!A${rowI + 2}:${endColumnLetter}${rowI + 2}`,
       valueInputOption: 'USER_ENTERED',
       resource: {
         values: [rowData],
       },
       auth: auth,
     };
-    
-    let sheets = google.sheets("v4");
+  
+    let sheets = google.sheets('v4');
     await sheets.spreadsheets.values.update(request);
-    return true
-
+    return true;
   }
 
 }
 
 module.exports = GoogleSheet;
 
-// (async () => {
-//   const gSheet = new GoogleSheet()
-//   let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
-//   let sheetTabName = '工作表1'
-//   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
-//   console.log(datas, 222)
-// })();
+// --- 调试
+if(module === require.main){
+  (async () => {
+    const gSheet = new GoogleSheet()
+    let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+    let sheetTabName = '工作表1'
+    let datas = await gSheet.updateRow(sheetId, sheetTabName, {"productId":"B0BG94RWYN","aiResult":"kkkkk"})
+    console.log(datas, 222)
+  })();
+}
+
+
