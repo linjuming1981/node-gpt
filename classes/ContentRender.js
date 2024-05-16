@@ -4,7 +4,9 @@ const path = require('path')
 
 class ContentRender {
   constructor(){
-    this.tplPath = path.resolve(__dirname, '../public/blogger_tpl.html');
+    // this.tplPath = path.resolve(__dirname, '../public/blogger_tpl.html');
+    this.tplPath = path.resolve(__dirname, '../public/aiResult_tpl.html')
+    this.benefitRegex = /<article\s+id="benefit-item">([\s\S]*?)<\/article>/
   }
 
   // productToHtml(product){
@@ -60,13 +62,29 @@ class ContentRender {
     return videosHtml
   }
 
+  getBenefitsHtml(aiResult){
+    let html = fs.readFileSync(this.tplPath)
+    let itemTpl = html.match(this.benefitRegex)[1]
+
+    let arr = aiResult.getBenefitDetails.map(n => {
+      let itemHtml = itemTpl
+        .replace(/\{\{imgUrl\}\}/g, n.imgUrl)
+        .replace(/\{\{imgDesc\}\}/g, n.description)
+      itemTpl = `<article>${itemHtml}</article>`
+      return itemHtml
+    })
+    let benefitsHtml = arr.json('\n')
+    return benefitsHtml
+  }
+
   productToHtml(product){
     let aiResult = JSON.parse(product.aiResult)
-    let videosHtml = this.getVideosHtml(product)    
+    let videosHtml = this.getVideosHtml(product)
+    let benefitsHtml = this.getBenefitsHtml(aiResult)  
     let infos = {...product, ...aiResult, videosHtml}
     
-    let tplPath = path.resolve(__dirname, '../public/apiResult_tpl.html')
-    let html = fs.readFileSync(tplPath)
+    let html = fs.readFileSync(this.tplPath)
+    html = html.replace(this.benefitRegex, benefitsHtml)
     for(let i in infos){
       let n = infos[i]
       let obj = this.getObj(n)
@@ -76,9 +94,6 @@ class ContentRender {
       let regex = new RegExp(`\{\{${i}\}\}`, 'g')
       html = html.replace(regex, n)
     }
-
-
-
     return html
   }
 
