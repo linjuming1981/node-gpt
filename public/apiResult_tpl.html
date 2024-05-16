@@ -1,6 +1,6 @@
 <script type="application/ld+json">
   {
-    "@context": "{{blogBaseUrl}}",
+    "@context": "http://schema.org/",
     "@type": "Product",
     "name": "{{title}}",
     "image": {{images}},
@@ -15,10 +15,11 @@
 <main>
   <section id="benefit-details">
     <h2>Product Benefits</h2>
-    <article>
+    <article id="benefit-item">
       <img src="{{imgUrl}}" alt="{{imgAlt}}">
       <p>{{imgDesc}}</p>
     </article>
+
   </section>
 
   <section id="recommendation">

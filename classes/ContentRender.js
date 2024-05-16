@@ -33,9 +33,53 @@ class ContentRender {
   //   return html
   // }
 
+  getObj = str => {
+    try {
+      const obj = JSON.parse(str);
+      if (typeof obj === 'object') {
+        return obj;
+      }
+    } catch (e) {}
+    return false
+  }
+
+  // 视频html
+  getVideosHtml(product){
+    let arr = JSON.parse(product.videoImgs).map(n => {
+      let itHtml = `
+        <div class="item">
+          <div class="imgBox">
+            <img src="${n.imgUrl}" alt="${n.imgDesc}" />
+          </div>
+          <h4>${n.imgDesc}</h4>
+        </div>
+      `
+      return itHtml
+    })
+    let videosHtml = arr.join('\n')
+    return videosHtml
+  }
+
   productToHtml(product){
     let aiResult = JSON.parse(product.aiResult)
+    let videosHtml = this.getVideosHtml(product)    
+    let infos = {...product, ...aiResult, videosHtml}
     
+    let tplPath = path.resolve(__dirname, '../public/apiResult_tpl.html')
+    let html = fs.readFileSync(tplPath)
+    for(let i in infos){
+      let n = infos[i]
+      let obj = this.getObj(n)
+      if(obj){
+        continue
+      }
+      let regex = new RegExp(`\{\{${i}\}\}`, 'g')
+      html = html.replace(regex, n)
+    }
+
+
+
+    return html
   }
 
 }
