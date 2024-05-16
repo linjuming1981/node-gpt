@@ -1,0 +1,90 @@
+<script type="application/ld+json">
+  {
+    "@context": "{{blogBaseUrl}}",
+    "@type": "Product",
+    "name": "{{title}}",
+    "image": {{images}},
+    "description": "{{abstract}}",
+    "sku": "{{productId}}"
+  }
+</script>
+<header>
+  <h1>{{title}}</h1>
+  <p>{{abstract}}</p>
+</header>
+<main>
+  <section id="benefit-details">
+    <h2>Product Benefits</h2>
+    <article>
+      <img src="{{imgUrl}}" alt="{{imgAlt}}">
+      <p>{{imgDesc}}</p>
+    </article>
+  </section>
+
+  <section id="recommendation">
+    <h2>Our Recommendation</h2>
+    <p>{{recommendation}}</p>
+  </section>
+
+  <section id="videos">
+    <h2>Videos for this product</h2>
+    <div class="videos">{{videosHtml}}</div>
+  </section>
+
+</main>
+
+<style>
+header{}
+header h1{
+  line-height: 34px;
+  color: mediumseagreen;
+}
+main{}
+main h2{
+  color: orangered;
+  border-left: 3px solid #ff450085;
+  padding-left: 20px;
+  background-color: #cccccc2e;
+  padding: 8px 20px;
+  box-shadow: 2px 2px 2px #00000017;
+  border-radius: 3px;
+}
+main p{}
+main span{}
+main strong{
+  color: #3a3a3a;
+}
+main img{
+  border-radius: 7px; 
+}
+main a{}
+.videos{
+  display: flex;
+}
+.videos .item{
+  flex: 1;
+  width: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+.videos .item .imgBox{
+  position: relative;
+}
+.videos .item .imgBox::before{
+  background: url(https://m.media-amazon.com/images/G/01/vse/Discovery/elements-play-button2x.png);
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background-size: contain;
+  left: 0;
+  content: ' ';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+.videos .item .imgBox img{
+  width: -webkit-fill-available;
+}
+.videos .item h4{}
+</style>
