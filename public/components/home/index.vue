@@ -16,6 +16,7 @@
         <template #default="scope">
           <div class="action">
             <a class="preview" :href="`/preview/${scope.row.productId}`" target="_blank">预览</a>
+            <a class="json" :href="`/json/${scope.row.productId}`" target="_blank">json</a>
             <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
           </div>
         </template>
@@ -157,7 +158,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.action .preview{ 
+.action .preview, .action .json{ 
   font-size: 12px;
   margin-right: 10px;
 }

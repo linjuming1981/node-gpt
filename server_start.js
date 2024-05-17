@@ -157,6 +157,23 @@ app.get('/preview/:id', async (req, res) => {
   res.send(html);
 })
 
+app.get('/json/:id', async (req, res) => {
+  const productId = req.params.id
+  const GoogleSheet = require('./classes/GoogleSheet.js')
+  const gSheet = new GoogleSheet()
+
+  let sheetId = AMAZON_SHEET_ID
+  let sheetTabName = '工作表1'
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter:{productId}})
+  let product = datas[0]
+  if(!req.full){
+    delete product.markdownCode
+    delete product.htmlCode
+    delete product.aiResult
+  }
+  res.send(product)
+})
+
 app.post('/googleOauth', (req, res) => {
   const baseUrl = req.body.baseUrl
   const GoogleAuthHelper = require('./classes/GoogleAuthHelper.js');
