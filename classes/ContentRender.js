@@ -63,17 +63,17 @@ class ContentRender {
   }
 
   getBenefitsHtml(aiResult){
-    let html = fs.readFileSync(this.tplPath)
+    let html = fs.readFileSync(this.tplPath).toString()
     let itemTpl = html.match(this.benefitRegex)[1]
 
-    let arr = aiResult.getBenefitDetails.map(n => {
+    let arr = aiResult.benefitDetails.map(n => {
       let itemHtml = itemTpl
         .replace(/\{\{imgUrl\}\}/g, n.imgUrl)
-        .replace(/\{\{imgDesc\}\}/g, n.description)
-      itemTpl = `<article>${itemHtml}</article>`
+        .replace(/\{\{imgDesc\}\}/g, n.description);
+      itemHtml = `<article>${itemHtml}</article>`
       return itemHtml
     })
-    let benefitsHtml = arr.json('\n')
+    let benefitsHtml = arr.join('\n')
     return benefitsHtml
   }
 
@@ -83,7 +83,7 @@ class ContentRender {
     let benefitsHtml = this.getBenefitsHtml(aiResult)  
     let infos = {...product, ...aiResult, videosHtml}
     
-    let html = fs.readFileSync(this.tplPath)
+    let html = fs.readFileSync(this.tplPath).toString()
     html = html.replace(this.benefitRegex, benefitsHtml)
     for(let i in infos){
       let n = infos[i]
