@@ -121,7 +121,12 @@ app.post('/getSheetRows', async (req, res) => {
     })
   }
 
-  res.send({code: 200, data: datas})
+  let idsObj = {}
+  for(let i=1; i<=10; i++){
+    idsObj[`productId${i}`] = datas[i-1]?.productId
+  }
+
+  res.send({code: 200, data: datas, ...idsObj})
 })
 
 app.post('/getOneRow', async (req, res) => {

@@ -2,7 +2,8 @@
 class Amazon {
   constructor(){
     // 谷歌cloude shell接口连接
-    this.apiBaseUrl = 'https://8080-cs-239467590834-default.cs-us-west1-wolo.cloudshell.dev'
+    // this.apiBaseUrl = 'https://8080-cs-239467590834-default.cs-us-west1-wolo.cloudshell.dev'
+    this.apiBaseUrl = 'https://node-gpt-h1b3.onrender.com'
   }
 
   async getPageHtml(url){
@@ -105,8 +106,6 @@ class Amazon {
       const imgDesc = $(n).text()
       videoImgs.push({imgUrl, imgDesc})
     })
-
-    console.log(2222222);
 
     let res = {
       productId,
