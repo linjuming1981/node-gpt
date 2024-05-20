@@ -117,7 +117,7 @@ app.post('/getSheetRows', async (req, res) => {
 
   if(update){ // 获取到的记录做更新操作
     datas.forEach(product => {
-      gSheet.updateRow({...product, ...update});  // update是个对象，如 {status: 0}
+      gSheet.updateRow(sheetId, sheetTabName, {...product, ...update});  // update是个对象，如 {status: 0}
     })
   }
 
