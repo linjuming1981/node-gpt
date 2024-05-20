@@ -29,11 +29,11 @@ class GoogleSheet {
     })
   }
 
-  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}, dealJson=false}) {
+  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}, dealJson=false, count=0}) {
     return new Promise(async resolve => {
       let datas = []
 
-      if(!columns.length){  // 全量数据
+      if(!columns.length){  // 返回全部字段
         datas = await this.getAllDatas({sheetId, sheetTabName})
       } else { // 指定列数据
         // 获取表头 B:B,E:E
@@ -57,6 +57,11 @@ class GoogleSheet {
         datas = datas.filter(n => {
           return Object.keys(filter).every(key => n[key] === filter[key].trim())
         })
+      }
+
+      // 返回指定条数
+      if(count){
+        datas = datas.slice(0, count)
       }
 
       // 字段只如果是json，转换成对象或数据

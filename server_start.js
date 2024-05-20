@@ -103,13 +103,24 @@ app.post('/getSheetRows', async (req, res) => {
   console.log('/getSheetRows', req.body)
   const GoogleSheet = require('./classes/GoogleSheet.js')
   const gSheet = new GoogleSheet()
-  let filter = req.body.filter
+  let {filter, update, count} = req.body
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
   }
+  if(typeof update === 'string'){
+    update = JSON.parse(filter)
+  }
+
   let sheetId = AMAZON_SHEET_ID
   let sheetTabName = '工作表1'
-  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter})
+  let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter, count})
+
+  if(update){ // 获取到的记录做更新操作
+    datas.forEach(product => {
+      gSheet.updateRow({...product, ...update});  // update是个对象，如 {status: 0}
+    })
+  }
+
   res.send({code: 200, data: datas})
 })
 
