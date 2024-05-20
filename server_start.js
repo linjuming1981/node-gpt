@@ -112,10 +112,10 @@ app.post('/getSheetRows', async (req, res) => {
   }
 
   let sheetId = AMAZON_SHEET_ID
-  let sheetTabName = '工作表1'
+  let sheetTabName = '工作表1' 
   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter, count})
 
-  if(update){ // 获取到的记录做更新操作
+  if(update){ // 获取到的记录做更新操作111
     datas.forEach(product => {
       gSheet.updateRow(sheetId, sheetTabName, {...product, ...update});  // update是个对象，如 {status: 0}
     })
