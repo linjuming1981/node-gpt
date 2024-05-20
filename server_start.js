@@ -145,15 +145,15 @@ app.post('/updateRow', async (req, res) => {
 app.get('/preview/:id', async (req, res) => {
   const productId = req.params.id
   const GoogleSheet = require('./classes/GoogleSheet.js')
-  const gSheet = new GoogleSheet()
+  const gSheet = new GoogleSheet()     
 
-  let sheetId = AMAZON_SHEET_ID
+  let sheetId = AMAZON_SHEET_ID   
   let sheetTabName = '工作表1'
   let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter:{productId}})
   const ContentRender = require('./classes/ContentRender.js')
   const render = new ContentRender()
   let html = render.productToHtml(datas[0])
-  res.set('Content-Type', 'text/html');
+  res.set('Content-Type', 'text/html');  
   res.send(html);
 })
 
