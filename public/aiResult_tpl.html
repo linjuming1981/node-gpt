@@ -24,8 +24,12 @@
 
   <section id="recommendation">
     <h2>Our Recommendation</h2>
-    <p>{{recommendation}}</p>
+    <div class="cont">
+      <p>{{recommendation}}</p>
+      <a class="go-to-amazon" href="{{myLink}}">Buy In Amazon</a>
+    </div>
   </section>
+
 
   <section id="videos">
     <h2>Videos for this product</h2>
@@ -88,4 +92,13 @@ main a{}
   width: -webkit-fill-available;
 }
 .videos .item h4{}
+#recommendation .cont{
+  display: flex;
+}
+.go-to-amazon{
+  background-color:  #333;
+}
+.go-to-amazon:hover{
+  background-color: #e6003d;
+}
 </style>

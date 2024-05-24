@@ -81,6 +81,15 @@ class ContentRender {
     return benefitsHtml
   }
 
+  getMyLink(product){
+    // https://www.amazon.com/Extender-Coverage-Extenders-internet-Amplifier/dp/B0BDSM76W4
+    // ?crid=RMQXETN4NMIF&dib=eyJ2IjoiMSJ9.No1WNL2S9T3IhIbSnmBWHB2sbb8SkfAAY4OJ_mJjUkoicZxp5DA-0A0AAzh80bpTaN2EXNaX3hn40jvf6ApLnKBFAV2B_Fz5q0zFNYIWHg6JTjCtSIZc6F0pPHS_Uq0J-PFCxWsOaj8zSW0GIIWukGLO7vn2QJEIO1z94D2adtxgFVdSa77DCIdjBsO63dMBXHj7shNS2rAEtqPXZIU8Z0hHV1t_hHicgcyNmj4y5OusRNRixzAB6GYx6WTP436QubwC1wYtTZxcgZDmd2Z1eER3aDvSz2AKtpJU7-zPZmU.NPwi5N78FyDpHP2cCPbMNeovKqOGErdFeIFaLLIAAXA&dib_tag=se&keywords=best+sellers&qid=1716570794&sprefix=%2Caps%2C309&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&linkCode=ll1
+    // &tag=linjuming-20&linkId=6eb1bc884d378ca271aaf4150a8e81a7&language=en_US&ref_=as_li_ss_tl
+    let {productLink} = product
+    let myLink = `${productLink}?tag=linjuming-20`
+    return myLink
+  }
+
   productToHtml(product){
     let {aiResult} = product
     if(typeof aiResult === 'string'){
@@ -89,7 +98,8 @@ class ContentRender {
 
     let videosHtml = this.getVideosHtml(product)
     let benefitsHtml = this.getBenefitsHtml(aiResult)  
-    let infos = {...product, ...aiResult, videosHtml}
+    let myLink = this.getMyLink(product)
+    let infos = {...product, ...aiResult, videosHtml, myLink}
     
     let html = fs.readFileSync(this.tplPath).toString()
     html = html.replace(this.benefitRegex, benefitsHtml)
