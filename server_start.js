@@ -108,7 +108,7 @@ app.post('/getSheetRows', async (req, res) => {
     filter = JSON.parse(filter)
   }
   if(typeof update === 'string'){
-    update = JSON.parse(filter)
+    update = JSON.parse(update)
   }
 
   let sheetId = AMAZON_SHEET_ID
