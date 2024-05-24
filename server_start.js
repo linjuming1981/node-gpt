@@ -225,8 +225,13 @@ app.post('/createBlogPost', async (req, res) => {
   const {product} = req.body
   const ContentRender = require('./classes/ContentRender.js')
   const render = new ContentRender()  
-  const html = render.productToHtml(product.markdownCode)
-  const title = 'test'
+  const html = render.productToHtml(product)
+  let {aiResult} = product
+  if(typeof aiResult === 'string'){
+    aiResult = JSON.parse(aiResult)
+  }
+  const title = aiResult.title
+
   const GoogleBlogger = require('./classes/GoogleBlogger.js') 
   const blogger = new GoogleBlogger()
   const ret = await blogger.createPost({title, content: html})

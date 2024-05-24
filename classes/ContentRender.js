@@ -47,7 +47,11 @@ class ContentRender {
 
   // 视频html
   getVideosHtml(product){
-    let arr = JSON.parse(product.videoImgs).map(n => {
+    let {videoImgs} = product;
+    if(typeof videoImgs === 'string'){
+      videoImgs = JSON.parse(videoImgs)
+    }
+    let arr = videoImgs.map(n => {
       let itHtml = `
         <div class="item">
           <div class="imgBox">
@@ -78,7 +82,11 @@ class ContentRender {
   }
 
   productToHtml(product){
-    let aiResult = JSON.parse(product.aiResult)
+    let {aiResult} = product
+    if(typeof aiResult === 'string'){
+      aiResult = JSON.parse(aiResult)
+    }
+
     let videosHtml = this.getVideosHtml(product)
     let benefitsHtml = this.getBenefitsHtml(aiResult)  
     let infos = {...product, ...aiResult, videosHtml}
