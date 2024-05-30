@@ -89,7 +89,7 @@ class GoogleAuthHelper {
   }
   
   saveOAuthToken(tokens){
-    const oauthConf = this.getOAuthConf()
+    const oauthConf = GoogleAuthHelper.getOAuthConf()
     oauthConf.tokens = tokens
     let json = JSON.stringify(oauthConf, null, 2)
     fs.writeFileSync(this.oauthConfFile, json)
@@ -98,7 +98,7 @@ class GoogleAuthHelper {
   getOAuthToken(code){
     return new Promise((resolve, reject) => {
       if(!code){
-        let {tokens} = this.getOAuthConf()
+        let {tokens} = GoogleAuthHelper.getOAuthConf()
         resolve(tokens)
         return
       }
