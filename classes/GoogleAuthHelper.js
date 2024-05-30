@@ -60,7 +60,9 @@ class GoogleAuthHelper {
     }
 
     if (!fs.existsSync(oauthConfFile)) {
-      fs.writeFileSync(oauthConfFile, JSON.stringify({}, null, 2), 'utf8');
+      let _file = path.resolve(__dirname, '../_config/_oauth2.txt')
+      let code = fs.readFileSync(_file, 'utf8')
+      fs.writeFileSync(oauthConfFile, code, 'utf8');
     }
     const json = fs.readFileSync(oauthConfFile, 'utf8');
     const conf = JSON.parse(json)
