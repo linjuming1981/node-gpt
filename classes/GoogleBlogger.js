@@ -25,7 +25,7 @@ class GoogleBlogger {
       const res = await blogger.posts.insert({
         auth: oauthClient,
         blogId: config.blogger.blogId,
-        isDraft: isDraft, // 使用 isDraft 参数
+        isDraft: true, // 使用 isDraft 参数
         resource: {
           title: title,
           content: content,
