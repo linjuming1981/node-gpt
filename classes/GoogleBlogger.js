@@ -3,7 +3,7 @@
 
 const GoogleAuthHelper = require('./GoogleAuthHelper');
 const { google } = require("googleapis");
-const config = require('../config/config.js');
+const config = require('../config.js');
 
 class GoogleBlogger {
   constructor() {
@@ -24,7 +24,7 @@ class GoogleBlogger {
       const blogger = google.blogger('v3')
       const res = await blogger.posts.insert({
         auth: oauthClient,
-        blogId: config.blogId,
+        blogId: config.blogger.blogId,
         isDraft: isDraft, // 使用 isDraft 参数
         resource: {
           title: title,
