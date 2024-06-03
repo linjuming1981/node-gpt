@@ -84,7 +84,7 @@ export default {
         url: '/getSheetRows',
         method: 'post',
         data: {
-          filter: {}
+          filter: {postedToBlogger: '0'}
         }
       })
       this.products = res.data.data

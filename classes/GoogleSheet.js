@@ -2,7 +2,9 @@ const GoogleAuthHelper = require('./GoogleAuthHelper.js');
 const { google } = require("googleapis");
 
 class GoogleSheet {
-  constructor(){
+  constructor({sheetId, sheetTabName}){
+    this.sheetId = sheetId;
+    this.sheetTabName = sheetTabName;
     this.authHelper = new GoogleAuthHelper(["https://www.googleapis.com/auth/spreadsheets"]);
   }
 
@@ -30,6 +32,13 @@ class GoogleSheet {
   }
 
   async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}, dealJson=false, count=0}) {
+    if(!sheetId){
+      sheetId = this.sheetId;
+    }
+    if(!sheetTabName){
+      sheetTabName = this.sheetTabName;
+    }
+
     return new Promise(async resolve => {
       let datas = []
 
@@ -44,7 +53,7 @@ class GoogleSheet {
             let columnLetter = String.fromCharCode('A'.charCodeAt(0) + index);
             let columnRange = columnLetter + ':' + columnLetter;
   
-            return this.getDataByColumn(sheetId, sheetTabName, columnRange);
+            return this.getDataByColumn({sheetId, sheetTabName, columnRange});
           } else {
             return Promise.resolve([]);
           }
@@ -112,6 +121,12 @@ class GoogleSheet {
   }
 
   async getAllDatas({sheetId, sheetTabName}){
+    if(!sheetId){
+      sheetId = this.sheetId;
+    }
+    if(!sheetTabName){
+      sheetTabName = this.sheetTabName;
+    }
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
       let auth = await this.authHelper.getAuthClient();
@@ -144,7 +159,13 @@ class GoogleSheet {
     })
   }
 
-  async getDataByColumn(sheetId, sheetTabName, columnRange) {
+  async getDataByColumn({sheetId, sheetTabName, columnRange}) {
+    if(!sheetId){
+      sheetId = this.sheetId;
+    }
+    if(!sheetTabName){
+      sheetTabName = this.sheetTabName;
+    }
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
       let auth = await this.authHelper.getAuthClient();
@@ -182,7 +203,14 @@ class GoogleSheet {
 
 
   // 插入新数据 有问题，需要更正 todo
-  async addSheetDatas(sheetId, sheetTabName='Sheet1', datas=[]){
+  async addSheetDatas({sheetId, sheetTabName='Sheet1', datas=[]}){
+    if(!sheetId){
+      sheetId = this.sheetId;
+    }
+    if(!sheetTabName){
+      sheetTabName = this.sheetTabName;
+    }
+    
     return new Promise(async (resolve, reject) => {
       let sheets = google.sheets("v4");
       let auth = await this.authHelper.getAuthClient();
@@ -216,7 +244,14 @@ class GoogleSheet {
     })
   }
 
-  async updateRow(sheetId, sheetTabName='Sheet1', product={}){
+  async updateRow({sheetId, sheetTabName='Sheet1', product={}}){
+    if(!sheetId){
+      sheetId = this.sheetId;
+    }
+    if(!sheetTabName){
+      sheetTabName = this.sheetTabName;
+    }
+
     let auth = await this.authHelper.getAuthClient();
     let existingRows = await this.getAllDatas({sheetId, sheetTabName});
     let rowI = existingRows.findIndex(n => n.productId === product.productId);
@@ -268,8 +303,6 @@ if(module === require.main){
     const gSheet = new GoogleSheet()
     let sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
     let sheetTabName = '工作表1'
-    let datas = await gSheet.updateRow(sheetId, sheetTabName, {"productId":"B0BG94RWYN","aiResult":"kkkkk"})
-    console.log(datas, 222)
   })();
 }
 
