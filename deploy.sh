@@ -2,9 +2,9 @@
 
 # 初始化变量
 PWD=$(pwd)
-GIT_REPO_PATH="/path/to/your/git/repo"
-NODE_SERVER_PATH="/path/to/your/node/server"
-SERVER_SCRIPT="app.js" # 你的 Node Express 脚本
+GIT_REPO_PATH="/home/linjuming1981/node-gpt"
+NODE_SERVER_PATH="/home/linjuming1981/node-gpt"
+SERVER_SCRIPT="server_start.js" # 你的 Node Express 脚本
 CHECK_INTERVAL=30 # 检测间隔时间（秒）
 
 # 切换到你的 Git 仓库
