@@ -8,7 +8,7 @@ class GoogleSheet {
     this.authHelper = new GoogleAuthHelper(["https://www.googleapis.com/auth/spreadsheets"]);
   }
 
-  async getSheetHeaders({ sheetId, sheetTabName = 'Sheet1' }){
+  async getSheetHeaders({ sheetId, sheetTabName }){
     return new Promise(async resolve => {
       let sheets = google.sheets("v4");
       let auth = await this.authHelper.getAuthClient()
@@ -31,7 +31,7 @@ class GoogleSheet {
     })
   }
 
-  async getSheetDatas({sheetId, sheetTabName = 'Sheet1', columns = [], filter={}, dealJson=false, count=0}) {
+  async getSheetDatas({sheetId, sheetTabName, columns = [], filter={}, dealJson=false, count=0}) {
     if(!sheetId){
       sheetId = this.sheetId;
     }
@@ -90,7 +90,7 @@ class GoogleSheet {
     })
   }
 
-  async getHeader({sheetId, sheetTabName = 'Sheet1'}){
+  async getHeader({sheetId, sheetTabName}){
     return new Promise(async resolve => {
       if(this.header){
         return resolve(this.header)
@@ -203,7 +203,7 @@ class GoogleSheet {
 
 
   // 插入新数据 有问题，需要更正 todo
-  async addSheetDatas({sheetId, sheetTabName='Sheet1', datas=[]}){
+  async addSheetDatas({sheetId, sheetTabName, datas=[]}){
     if(!sheetId){
       sheetId = this.sheetId;
     }
@@ -244,7 +244,7 @@ class GoogleSheet {
     })
   }
 
-  async updateRow({sheetId, sheetTabName='Sheet1', product={}}){
+  async updateRow({sheetId, sheetTabName, product={}}){
     if(!sheetId){
       sheetId = this.sheetId;
     }
