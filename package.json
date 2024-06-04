@@ -2,7 +2,8 @@
   "name": "node-gpt",
   "private": true,
   "scripts": {
-    "start1": "node server_start.js"
+    "start1": "node server_start.js",
+    "deploy": "node deploy.js"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
