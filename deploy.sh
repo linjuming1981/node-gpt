@@ -1,5 +1,8 @@
 #!/bin/bash
 
+git fetch
+echo "kkk"
+
 # 初始化变量
 PWD=$(pwd)
 GIT_REPO_PATH="/home/linjuming1981/node-gpt"
@@ -14,7 +17,7 @@ CHECK_INTERVAL=30 # 检测间隔时间（秒）
 while true
 do
   echo "hello world"
-  
+
   # 拉取最新的代码
   git fetch
 
