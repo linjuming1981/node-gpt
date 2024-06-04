@@ -8,7 +8,7 @@ SERVER_SCRIPT="server_start.js" # 你的 Node Express 脚本
 CHECK_INTERVAL=30 # 检测间隔时间（秒）
 
 # 切换到你的 Git 仓库
-cd $GIT_REPO_PATH
+# cd $GIT_REPO_PATH
 
 # 开始循环检测
 while true
