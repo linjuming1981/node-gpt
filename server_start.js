@@ -148,7 +148,7 @@ app.post('/getOneRow', async (req, res) => {
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
   }
-  // let sheetId = AMAZON_SHEET_ID
+  // let sheetId = AMAZON_SHEET_ID  aaa
   // let sheetTabName = '工作表1'
   // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter})
   let datas = await gSheet.getSheetDatas({filter})
