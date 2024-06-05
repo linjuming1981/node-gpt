@@ -63,11 +63,11 @@ app.get('/test', async (req, res) => {
   let datas = await gSheet.getSheetDatas({dealJson:true})
   res.send(datas)
 
-  // 新增数据调试
+  // 新增数据调试 1111
   // let datas = [{
   //   productId: 'kkkk',
   //   productTitle: 'title',
-  //   productDescription: 'kk desc',
+  //   productDescription: 'kk desc', 
   //   cost: 11,
   //   bookDescription: 'bookDescription',
   //   featurebullets: 'featurebullets',
