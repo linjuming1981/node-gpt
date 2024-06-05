@@ -5,8 +5,10 @@ echo "kkk"
 
 # 初始化变量
 PWD=$(pwd)
-GIT_REPO_PATH="/home/linjuming1981/node-gpt"
-NODE_SERVER_PATH="/home/linjuming1981/node-gpt"
+# GIT_REPO_PATH="/home/linjuming1981/node-gpt"
+# NODE_SERVER_PATH="/home/linjuming1981/node-gpt"
+GIT_REPO_PATH=$(pwd)
+NODE_SERVER_PATH=$(pwd)
 SERVER_SCRIPT="server_start.js" # 你的 Node Express 脚本
 CHECK_INTERVAL=30 # 检测间隔时间（秒）
 
