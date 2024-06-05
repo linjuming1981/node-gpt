@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "start1": "node server_start.js",
-    "deploy": "node deploy.js"
+    "deploy": "node deploy.js",
+    "pm2_start": "pm2 start server_start.js --watch",
+    "pm2_stop": "pm2 stop server_start.js"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
@@ -14,6 +16,7 @@
     "google-ads-api": "^16.0.0-rest-beta3",
     "googleapis": "^133.0.0",
     "marked": "^12.0.2",
-    "openai": "^4.10.0"
+    "openai": "^4.10.0",
+    "pm2": "^5.4.0"
   }
 }

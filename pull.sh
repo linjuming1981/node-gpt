@@ -1,7 +1,7 @@
 #!/bin/bash
 
 git fetch
-echo "kkk"
+echo "git auto pull"
 
 # 初始化变量
 PWD=$(pwd)
@@ -26,22 +26,11 @@ do
   # 检查是否有更新
   if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]
   then
-    echo "New commits detected, updating the repo."
+    # echo "New commits detected, updating the repo."
+    echo "有新提交, 正在执行git pull"
 
     # 更新仓库
     git pull
-
-    # 如果 Node 服务正在运行，停止它
-    if pgrep -x "node" > /dev/null
-    then
-      echo "Stopping Node server."
-      pkill node
-    fi
-
-    # 切换到你的 Node 服务目录并启动服务
-    cd $NODE_SERVER_PATH
-    echo "Starting Node server."
-    node $SERVER_SCRIPT &
 
     # 切换回 Git 仓库目录以继续检测
     cd $GIT_REPO_PATH
