@@ -5,9 +5,6 @@ const fs = require('fs')
 const bodyParser = require('body-parser')
 const app = express()
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
-
-let oauth2Code = ''
-
 const GoogleSheet = require('./classes/GoogleSheet.js')
 const sheetId = AMAZON_SHEET_ID
 const sheetTabName = '工作表1'
@@ -90,27 +87,17 @@ app.post('/addProductsToSheet', async (req, res) => {
       }
     }
   });
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
-  // const gSheet = new GoogleSheet()
-  // let sheetId = AMAZON_SHEET_ID
-  // let sheetTabName = '工作表1'
-  // await gSheet.addSheetDatas(sheetId, sheetTabName, products)
   await gSheet.addSheetDatas(products)
   res.send(req.body)
 })
 
 app.get('/getAllSheetRows', async (req, res) => {
-  // const gSheet = new GoogleSheet()
-  // let sheetId = AMAZON_SHEET_ID
-  // let sheetTabName = '工作表1'
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName})
   let datas = await gSheet.getSheetDatas()
   res.send({code: 200, data: datas})
 })
 
 app.post('/getSheetRows', async (req, res) => {
   console.log('/getSheetRows', req.body)
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
   // const gSheet = new GoogleSheet()
   let {filter, update, count} = req.body
   if(typeof filter === 'string'){
@@ -120,14 +107,10 @@ app.post('/getSheetRows', async (req, res) => {
     update = JSON.parse(update)
   }
 
-  // let sheetId = AMAZON_SHEET_ID
-  // let sheetTabName = '工作表1' 
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter, count})
   let datas = await gSheet.getSheetDatas({filter, count})
 
   if(update){ // 获取到的记录做更新操作111
     datas.forEach(product => {
-      // gSheet.updateRow(sheetId, sheetTabName, {...product, ...update});  // update是个对象，如 {status: 0}
       gSheet.updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
     })
   }
@@ -142,15 +125,10 @@ app.post('/getSheetRows', async (req, res) => {
 
 app.post('/getOneRow', async (req, res) => {
   console.log('/getOneRow', req.body)
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
-  // const gSheet = new GoogleSheet()
   let filter = req.body.filter
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
   }
-  // let sheetId = AMAZON_SHEET_ID  aaa
-  // let sheetTabName = '工作表1'
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter})
   let datas = await gSheet.getSheetDatas({filter})
   let item = datas[0]
   res.send({code: 200, data: item})
@@ -158,27 +136,16 @@ app.post('/getOneRow', async (req, res) => {
 
 app.post('/updateRow', async (req, res) => {
   console.log('/updateRow', req.body)
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
-  // const gSheet = new GoogleSheet()
-  // let sheetId = AMAZON_SHEET_ID
-  // let sheetTabName = '工作表1'
   let product = req.body.product
   if(typeof product === 'string'){
     product = JSON.parse(product)
   }
-  // gSheet.updateRow({sheetId, sheetTabName, product})
   gSheet.updateRow({product})
   res.send({code: 200, data: product})
 })
 
 app.get('/preview/:id', async (req, res) => {
   const productId = req.params.id
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
-  // const gSheet = new GoogleSheet()     
-
-  // let sheetId = AMAZON_SHEET_ID   
-  // let sheetTabName = '工作表1'
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter:{productId}})
   let datas = await gSheet.getSheetDatas({filter:{productId}})
   const ContentRender = require('./classes/ContentRender.js')
   const render = new ContentRender()
@@ -189,12 +156,6 @@ app.get('/preview/:id', async (req, res) => {
 
 app.get('/json/:id', async (req, res) => {
   const productId = req.params.id
-  // const GoogleSheet = require('./classes/GoogleSheet.js')
-  // const gSheet = new GoogleSheet()
-
-  // let sheetId = AMAZON_SHEET_ID
-  // let sheetTabName = '工作表1'
-  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, filter:{productId}})
   let datas = await gSheet.getSheetDatas({filter:{productId}})
   let product = datas[0]
   if(!req.full){
