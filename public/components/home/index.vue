@@ -13,7 +13,7 @@
           <a :href="scope.row.productLink" target="_blank">{{scope.row.productTitle}}</a>
         </template>
       </el-table-column>
-      <el-table-column prop="postedToBlogger" label="已发布" width="180" />
+      <el-table-column prop="postedToBlogger" label="已发布" width="100" />
       <el-table-column fixed="right" label="Operations" width="160">
         <template #default="scope">
           <div class="action">
