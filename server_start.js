@@ -98,7 +98,6 @@ app.get('/getAllSheetRows', async (req, res) => {
 
 app.post('/getSheetRows', async (req, res) => {
   console.log('/getSheetRows', req.body)
-  // const gSheet = new GoogleSheet()
   let {filter, update, count} = req.body
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
