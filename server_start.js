@@ -210,7 +210,8 @@ app.post('/createBlogPost', async (req, res) => {
   const GoogleBlogger = require('./classes/GoogleBlogger.js') 
   const blogger = new GoogleBlogger()
   const ret = await blogger.createPost({title, content: html})
-  gSheet.updateRow({...product, postedToBlogger: '1'})
+  product.postedToBlogger = '1'
+  gSheet.updateRow({product})
   res.send({code: 200, ret})
 })
 
