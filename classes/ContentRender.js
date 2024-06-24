@@ -9,32 +9,6 @@ class ContentRender {
     this.benefitRegex = /<article\s+id="benefit-item">([\s\S]*?)<\/article>/
   }
 
-  // productToHtml(product){
-  //   let html = fs.readFileSync(this.tplPath).toString()
-
-  //   // markdown生成的html
-  //   let mdHtml = marked.parse(product.markdownCode)
-
-  //   // 视频html
-  //   let arr = JSON.parse(product.videoImgs).map(n => {
-  //     let itHtml = `
-  //       <div class="item">
-  //         <div class="imgBox">
-  //           <img src="${n.imgUrl}" alt="${n.imgDesc}" />
-  //         </div>
-  //         <h4>${n.imgDesc}</h4>
-  //       </div>
-  //     `
-  //     return itHtml
-  //   })
-  //   let videosHtml = arr.join('\n')
-
-  //   // 替换模板
-  //   html = html.replace('{{mdHtml}}', mdHtml)
-  //   html = html.replace('{{videosHtml}}', videosHtml)
-  //   return html
-  // }
-
   getObj = str => {
     try {
       const obj = JSON.parse(str);
@@ -52,11 +26,12 @@ class ContentRender {
       videoImgs = JSON.parse(videoImgs)
     }
     let arr = videoImgs.map(n => {
+      let buyLink = this.getMyLink(n)
       let itHtml = `
         <div class="item">
-          <div class="imgBox">
+          <a class="imgBox" href="${buyLink}">
             <img src="${n.imgUrl}" alt="${n.imgDesc}" />
-          </div>
+          </a>
           <h4>${n.imgDesc}</h4>
         </div>
       `
