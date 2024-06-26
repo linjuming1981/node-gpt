@@ -6,7 +6,7 @@ class ContentRender {
   constructor(){
     // this.tplPath = path.resolve(__dirname, '../public/blogger_tpl.html');
     this.tplPath = path.resolve(__dirname, '../public/aiResult_tpl.html')
-    this.benefitRegex = /<article\s+id="benefit-item">([\s\S]*?)<\/article>/
+    this.benefitRegex = /<article\s+class="benefit-item">([\s\S]*?)<\/article>/
   }
 
   getObj = str => {
@@ -38,7 +38,7 @@ class ContentRender {
       return itHtml
     })
     let videosHtml = arr.join('\n')
-    return videosHtml
+    return 
   }
 
   getBenefitsHtml(aiResult){
@@ -72,9 +72,17 @@ class ContentRender {
     }
 
     let videosHtml = this.getVideosHtml(product)
+    let videosHtml_display = videosHtml? 'block': 'none'
     let benefitsHtml = this.getBenefitsHtml(aiResult)  
+    let benefitsHtml_display = benefitsHtml? 'block': 'none';
     let myLink = this.getMyLink(product)
-    let infos = {...product, ...aiResult, videosHtml, myLink}
+    let infos = {
+      ...product, 
+      ...aiResult, 
+      videosHtml, videosHtml_display, 
+      benefitsHtml, benefitsHtml_display,
+      myLink
+    }
     
     let html = fs.readFileSync(this.tplPath).toString()
     html = html.replace(this.benefitRegex, benefitsHtml)
@@ -86,6 +94,10 @@ class ContentRender {
       }
       let regex = new RegExp(`\{\{${i}\}\}`, 'g')
       html = html.replace(regex, n)
+
+      regex = new RegExp(`\{\{${i}_display\}\}`, 'g')
+      let display = n? 'block': 'none';
+      html = html.replace(regex, display)
     }
     return html
   }

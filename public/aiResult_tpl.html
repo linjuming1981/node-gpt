@@ -13,13 +13,19 @@
   <p>{{abstract}}</p>
 </header>
 <main>
-  <section id="benefit-details">
+  <section id="benefit-details" style="display:{{videosHtml_display}}">
     <h2>Product Benefits</h2>
-    <article id="benefit-item">
+    <article class="benefit-item">
       <img src="{{imgUrl}}" alt="{{imgDesc}}">
       <p>{{imgDesc}}</p>
     </article>
+  </section>
 
+  <section id="book-description" style="display:{{bookDescription_display}}">
+    <h2>Book Description</h2>
+    <article>
+      <p>{{bookDescription}}</p>
+    </article>
   </section>
 
   <section id="recommendation">
@@ -30,7 +36,7 @@
     </div>
   </section>
 
-  <section id="videos">
+  <section id="videos" style="display:{{videosHtml_display}}">
     <h2>Videos</h2>
     <div class="videos">{{videosHtml}}</div>
   </section>
