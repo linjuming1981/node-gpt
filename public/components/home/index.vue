@@ -89,6 +89,7 @@ export default {
         }
       })
       this.products = res.data.data
+      console.log(this.products)
     },
 
     async googleOauth(){
