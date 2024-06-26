@@ -26,7 +26,7 @@
         </el-table-column>
       </el-table>
       <div class="preview" v-show="isPreview">
-        <span class="close" @click="isPreview=false">X<span>
+        <span class="close" @click="isPreview=false">X</span>
         <iframe id="previewFrame" name="previewFrame"></iframe>
       </div>
     </div>
