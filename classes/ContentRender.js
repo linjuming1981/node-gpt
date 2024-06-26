@@ -45,7 +45,7 @@ class ContentRender {
     let html = fs.readFileSync(this.tplPath).toString()
     let itemTpl = html.match(this.benefitRegex)[1]
 
-    let arr = aiResult.benefitDetails.map(n => {
+    let arr = (aiResult.benefitDetails||[]).map(n => {
       let itemHtml = itemTpl
         .replace(/\{\{imgUrl\}\}/g, n.imgUrl)
         .replace(/\{\{imgDesc\}\}/g, n.description);
