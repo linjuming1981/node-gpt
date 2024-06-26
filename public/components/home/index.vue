@@ -5,6 +5,7 @@
       <el-button type="primary" @click="editOauth">Edit OAuth2 Config</el-button>
       <a href="https://console.cloud.google.com/apis/credentials/oauthclient/149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com?project=test-link-sheet" target="_blank">Oauth2</a>
       <el-button type="primary" @click="test">调试4</el-button>
+      <el-button type="primary" @click="getSheetRows(true)">刷新列表</el-button>
     </div>
     <div class="body">
       <el-table :data="products" style="width: 100%" :row-class-name="getRowClsName">
@@ -87,16 +88,24 @@ export default {
       this.products = res.data.data
     },
 
-    async getSheetRows(){
-      let res = await axios({
-        url: '/getSheetRows',
-        method: 'post',
-        data: {
-          filter: {postedToBlogger: '0'}
-        }
-      })
-      this.products = res.data.data.filter(n => n.aiResult)
-      console.log(this.products)
+    async getSheetRows(refresh=false){
+      let productsInStorage = window.localStorage.getItem('products');
+      if (refresh === false && productsInStorage) {
+        this.products = JSON.parse(productsInStorage);
+        console.log(this.products)
+      } else {
+        let res = await axios({
+          url: '/getSheetRows',
+          method: 'post',
+          data: {
+            filter: {postedToBlogger: '0'}
+          }
+        })
+        let products = res.data.data.filter(n => n.aiResult);
+        this.products = products;
+        window.localStorage.setItem('products', JSON.stringify(this.products));
+        console.log(this.products)
+      }
     },
 
     async googleOauth(){
