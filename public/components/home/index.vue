@@ -25,7 +25,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="preview">
+      <div class="preview" v-show="isPreview">
         <el-icon
           @click="isPreview=false"
         ><CircleClose /></el-icon>
