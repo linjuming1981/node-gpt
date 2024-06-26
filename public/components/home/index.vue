@@ -26,9 +26,7 @@
         </el-table-column>
       </el-table>
       <div class="preview" v-show="isPreview">
-        <el-icon
-          @click="isPreview=false"
-        ><CircleClose /></el-icon>
+        <span class="close" @click="isPreview=false">X<span>
         <iframe id="previewFrame" name="previewFrame"></iframe>
       </div>
     </div>
@@ -204,8 +202,15 @@ export default {
 .body .preview{
   position: relative;
 }
-.preview .el-icon{
-  color: red;
+.preview .close{
+    color: red;
+    background-color: #374956;
+    position: absolute;
+    left: 50%;
+    top: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
 }
 .body #previewFrame {
     width: 50vw;
