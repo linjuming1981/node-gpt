@@ -25,8 +25,8 @@ class ContentRender {
     if(typeof videoImgs === 'string'){
       videoImgs = JSON.parse(videoImgs)
     }
+    let buyLink = this.getMyLink(product)
     let arr = videoImgs.map(n => {
-      let buyLink = this.getMyLink(n)
       let itHtml = `
         <div class="item">
           <a class="imgBox" href="${buyLink}">
