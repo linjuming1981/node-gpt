@@ -18,7 +18,7 @@
         <el-table-column fixed="right" label="Operations" width="160">
           <template #default="scope">
             <div class="action">
-              <a class="preview" :href="`/preview/${scope.row.productId}`" target="previewFrame">预览</a>
+              <a class="preview" :href="`/preview/${scope.row.productId}`" target="previewFrame" @click="isPreview=true">预览</a>
               <a class="json" :href="`/json/${scope.row.productId}`" target="_blank">json</a>
               <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
             </div>
@@ -26,6 +26,9 @@
         </el-table-column>
       </el-table>
       <div class="preview">
+        <el-icon
+          @click="isPreview=false"
+        ><CircleClose /></el-icon>
         <iframe id="previewFrame" name="previewFrame"></iframe>
       </div>
     </div>
@@ -69,6 +72,7 @@ export default {
       products: [],
       oauthDialogVisible: false,
       oauthConfig: '',
+      isPreview: false,
     }
   },
   methods: {
@@ -197,7 +201,11 @@ export default {
 .body{
   display: flex;
 }
-.body #previewFrame{
-  border: none;
+.body #previewFrame {
+    width: 50vw;
+    height: 2000px;
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid #d5dce2;
 }
 </style>
