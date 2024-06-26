@@ -6,24 +6,29 @@
       <a href="https://console.cloud.google.com/apis/credentials/oauthclient/149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com?project=test-link-sheet" target="_blank">Oauth2</a>
       <el-button type="primary" @click="test">调试4</el-button>
     </div>
-    <el-table :data="products" style="width: 100%" :row-class-name="getRowClsName">
-      <el-table-column prop="productId" label="productId" width="180" />
-      <el-table-column prop="productTitle" label="productTitle" width="300" >
-        <template #default="scope">
-          <a :href="scope.row.productLink" target="_blank">{{scope.row.productTitle}}</a>
-        </template>
-      </el-table-column>
-      <el-table-column prop="postedToBlogger" label="已发布" width="100" />
-      <el-table-column fixed="right" label="Operations" width="160">
-        <template #default="scope">
-          <div class="action">
-            <a class="preview" :href="`/preview/${scope.row.productId}`" target="_blank">预览</a>
-            <a class="json" :href="`/json/${scope.row.productId}`" target="_blank">json</a>
-            <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
+    <div class="body">
+      <el-table :data="products" style="width: 100%" :row-class-name="getRowClsName">
+        <el-table-column prop="productId" label="productId" width="180" />
+        <el-table-column prop="productTitle" label="productTitle" width="300" >
+          <template #default="scope">
+            <a :href="scope.row.productLink" target="_blank">{{scope.row.productTitle}}</a>
+          </template>
+        </el-table-column>
+        <el-table-column prop="postedToBlogger" label="已发布" width="100" />
+        <el-table-column fixed="right" label="Operations" width="160">
+          <template #default="scope">
+            <div class="action">
+              <a class="preview" :href="`/preview/${scope.row.productId}`" target="previewFrame">预览</a>
+              <a class="json" :href="`/json/${scope.row.productId}`" target="_blank">json</a>
+              <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="preview">
+        <iframe id="previewFrame" name="previewFrame"></iframe>
+      </div>
+    </div>
     <el-dialog
       v-model="oauthDialogVisible"
       title="编辑Oauth2"
@@ -188,5 +193,11 @@ export default {
 }
 .highlight-row{
   background-color: lightblue;
+}
+.body{
+  display: flex;
+}
+.body #previewFrame{
+  border: none;
 }
 </style>
