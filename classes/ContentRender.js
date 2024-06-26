@@ -75,7 +75,6 @@ class ContentRender {
     let videosHtml_display = videosHtml? 'block': 'none'
     let benefitsHtml = this.getBenefitsHtml(aiResult)  
     let benefitsHtml_display = benefitsHtml? 'block': 'none';
-    console.log({benefitsHtml, benefitsHtml_display})
     let myLink = this.getMyLink(product)
     let infos = {
       ...product, 
