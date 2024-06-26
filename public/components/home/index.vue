@@ -88,7 +88,7 @@ export default {
           filter: {postedToBlogger: '0'}
         }
       })
-      this.products = res.data.data
+      this.products = res.data.data.filter(n => n.aiResult)
       console.log(this.products)
     },
 
