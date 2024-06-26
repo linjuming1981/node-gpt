@@ -112,6 +112,7 @@ export default {
           product
         }
       })
+      product.postedToBlogger = '1'
       console.log({res})
     },
 
