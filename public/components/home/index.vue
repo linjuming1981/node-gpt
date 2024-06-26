@@ -201,6 +201,12 @@ export default {
 .body{
   display: flex;
 }
+.body .preview{
+  position: relative;
+}
+.preview .el-icon{
+  color: red;
+}
 .body #previewFrame {
     width: 50vw;
     height: 2000px;
