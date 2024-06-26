@@ -6,7 +6,7 @@
       <a href="https://console.cloud.google.com/apis/credentials/oauthclient/149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com?project=test-link-sheet" target="_blank">Oauth2</a>
       <el-button type="primary" @click="test">调试4</el-button>
     </div>
-    <el-table :data="products" style="width: 100%">
+    <el-table :data="products" style="width: 100%" :row-class-name="getRowClsName">
       <el-table-column prop="productId" label="productId" width="180" />
       <el-table-column prop="productTitle" label="productTitle" width="300" >
         <template #default="scope">
@@ -150,6 +150,13 @@ export default {
         }
       })
       console.log({res})
+    },
+
+    getRowClsName(row, rowIndex){
+      if (row.postedToBlogger === '1') {
+        return 'highlight-row';
+      }
+      return '';
     }
 
   },
@@ -177,5 +184,8 @@ export default {
 .action .preview, .action .json{ 
   font-size: 12px;
   margin-right: 10px;
+}
+.highlight-row{
+  background-color: lightblue;
 }
 </style>
