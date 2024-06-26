@@ -203,14 +203,18 @@ export default {
   position: relative;
 }
 .preview .close{
-    color: red;
+    cursor: pointer;
+    color: #fff;
     background-color: #374956;
     position: absolute;
     left: 50%;
     top: -15px;
     width: 30px;
     height: 30px;
+    line-height: 30px;
     border-radius: 100%;
+    text-align: center;
+    font-size: 16px;
 }
 .body #previewFrame {
     width: 50vw;
