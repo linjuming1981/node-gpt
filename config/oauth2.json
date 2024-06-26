@@ -1,0 +1,20 @@
+{
+  "client_id": "149527344053-q46e8ltcj9rmfbivu757qru678cgcsb6.apps.googleusercontent.com",
+  "project_id": "test-link-sheet",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_secret": "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",
+  "redirect_uris": [
+    "https://8080-cs-239467590834-default.cs-asia-east1-jnrc.cloudshell.dev/saveOauthToken"
+  ],
+  "apiKey": "AIzaSyD4ufL3MFPjRMan0gVTAFcEzA0YVBuAECU",
+  "blogId": "8563811807642467410",
+  "tokens": {
+    "access_token": "ya29.a0Ad52N38p3RIFUfvfWmpAUsN9-8TUBg6bceyTyMVjFh-EnjolCK9OW4CgQlWqbWxGrfopUspBl--B7WZJCjqRJsyXL31-wgH8oH3wOFJ48BVLHyNbefihMmFzGvk45iWv9prv3ftJEgFFkLEpGuru8Ihvmo5KJf5FYILiaCgYKAasSARASFQHGX2Mib4FaADaCMqP693G8ZAk7dQ0171",
+    "refresh_token": "1//0etlYebimKdISCgYIARAAGA4SNwF-L9IriDWLbt91NX3qM-zuTIUKwfhAO4vNPKDhCQBdFU-P5Bj3k-oHjoAGs4mO3NqxFIKPkvA",
+    "scope": "https://www.googleapis.com/auth/blogger",
+    "token_type": "Bearer",
+    "expiry_date": 1714480434299
+  }
+}
