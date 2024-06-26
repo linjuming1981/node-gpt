@@ -38,7 +38,7 @@ class ContentRender {
       return itHtml
     })
     let videosHtml = arr.join('\n')
-    return 
+    return videosHtml
   }
 
   getBenefitsHtml(aiResult){
