@@ -42,7 +42,7 @@ class Amazon {
     if(page === 'list'){
       $page.find('.s-result-list').find('.s-result-item').each((i,n) => {
         let url = $(n).find('a').attr('href')
-        url = this.getPageItemUrl(url)
+        // url = this.getPageItemUrl(url)
         console.log(1111111, url)
       })
     }
