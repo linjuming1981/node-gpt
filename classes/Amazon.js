@@ -18,10 +18,23 @@ class Amazon {
   }
 
   getPageItemUrl(inputURL) {
-    let match = inputURL.match(/&url=([^&]+)%2Fref%3D/);
-    let decodedMatch = match ? decodeURIComponent(match[1]) : '';
-    let fullyDecoded = decodeURIComponent(decodedMatch);
-    return 'https://www.amazon.com' + fullyDecoded;
+    // 先定义一个空的结果字符串
+    let productPath = '';
+    
+    // 检查是否包含 '&url='
+    if (inputURL.includes('&url=')) {
+      // 使用正则表达式匹配链接中的 &url= 后面，到 %2Fref%3D 前面的部分
+      let match = inputURL.match(/&url=([^&]+)%2Fref%3D/);
+      // 使用 decodeURIComponent 函数对匹配的结果进行解码
+      productPath = match ? decodeURIComponent(match[1]) : '';
+    } else {
+      // 这里假定产品链接总是以 '/' 开始，百尾是以 /ref 开始的部分结束
+      let match = inputURL.match(/\/[^\/]+\/dp\/[^\/]+/);
+      productPath = match ? match[0] : '';
+    }
+    
+    // 返回完整的产品链接
+    return 'https://www.amazon.com' + productPath;
   }
 
   // 获取页面中所有产品连接
