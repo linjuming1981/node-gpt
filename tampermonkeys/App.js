@@ -45,7 +45,7 @@ const App = {
     },
 
     async addProductsToSheet_listPage(){
-      this.addProductsToSheet('list')
+      this.addProductsToSheet('list') // 做到这里
     }
   }
 }
