@@ -17,17 +17,35 @@ class Amazon {
     })
   }
 
+  getPageItemUrl(inputURL) {
+    let match = inputURL.match(/&url=([^&]+)%2Fref%3D/);
+    let decodedMatch = match ? decodeURIComponent(match[1]) : '';
+    let fullyDecoded = decodeURIComponent(decodedMatch);
+    return 'https://www.amazon.com' + fullyDecoded;
+  }
+
   // 获取页面中所有产品连接
-  async getProductList(url){
+  async getProductList(url, page=null){
     let html = await this.getPageHtml(url)
     let $page = $(html)
 
-    let regex = /^(https:\/\/www.amazon.com.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/
-    let productLinks = $page.find('a')
+    let productLinks = []
+    if(!page){
+      let regex = /^(https:\/\/www.amazon.com.*\/dp\/[A-Z0-9]+)[^A-Z0-9].*$/
+      let productLinks = $page.find('a')
       .filter((i,n) => n.href.match(regex))
       .toArray()
       .map(n => n.href.replace(regex, '$1'))
-    productLinks = Array.from(new Set(productLinks))
+      productLinks = Array.from(new Set(productLinks))
+    }
+
+    if(page === 'list'){
+      $page.find('.s-result-list').each((i,n) => {
+        let url = $(n).find('a').attr('href')
+        url = this.getPageItemUrl(url)
+        console.log(1111111, url)
+      })
+    }
 
     let productIds = []
     let filterLinks = []

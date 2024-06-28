@@ -2,6 +2,7 @@ const template = `
   <div class="amazon_app">
     <button type="primary" @click="addOneToSheet">收集one</button>
     <button type="primary" @click="addProductsToSheet">收集all</button>
+    <button type="primary" @click="addProductsToSheet_ListPage">收集列表页</button>
   </div>
 `
 const App = {
@@ -41,6 +42,12 @@ const App = {
       console.log('products', products)
       let res = await amazon.addProductsToSheet(products)
       return res
+    },
+
+    async addProductsToSheet_ListPage(){
+      let amazon = new Amazon()
+      let url = location.href
+      let productUrls = await amazon.getProductList(url, 'list')
     }
   }
 }
