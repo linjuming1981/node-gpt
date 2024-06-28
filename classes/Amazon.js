@@ -32,6 +32,10 @@ class Amazon {
       let match = inputURL.match(/\/[^\/]+\/dp\/[^\/]+/);
       productPath = match ? match[0] : '';
     }
+
+    if(!productPath){
+      return ''
+    }
     
     // 返回完整的产品链接
     return 'https://www.amazon.com' + productPath;
@@ -58,8 +62,10 @@ class Amazon {
         if(!url){
           return true
         }
-        url = this.getPageItemUrl(url)
-        productLinks.push(url)
+        let _url = this.getPageItemUrl(url)
+        if(_url){
+          productLinks.push(_url)
+        }
       })
     }
 
