@@ -2,7 +2,7 @@ const template = `
   <div class="amazon_app">
     <button type="primary" @click="addOneToSheet">收集one</button>
     <button type="primary" @click="addProductsToSheet">收集all</button>
-    <button type="primary" @click="addProductsToSheet_ListPage">收集列表页</button>
+    <button type="primary" @click="addProductsToSheet_listPage">收集列表页</button>
   </div>
 `
 const App = {
@@ -22,10 +22,10 @@ const App = {
       return res
     },
 
-    async addProductsToSheet(){  
+    async addProductsToSheet(page){  
       let amazon = new Amazon()
       let url = location.href
-      let productUrls = await amazon.getProductList(url)
+      let productUrls = await amazon.getProductList(url, page)
       let ps = productUrls.map(n => {
         return amazon.collectDetail(n)
       })
@@ -44,10 +44,8 @@ const App = {
       return res
     },
 
-    async addProductsToSheet_ListPage(){
-      let amazon = new Amazon()
-      let url = location.href
-      let productUrls = await amazon.getProductList(url, 'list')
+    async addProductsToSheet_listPage(){
+      this.addProductsToSheet('list')
     }
   }
 }
