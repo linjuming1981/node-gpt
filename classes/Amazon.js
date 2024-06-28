@@ -18,7 +18,7 @@ class Amazon {
   }
 
   getPageItemUrl(inputURL) {
-    // 先定义一个空的结果字符串
+    // 先定义一个空的结果字符串  
     let productPath = '';
     
     // 检查是否包含 '&url='
