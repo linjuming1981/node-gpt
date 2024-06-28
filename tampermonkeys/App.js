@@ -21,7 +21,7 @@ const App = {
       return res
     },
 
-    async addProductsToSheet(){
+    async addProductsToSheet(){  
       let amazon = new Amazon()
       let url = location.href
       let productUrls = await amazon.getProductList(url)
