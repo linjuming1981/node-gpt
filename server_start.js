@@ -87,7 +87,7 @@ app.post('/addProductsToSheet', async (req, res) => {
     }
   });
   console.log(11111, products)
-  await gSheet.addSheetDatas(products)
+  await gSheet.addSheetDatas({datas: products})
   res.send(req.body)
 })
 
