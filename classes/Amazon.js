@@ -2,8 +2,8 @@
 class Amazon {
   constructor(){
     // 谷歌cloude shell接口连接  
-    this.apiBaseUrl = 'https://8080-cs-239467590834-default.cs-asia-east1-vger.cloudshell.dev'
-    // this.apiBaseUrl = 'https://node-gpt-h1b3.onrender.com'
+    // this.apiBaseUrl = 'https://8080-cs-239467590834-default.cs-asia-east1-vger.cloudshell.dev'
+    this.apiBaseUrl = 'https://node-gpt-h1b3.onrender.com'
   }
 
   async getPageHtml(url){
