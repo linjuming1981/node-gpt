@@ -229,7 +229,7 @@ class GoogleSheet {
         }
       }
 
-      console(2222)
+      console.log(2222)
       sheets.spreadsheets.values.append(
         {
           auth, 
