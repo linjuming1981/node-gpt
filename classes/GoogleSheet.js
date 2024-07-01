@@ -229,17 +229,22 @@ class GoogleSheet {
         }
       }
 
+      console(2222)
       sheets.spreadsheets.values.append(
         {
           auth, 
           ...addRowOptions, 
-        },function(err, response) {
-        if(err) {
-          console.log('The API returned an error: ' + err);
-          return reject(err);
+        },
+        function(err, response) {
+          console.log(3333)
+          if(err) {
+            console.log('The API returned an error: ' + err);
+            return reject(err);
+          }
+          console.log(4444, response)
+          resolve(response);
         }
-        resolve(response);
-      });
+      );
 
     })
   }
