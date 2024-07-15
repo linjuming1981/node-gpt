@@ -136,6 +136,8 @@ class GoogleSheet {
         range: sheetTabName,
       }
 
+      console.log(33333, params)
+
       sheets.spreadsheets.values.get(
         params,
         (error, response) => {
