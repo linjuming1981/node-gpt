@@ -216,6 +216,7 @@ class GoogleSheet {
       let auth = await this.authHelper.getAuthClient();
 
       let existingRows = await this.getSheetDatas({sheetId, sheetTabName})
+      console.log(222, existingRows)
       let existingIds = existingRows.map(n => n.productId)
       datas = datas.filter(n => !existingIds.includes(n.productId))
       let dataRows = datas.map(obj => this.header.map(key => obj[key]))
