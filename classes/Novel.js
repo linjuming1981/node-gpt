@@ -39,6 +39,30 @@ class Novel {
     bookSheet.addSheetDatas({datas: items})
   }
 
+  splitChapterContent(chapterCont, perWordCont = 600) {
+    let outPutArr = [];
+    let currentSegment = '';
+    let currentLength = 0;
+  
+    chapterCont.split('\n').forEach(paragraph => {
+      if (currentLength + paragraph.length <= perWordCont) {
+        currentSegment += paragraph + '\n';
+        currentLength += paragraph.length;
+      } else {
+        outPutArr.push(currentSegment.trim());
+        currentSegment = paragraph + '\n';
+        currentLength = paragraph.length;
+      }
+    });
+  
+    if (currentSegment.length > 0) {
+      outPutArr.push(currentSegment.trim());
+    }
+  
+    return outPutArr;
+  }
+
+
 }
 
 module.exports = Novel;
