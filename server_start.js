@@ -243,3 +243,6 @@ const port = 8080
 app.listen(port, function(){
   console.log(`node-gpt: http://localhost:${port}`)
 });
+
+
+// 冲突时，丢弃本地代码，使用远程代码命令： git reset --hard origin/master
