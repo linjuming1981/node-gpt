@@ -46,7 +46,7 @@ class Novel {
   
     chapterCont.split('\n').forEach(paragraph => {
       if (currentLength + paragraph.length <= perWordCont) {
-        currentSegment += paragraph + '\n';
+        currentSegment += paragraph + '\n'; 
         currentLength += paragraph.length;
       } else {
         outPutArr.push(currentSegment.trim());
