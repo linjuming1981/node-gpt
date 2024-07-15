@@ -15,7 +15,7 @@ class Novel {
   // 根据小说内容文件，将里面的每一个章节内容提取出来，用数组输出
   splitBookToChapters(file) {
     let cont = fs.readFileSync(file).toString();
-    // 使用正则表达式匹配章节标题和内容
+    // 使用正则表达式匹配章节标题和内容       
     let chapters = cont.split(/\n(?=\s*第.*章\s)/);
     let chapterArr = [];
 
