@@ -43,7 +43,7 @@ class Novel {
 const novel = new Novel();
 const file = '../gpt-novels/perfect_world.txt'
 const chapters = novel.splitBookToChapters(file)
-console.log(chapters)
-// novel.saveChapterToSheet(chapters)
+// console.log(chapters)
+novel.saveChapterToSheet(chapters)
 
 
