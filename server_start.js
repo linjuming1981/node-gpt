@@ -10,7 +10,11 @@ const sheetId = AMAZON_SHEET_ID
 const sheetTabName = '工作表1'
 const gSheet = new GoogleSheet({sheetId, sheetTabName})
 
-
+// 完美世界小说sheet
+const bookSheet = new GoogleSheet({
+  sheetId: '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
+  sheetName: '工作表1'
+})
 
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
