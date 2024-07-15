@@ -33,17 +33,25 @@ class Novel {
     return chapterArr;   
   }
 
+  // 保存小说章节到google sheet
   saveChapterToSheet(items){
     const bookSheet = this.getGSheet();
     bookSheet.addSheetDatas({datas: items})
   }
+
 }
 
+module.exports = Novel;
 
-const novel = new Novel();
-const file = '../gpt-novels/perfect_world.txt'
-const chapters = novel.splitBookToChapters(file)
+if(module === require.main){
+  const novel = new Novel();
+
+
+}
+
+// const file = '../gpt-novels/perfect_world.txt'
+// const chapters = novel.splitBookToChapters(file)
 // console.log(chapters)
-novel.saveChapterToSheet(chapters)
+// novel.saveChapterToSheet(chapters)
 
 

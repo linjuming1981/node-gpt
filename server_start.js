@@ -11,7 +11,7 @@ const sheetTabName = '工作表1'
 const gSheet = new GoogleSheet({sheetId, sheetTabName})
 
 // 完美世界小说sheet
-const bookSheet = new GoogleSheet({
+const novelSheet = new GoogleSheet({
   sheetId: '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
   sheetTabName: '工作表1'
 })
@@ -216,6 +216,25 @@ app.post('/createBlogPost', async (req, res) => {
   product.postedToBlogger = '1'
   gSheet.updateRow({product})
   res.send({code: 200, ret})
+})
+
+app.post('/getNovelRows', async (req, res) => {
+  let {filter, update, count} = req.body
+  if(typeof filter === 'string'){
+    filter = JSON.parse(filter)
+  }
+  if(typeof update === 'string'){
+    update = JSON.parse(update)
+  }
+
+  let datas = await novelSheet.getSheetDatas({filter, count})
+
+  if(update){ // 获取到的记录做更新操作
+    datas.forEach(product => {
+      novelSheet.updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
+      // 做到这里，todo 2024-7-15
+    })
+  }
 })
 
 
