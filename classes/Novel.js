@@ -26,7 +26,7 @@ class Novel {
       chapterArr.push({ chapterTitle: title, cnCont: content });
     });
 
-    return chapterArr;
+    return chapterArr; 
   }
 
   saveChapterToSheet(items){
