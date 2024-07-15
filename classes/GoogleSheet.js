@@ -43,8 +43,10 @@ class GoogleSheet {
       let datas = []
 
       if(!columns.length){  // 返回全部字段
+        console.log(4444)
         datas = await this.getAllDatas({sheetId, sheetTabName})
       } else { // 指定列数据
+        console.log(5555)
         // 获取表头 B:B,E:E
         let header = await this.getSheetHeaders({sheetId, sheetTabName});
         datas = await Promise.all(columns.map(async column => {
