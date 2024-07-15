@@ -26,9 +26,16 @@ const options = {
 // 渲染
 const app = Vue.createApp({
   components: {
-    Home: Vue.defineAsyncComponent( () => loadModule('./components/home/index.vue', options) )
+    Home: Vue.defineAsyncComponent( () => loadModule('./components/home/index.vue', options) ),
+    Amazon: Vue.defineAsyncComponent( () => loadModule('./components/amazon/index.vue', options) ),
+    Novel: Vue.defineAsyncComponent( () => loadModule('./components/novel/index.vue', options) ),
   },
-  template: '<Home></Home>'
+  template: `
+    <Home>
+      <template #amazon><Amazon /></template>
+      <template #novel><Novel /></template>
+    </Home>
+  `
 });
 
 app.use(ElementPlus)
