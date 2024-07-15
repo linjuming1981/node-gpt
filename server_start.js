@@ -235,6 +235,19 @@ app.post('/getNovelRows', async (req, res) => {
       // 做到这里，todo 2024-7-15
     })
   }
+
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+  datas.forEach(n => {
+    let arr = novel.splitChapterContent(n.cnCont)
+    let cnParts = {}
+    arr.forEach((n1, i1) => {
+      cnParts[`part${i1}`] = n1
+    })
+    n.cnParts = cnParts
+  })
+
+  res.send({code: 200, data: datas, ...idsObj})
 })
 
 
