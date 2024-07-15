@@ -43,10 +43,8 @@ class GoogleSheet {
       let datas = []
 
       if(!columns.length){  // 返回全部字段
-        console.log(4444)
         datas = await this.getAllDatas({sheetId, sheetTabName})
       } else { // 指定列数据
-        console.log(5555)
         // 获取表头 B:B,E:E
         let header = await this.getSheetHeaders({sheetId, sheetTabName});
         datas = await Promise.all(columns.map(async column => {
@@ -138,8 +136,6 @@ class GoogleSheet {
         range: sheetTabName,
       }
 
-      console.log(33333, params)
-
       sheets.spreadsheets.values.get(
         params,
         (error, response) => {
@@ -220,7 +216,6 @@ class GoogleSheet {
       let auth = await this.authHelper.getAuthClient();
 
       let existingRows = await this.getSheetDatas({sheetId, sheetTabName})
-      console.log(222, existingRows)
       let existingIds = existingRows.map(n => n.productId)
       datas = datas.filter(n => !existingIds.includes(n.productId))
       let dataRows = datas.map(obj => this.header.map(key => obj[key]))

@@ -13,7 +13,7 @@ const gSheet = new GoogleSheet({sheetId, sheetTabName})
 // 完美世界小说sheet
 const bookSheet = new GoogleSheet({
   sheetId: '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
-  sheetName: '工作表1'
+  sheetTabName: '工作表1'
 })
 
 app.use(bodyParser.json({limit:'50mb'}));
