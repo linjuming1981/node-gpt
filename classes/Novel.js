@@ -31,7 +31,7 @@ class Novel {
 
   saveChapterToSheet(items){
     const bookSheet = this.getGSheet();
-    bookSheet.addSheetDatas(datas: items)
+    bookSheet.addSheetDatas({datas: items})
     console.log(111)  
   }
 }
