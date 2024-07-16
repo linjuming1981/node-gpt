@@ -27,7 +27,7 @@ class Novel {
       }
       let title = titleMatch ? titleMatch[0] : "Unknown Title";
       let content = chapter.replace(title, '').trim();
-      chapterArr.push({ chapterTitle: title, cnCont: content });
+      chapterArr.push({ cnTitle: title, cnCont: content });
     });
 
     return chapterArr;   
