@@ -65,7 +65,7 @@ class GoogleSheet {
       if(Object.keys(filter).length){
         console.log(222, datas[0])
         datas = datas.filter(n => {
-          return Object.keys(filter).every( key => n[key] === (filter[key]?.trim?.() || '') )
+          return Object.keys(filter).every( key => n[key] === (filter[key]?.trim?.() || '0') )
         })
       }
 
