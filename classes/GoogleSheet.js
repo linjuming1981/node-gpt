@@ -72,8 +72,6 @@ class GoogleSheet {
         })
       }
 
-      console.log(3333, datas)
-
       // 返回指定条数
       if(count){
         datas = datas.slice(0, count)

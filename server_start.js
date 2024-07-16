@@ -229,9 +229,6 @@ app.post('/getNovelRows', async (req, res) => {
   }
 
   let datas = await novelSheet.getSheetDatas({filter, count})
-
-  console.log(111, filter, count, datas)
-
   if(update){ // 获取到的记录做更新操作
     datas.forEach(product => {
       novelSheet.updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
