@@ -1,7 +1,7 @@
 <template>
   <div class="novel">
     <div class="top">
-      <el-button type="primary">刷新列表</el-button> 
+      <el-button type="primary" @click="getSheetRows(true)">刷新列表</el-button> 
     </div>
     <div class="body">
       <el-table :data="novels" style="width: 100%" :row-class-name="getRowClsName">
