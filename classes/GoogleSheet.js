@@ -44,6 +44,7 @@ class GoogleSheet {
 
       if(!columns.length){  // 返回全部字段
         datas = await this.getAllDatas({sheetId, sheetTabName})
+        console.log(222, sheetId, sheetTabName, datas.length)
       } else { // 指定列数据
         // 获取表头 B:B,E:E
         let header = await this.getSheetHeaders({sheetId, sheetTabName});
