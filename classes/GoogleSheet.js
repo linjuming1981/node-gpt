@@ -61,8 +61,8 @@ class GoogleSheet {
         datas = this.formatColumnData(datas, columns);
       }
 
-      // 过滤数据
-      if(Object.keys(filter).length){ 
+      // 过滤数据  
+      if(Object.keys(filter).length){      
         console.log(222, datas[0])
         datas = datas.filter(n => {
           return Object.keys(filter).every( key => {
