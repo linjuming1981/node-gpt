@@ -62,7 +62,7 @@ class GoogleSheet {
       }
 
       // 过滤数据
-      if(Object.keys(filter).length){
+      if(Object.keys(filter).length){ 
         console.log(222, datas[0])
         datas = datas.filter(n => {
           return Object.keys(filter).every( key => {
