@@ -248,7 +248,7 @@ app.post('/getNovelRows', async (req, res) => {
     n.cnParts = cnParts
   })
 
-  res.send({code: 200, data: datas, ...idsObj})
+  res.send({code: 200, data: datas})
 })
 
 
