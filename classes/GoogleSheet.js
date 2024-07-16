@@ -63,6 +63,7 @@ class GoogleSheet {
 
       // 过滤数据
       if(Object.keys(filter).length){
+        console.log(222, datas[0])
         datas = datas.filter(n => {
           return Object.keys(filter).every(key => n[key] === filter[key].trim())
         })
@@ -72,7 +73,6 @@ class GoogleSheet {
       if(count){
         datas = datas.slice(0, count)
       }
-      console.log(2222, datas)
 
       // 字段只如果是json，转换成对象或数据
       if(dealJson){
