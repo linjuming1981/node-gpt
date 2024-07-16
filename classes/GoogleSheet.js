@@ -44,7 +44,6 @@ class GoogleSheet {
 
       if(!columns.length){  // 返回全部字段
         datas = await this.getAllDatas({sheetId, sheetTabName})
-        console.log(222, sheetId, sheetTabName, datas.length)
       } else { // 指定列数据
         // 获取表头 B:B,E:E
         let header = await this.getSheetHeaders({sheetId, sheetTabName});
@@ -73,6 +72,7 @@ class GoogleSheet {
       if(count){
         datas = datas.slice(0, count)
       }
+      console.log(2222, datas)
 
       // 字段只如果是json，转换成对象或数据
       if(dealJson){
