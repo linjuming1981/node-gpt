@@ -257,6 +257,18 @@ app.post('/getOneNovel', async (req, res) => {
     filter = JSON.parse(filter)
   }
   let datas = await novelSheet.getSheetDatas({filter})
+
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+  datas.forEach(n => {
+    let arr = novel.splitChapterContent(n.cnCont)
+    let cnParts = {}
+    arr.forEach((n1, i1) => {
+      cnParts[`part${i1}`] = n1
+    })
+    n.cnParts = cnParts
+  })
+
   let item = datas[0]
   res.send({code: 200, data: item})
 })
