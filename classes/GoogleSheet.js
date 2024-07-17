@@ -98,7 +98,7 @@ class GoogleSheet {
         return resolve(this.header)
       }
       
-      let sheets = google.sheets("v4");
+      let sheets = google.sheets("v4"); 
       let auth = await this.authHelper.getAuthClient();
       let params = {
         auth,
