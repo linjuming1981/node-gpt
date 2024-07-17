@@ -75,7 +75,7 @@ class GoogleSheet {
         datas = datas.slice(0, count)
       }
 
-      // 字段只如果是json，转换成对象或数据
+      // 字段只如果是json，转换成对象或数据 
       if(dealJson){
         datas.forEach((n, i) => {
           for(let key in n){
