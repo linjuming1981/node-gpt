@@ -60,13 +60,13 @@ export default {
       }
     },
 
-    async createBlogPost(product){
-      product.postedToBlogger = '1'
+    async createBlogPost(novel){
+      novel.postedToBlogger = '1'
       let res = await axios({
         url: '/updateNovel',
         method: 'post',
         data: {
-          product
+          novel
         }
       })
       console.log({res})
