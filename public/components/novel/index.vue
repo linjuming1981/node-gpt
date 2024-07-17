@@ -59,6 +59,18 @@ export default {
         console.log(this.novels)
       }
     },
+
+    async createBlogPost(product){
+      product.postedToBlogger = '1'
+      let res = await axios({
+        url: '/updateNovel',
+        method: 'post',
+        data: {
+          product
+        }
+      })
+      console.log({res})
+    },
   }
 }
 </script>
