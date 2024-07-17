@@ -250,6 +250,15 @@ app.post('/getNovelRows', async (req, res) => {
   res.send({code: 200, data: datas})
 })
 
+app.post('/updateNovel', async (req, res) => {
+  console.log('/updateNovel', req.body)
+  let novel = req.body.novel
+  if(typeof novel === 'string'){
+    novel = JSON.parse(novel)
+  }
+  novelSheet.updateRow({product: novel})
+  res.send({code: 200, data: novel})
+})
 
 // 服务监听开启  
 const port = 8080
