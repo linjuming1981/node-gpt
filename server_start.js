@@ -250,6 +250,17 @@ app.post('/getNovelRows', async (req, res) => {
   res.send({code: 200, data: datas})
 })
 
+app.post('/getOneNovel', async (req, res) => {
+  console.log('/getOneNovel', req.body)
+  let filter = req.body.filter
+  if(typeof filter === 'string'){
+    filter = JSON.parse(filter)
+  }
+  let datas = await novelSheet.getSheetDatas({filter})
+  let item = datas[0]
+  res.send({code: 200, data: item})
+})
+
 app.post('/updateNovel', async (req, res) => {
   console.log('/updateNovel', req.body)
   let novel = req.body.novel
