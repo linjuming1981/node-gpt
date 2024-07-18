@@ -247,7 +247,12 @@ app.post('/getNovelRows', async (req, res) => {
     n.cnParts = cnParts
   })
 
-  res.send({code: 200, data: datas})
+  let idsObj = {}
+  for(let i=1; i<=10; i++){
+    idsObj[`productId${i}`] = datas[i]?.productId
+  }
+
+  res.send({code: 200, data: datas, ...idsObj})
 })
 
 app.post('/getOneNovel', async (req, res) => {
