@@ -248,7 +248,7 @@ app.post('/getNovelRows', async (req, res) => {
   })
 
   let idsObj = {}
-  for(let i=1; i<=10; i++){
+  for(let i=0; i<10; i++){
     idsObj[`productId${i}`] = datas[i]?.productId
   }
 
