@@ -269,7 +269,7 @@ app.post('/getOneNovel', async (req, res) => {
     let arr = novel.splitChapterContent(n.cnCont)
     let cnParts = {}
     arr.forEach((n1, i1) => {
-      n1 = n1.replace(/猿/g, '猩猩'); // coze翻译报错处理
+      n1 = n1.replace(/猿/g, '大猴'); // coze翻译报错处理
       cnParts[`part${i1}`] = n1
     })
     n.cnParts = cnParts
