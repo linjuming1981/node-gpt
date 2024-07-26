@@ -17,15 +17,19 @@ class AutoTest {
     }
   }
 
-  async getPage(url){
+  async getPage(url, isLike=false){
     if (!this.context) {
       throw new Error('Browser context is not initialized. Call initialize() first.');
     }
     const pages = await this.context.pages();
-    console.log(111, pages)
-
+    let page
+    if(!isLike){ // 精确匹配 
+      page = pages.find(n => n._mainFrame._url === url)
+    } else { // 模糊匹配
+      page = pages.find(n => n._mainFrame._url.includes(url))
+    }
+    return page
   }
-
 
 
 }
