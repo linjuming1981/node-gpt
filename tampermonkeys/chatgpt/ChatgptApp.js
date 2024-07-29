@@ -4,13 +4,13 @@ const template = `
     <button @click="translate">翻译一章</button>
   </div>
 `
-
+  
 const ChatgptApp = {
   template,
   data(){
     return {
 
-    }
+    }  
   },
   methods: { 
    
