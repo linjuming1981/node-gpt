@@ -41,7 +41,7 @@ if(module === require.main){
   (async () => {
     const autoTest = new AutoTest();
     await autoTest.initialize();
-    await autoTest.getPage()
+    await autoTest.getPage('chatgpt.com')
     await autoTest.closeBrowser();
   })();
 }

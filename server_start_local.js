@@ -34,4 +34,11 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.get('/')
+app.get('/gptFillQuery', async (req, res) => {
+  const {text} = req.body
+  const autoTest = new require('./classes/AutoTest.js')
+  await autoTest.initialize();
+  await autoTest.getPage('chatgpt.com');
+  const unswer = await autoTest.gptFillQuery(text)
+  res.send({code: 200, data: unswer})
+})
