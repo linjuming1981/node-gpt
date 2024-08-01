@@ -1,7 +1,7 @@
 const template = `
   <div class="chatgpt_app">
-    <button onclick="ChatgptApp.setRole">角色设定</button>
-    <button onclick="ChatgptApp.translate">翻译一章</button>
+    <button _onclick="setRole">角色设定</button>
+    <button _onclick="translate">翻译一章</button>
   </div>
 `
 
@@ -19,12 +19,15 @@ const ChatgptApp = {
     el.innerHTML = this.template
     document.body.appendChild(el)
     el.addEventListener('click', e => {
-      console.log(1111, e)
+      let evt = e.target.getAttribute('_onclick')
+      if(evt){
+        this[evt]()
+      }      
     })
   },
   async getNovelRows() {
     let apiBaseUrl = this.data['apiBaseUrl']
-    let novels = await Util.request({
+    let res = await Util.request({
       url: `${apiBaseUrl}/getNovelRows`,
       method: 'post',
       data: {
@@ -35,7 +38,7 @@ const ChatgptApp = {
         count: 10,
       }
     })
-    return novels;
+    return res.data
   },
 
   async translate() {
@@ -47,7 +50,7 @@ const ChatgptApp = {
       url: `http://localhost:9000/gptFillQuery`,
       method: 'post',
       data: {
-        text: novel.enCont
+        text: novel.cnCont
       }
     })
     console.log(res)
