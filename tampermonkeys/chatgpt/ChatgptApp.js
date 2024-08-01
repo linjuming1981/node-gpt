@@ -55,8 +55,14 @@ GM_addStyle(`
     right: 0;
     top: 20%;
   }
-  .chatgpt_app button{
+  .chatgpt_app button {
     display: block;
+    border: 1px solid #253a49;
+    margin-top: -1px;
+    background-color: #11191f;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 5px;
   }
 `)
 
