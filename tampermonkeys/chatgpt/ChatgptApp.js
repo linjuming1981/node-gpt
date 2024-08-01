@@ -1,3 +1,5 @@
+const e = require("express");
+
 const template = `
   <div class="chatgpt_app">
     <button onclick="ChatgptApp.setRole">角色设定</button>
@@ -12,9 +14,15 @@ const ChatgptApp = {
     novels: [],
   },
   mounted(){
+    this.render();
+  },
+  render(){
     var el = document.createElement('div');
     el.innerHTML = this.template
     document.body.appendChild(el)
+    el.addEventListener('click', e => {
+      console.log(1111, e)
+    })
   },
   async getNovelRows() {
     let apiBaseUrl = this.data['apiBaseUrl']
