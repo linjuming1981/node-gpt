@@ -1,5 +1,3 @@
-const e = require("express");
-
 const template = `
   <div class="chatgpt_app">
     <button onclick="ChatgptApp.setRole">角色设定</button>
@@ -14,7 +12,7 @@ const ChatgptApp = {
     novels: [],
   },
   mounted(){  
-    this.render();      // 111
+    this.render();      // 11112
   },
   render(){
     var el = document.createElement('div');
