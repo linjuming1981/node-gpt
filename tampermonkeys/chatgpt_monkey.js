@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         chatgpt
 // @namespace    http://tampermonkey.net/
-// @version      2024-03-21
+// @version      2024-8-1
 // @description  try to take over the world!
 // @author       You
 // @match        https://chagtgpt.com/*
@@ -11,7 +11,6 @@
 // @grant        unsafeWindow
 // @require      https://code.jquery.com/jquery-3.5.1.min.js
 // @require      https://unpkg.com/vue@3.2.26/dist/vue.global.prod.js
-// @require      file://D:\www\leb\node-gpt\classes/AutoTest.js
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\chatgpt\ChatgptApp.js
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\chatgpt_monkey.js
 // ==/UserScript==
