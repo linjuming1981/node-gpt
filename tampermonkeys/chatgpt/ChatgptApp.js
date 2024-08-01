@@ -34,8 +34,26 @@ const ChatgptApp = {
         this.novels = await this.getNovelRows()
       }
       let novel = this.novels.find(n => !n.isTranslated)
-      
-
+      let res = await Util.request({
+        url: `http://localhost:9000/gptFillQuery`,
+        method: 'post',
+        data: {
+          text: novel.enCont
+        }
+      })
+      console.log(res)
     }
   }
 }
+
+GM_addStyle(`
+  .chatgpt_app {
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    top: 20%;
+  }
+  .chatgpt_app button{
+    display: block;
+  }
+`)

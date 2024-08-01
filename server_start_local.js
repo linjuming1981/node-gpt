@@ -42,3 +42,10 @@ app.get('/gptFillQuery', async (req, res) => {
   const unswer = await autoTest.gptFillQuery(text)
   res.send({code: 200, data: unswer})
 })
+
+// 服务监听开启  
+const port = 9000
+app.listen(port, function(){
+  console.log(`node-gpt: http://localhost:${port}`)
+});
+
