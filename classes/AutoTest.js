@@ -31,6 +31,9 @@ class AutoTest {
     return page
   }
 
+  gptFillQuery(text){
+
+  }
 
 }
 
@@ -42,6 +45,7 @@ if(module === require.main){
     const autoTest = new AutoTest();
     await autoTest.initialize();
     await autoTest.getPage('chatgpt.com')
+    const unswer = await autoTest.gptFillQuery('你好吗，今天星期几')
     await autoTest.closeBrowser();
   })();
 }
