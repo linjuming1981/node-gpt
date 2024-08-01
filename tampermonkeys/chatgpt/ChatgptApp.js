@@ -1,48 +1,50 @@
 const template = `
   <div class="chatgpt_app">
-    <button @click="setRole">角色设定</button>
-    <button @click="translate">翻译一章</button>
+    <button onclick="ChatgptApp.setRole">角色设定</button>
+    <button onclick="ChatgptApp.translate">翻译一章</button>
   </div>
 `
-  
+
 const ChatgptApp = {
   template,
-  data(){
-    return {
-      apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
-      novels: [],
-    }  
+  data: {
+    apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
+    novels: [],
   },
-  methods: { 
-    async getNovelRows(){
-      let novels = await Util.request({
-        url: `${this.apiBaseUrl}/getNovelRows`,
-        method: 'post',
-        data: {
-          filter: {
-            enCont: '',
-            postedToBlogger: '0'
-          },
-          count: 10,
-        }
-      })
-      return novels;
-    },
-
-    async translate(){
-      if(!this.novels){
-        this.novels = await this.getNovelRows()
+  mounted(){
+    var el = document.createElement('div');
+    el.innerHTML = this.template
+    document.body.appendChild(el)
+  },
+  async getNovelRows() {
+    let apiBaseUrl = this.data['apiBaseUrl']
+    let novels = await Util.request({
+      url: `${apiBaseUrl}/getNovelRows`,
+      method: 'post',
+      data: {
+        filter: {
+          enCont: '',
+          postedToBlogger: '0'
+        },
+        count: 10,
       }
-      let novel = this.novels.find(n => !n.isTranslated)
-      let res = await Util.request({
-        url: `http://localhost:9000/gptFillQuery`,
-        method: 'post',
-        data: {
-          text: novel.enCont
-        }
-      })
-      console.log(res)
+    })
+    return novels;
+  },
+
+  async translate() {
+    if (!this.novels) {
+      this.novels = await this.getNovelRows()
     }
+    let novel = this.novels.find(n => !n.isTranslated)
+    let res = await Util.request({
+      url: `http://localhost:9000/gptFillQuery`,
+      method: 'post',
+      data: {
+        text: novel.enCont
+      }
+    })
+    console.log(res)
   }
 }
 
@@ -58,4 +60,5 @@ GM_addStyle(`
   }
 `)
 
+ChatgptApp.mounted();
 unsafeWindow.ChatgptApp = ChatgptApp;

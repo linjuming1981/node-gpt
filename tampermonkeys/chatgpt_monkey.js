@@ -16,13 +16,13 @@
 // ==/UserScript==
 
 (async () => {
-    console.log(111)
-    if (unsafeWindow.Vue === undefined) {
-      unsafeWindow.Vue = Vue;
-    }
-  
-    var el = document.createElement('div');
-    document.body.appendChild(el);
-    const { createApp } = Vue;
-    createApp(ChatgptApp).mount(el)
-  })();
+  console.log(111)
+  if (unsafeWindow.Vue === undefined) {
+    unsafeWindow.Vue = Vue;
+  }
+
+  var el = document.createElement('div');
+  document.body.appendChild(el);
+  const { createApp } = Vue;
+  createApp(ChatgptApp).mount(el)
+})();
