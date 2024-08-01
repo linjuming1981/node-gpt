@@ -1,5 +1,3 @@
-const e = require("express");
-
 const template = `
   <div class="chatgpt_app">
     <button onclick="ChatgptApp.setRole">角色设定</button>
