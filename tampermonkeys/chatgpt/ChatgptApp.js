@@ -1,3 +1,5 @@
+const e = require("express");
+
 const template = `
   <div class="chatgpt_app">
     <button onclick="ChatgptApp.setRole">角色设定</button>
@@ -11,8 +13,8 @@ const ChatgptApp = {
     apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
     novels: [],
   },
-  mounted(){
-    this.render();
+  mounted(){  
+    this.render();      // 111
   },
   render(){
     var el = document.createElement('div');
