@@ -57,3 +57,5 @@ GM_addStyle(`
     display: block;
   }
 `)
+
+unsafeWindow.ChatgptApp = ChatgptApp;
