@@ -220,6 +220,7 @@ app.post('/createBlogPost', async (req, res) => {
 })
 
 app.post('/getNovelRows', async (req, res) => {
+  console.log('/getNovelRows');
   let {filter, update, count} = req.body
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
