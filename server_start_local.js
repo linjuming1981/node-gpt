@@ -34,11 +34,9 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.post('/gptFillQuery', async (req, res) => {
-  console.log(1111111);
+app.get('/gptFillQuery', async (req, res) => {
   const {text} = req.body
-  const AutoTest = require('./classes/AutoTest.js')
-  const autoTest = new AutoTest()
+  const autoTest = new require('./classes/AutoTest.js')
   await autoTest.initialize();
   await autoTest.getPage('chatgpt.com');
   const unswer = await autoTest.gptFillQuery(text)
