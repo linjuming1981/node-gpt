@@ -32,7 +32,7 @@ class AutoTest {
   }
 
   gptFillQuery(text){
-
+    return 'kkkk'
   }
 
 }
