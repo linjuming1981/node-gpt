@@ -43,7 +43,7 @@ class AutoTest {
       console.log('GPT 在回答中...');
 
       // 等待 stop-button 消失（即变成 send-button）
-      await stopBtn.waitFor({ state: 'hidden' });
+      await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
 
       // 抓取最后一个 conversation-turn 元素的 HTML 内容
       const elements = page.locator('div[data-testid^="conversation-turn-"]');
@@ -55,7 +55,7 @@ class AutoTest {
       return markdownHtml;
     } catch (err) {
       console.error('gptFillQuery 执行失败:', err);
-      return 'error';
+      return false;
     }
   }
 

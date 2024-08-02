@@ -1,3 +1,6 @@
+
+var Util = {};
+
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     define([], factory);
@@ -9,7 +12,7 @@
 }(typeof self !== 'undefined' ? self : this, function () {
 
   // ----------------------------------
-  var Util = {
+  Util = {
     request(option){
       option = {
         responseType: 'json',

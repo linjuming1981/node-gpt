@@ -1,83 +1,298 @@
-t a/classes/AutoTest.js b/classes/AutoTest.js
-index ca5517a..66781a4 100644
+t a/.gitignore b/.gitignore
+index 92b9339..d62999a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,3 +1,4 @@
+ node_modules
+ package-lock.json
+ /.npmrc
++/changes.patch
+diff --git a/classes/AutoTest.js b/classes/AutoTest.js
+index 66781a4..87b9563 100644
 --- a/classes/AutoTest.js
 +++ b/classes/AutoTest.js
-@@ -34,17 +34,7 @@ class AutoTest {
-   async gptFillQuery(text) {
-     try {
-       const page = await this.getPage('chatgpt.com');
--
--      // 点击输入框并输入文本
--      await page.click('#prompt-textarea');
--      await page.keyboard.type('  ');
--      // 传递 text 作为参数给 page.evaluate
--      await page.evaluate((text) => {
--        const inputEl = document.querySelector('#prompt-textarea');
--        if (inputEl) {
--          inputEl.value = text;
--        }
--      }, text);
-+      await page.fill('#prompt-textarea', text)
-       await page.click('[data-testid="send-button"]');
-       
-       // 等待 stop-button 可见
-@@ -78,7 +68,8 @@ if(module === require.main){
-   (async () => {
-     const autoTest = new AutoTest();
-     await autoTest.initialize();
--    const unswer = await autoTest.gptFillQuery('随机生成一篇200字的散文')
-+    const text = '今天星期几'
-+    const unswer = await autoTest.gptFillQuery(text)
-     console.log(unswer);
-     await autoTest.closeBrowser();
-   })();
+@@ -43,7 +43,7 @@ class AutoTest {
+       console.log('GPT 在回答中...');
+ 
+       // 等待 stop-button 消失（即变成 send-button）
+-      await stopBtn.waitFor({ state: 'hidden' });
++      await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
+ 
+       // 抓取最后一个 conversation-turn 元素的 HTML 内容
+       const elements = page.locator('div[data-testid^="conversation-turn-"]');
+@@ -55,7 +55,7 @@ class AutoTest {
+       return markdownHtml;
+     } catch (err) {
+       console.error('gptFillQuery 执行失败:', err);
+-      return 'error';
++      return false;
+     }
+   }
+ 
 diff --git a/classes/Util.js b/classes/Util.js
-index 749f355..1c230d5 100644
+index 1c230d5..6f099f8 100644
 --- a/classes/Util.js
 +++ b/classes/Util.js
-@@ -36,6 +36,18 @@
-         })
-       })
-     },
+@@ -1,3 +1,6 @@
 +
-+    async gptAsk(text){
-+      let res = await this.request({
-+        url: `http://localhost:9000/gptFillQuery`,
-+        method: 'post',
-+        data: {
-+          text
-+        }
-+      })
-+      return res.data
-+    }
++var Util = {};
 +
-   };
+ (function (root, factory) {
+   if (typeof define === 'function' && define.amd) {
+     define([], factory);
+@@ -9,7 +12,7 @@
+ }(typeof self !== 'undefined' ? self : this, function () {
  
-   return Util;
+   // ----------------------------------
+-  var Util = {
++  Util = {
+     request(option){
+       option = {
+         responseType: 'json',
+diff --git a/diary.js b/diary.js
+index e0b996e..7e7ce67 100644
+--- a/diary.js
++++ b/diary.js
+@@ -34,4 +34,28 @@ server=="cloudflare" && port=="443" && header="Forbidden" && country=="新加坡
+ 
+ 3. 保持原文中的任何格式，如段落分隔或对话结构。
+ 
+-4. 我将提供中文小说章节内容给你，请你直接输出翻译结果，不要带其他非原文中的任何说明信息
+\ No newline at end of file
++4. 我将提供中文小说章节内容给你，请你直接输出翻译结果，不要带其他非原文中的任何说明信息。
++
++
++-----------
++
++你是一位专业的中英文学翻译家，专长于将中文小说翻译成英文。你的任务是翻译辰东的《完美世界》这部作品。
++
++**翻译要求：**
++
++1. **准确性与完整性：**
++   - 翻译必须与原文内容完全一致，不得省略任何情节或对话。
++
++2. **可读性与表达：**
++   - 确保翻译内容对英语读者易于理解。
++   - 在保持原意和语气的基础上，使用生动且富有表现力的语言，以提升译文的文学品质。
++
++3. **文化术语解释：**
++   - 对于英语读者可能不熟悉的文化特定术语或概念，请在术语后用括号提供简短解释。
++
++4. **格式保持：**
++   - 保持原文中的任何格式，如段落分隔和对话结构。
++
++5. **输出格式：**
++   - 请直接输出翻译结果，不附加任何额外的说明或信息。
++
 diff --git a/tampermonkeys/chatgpt/ChatgptApp.js b/tampermonkeys/chatgpt/ChatgptApp.js
-index ded9b48..4efed37 100644
+index 4efed37..d61662f 100644
 --- a/tampermonkeys/chatgpt/ChatgptApp.js
 +++ b/tampermonkeys/chatgpt/ChatgptApp.js
-@@ -9,6 +9,7 @@ const ChatgptApp = {
+@@ -2,9 +2,32 @@ const template = `
+   <div class="chatgpt_app">
+     <button _onclick="setRole">角色设定</button>
+     <button _onclick="translate">翻译一章</button>
++    <button _onclick="clearCache">清空缓存</button>
+   </div>
+ `
+ 
++const role = `
++你是一位专业的中英文学翻译家，专长于将中文小说翻译成英文。你的任务是翻译辰东的《完美世界》这部作品。
++
++**翻译要求：**
++
++1. **准确性与完整性：**
++   - 翻译必须与原文内容完全一致，不得省略任何情节或对话。
++
++2. **可读性与表达：**
++   - 确保翻译内容对英语读者易于理解。
++   - 在保持原意和语气的基础上，使用生动且富有表现力的语言，以提升译文的文学品质。
++
++3. **文化术语解释：**
++   - 对于英语读者可能不熟悉的文化特定术语或概念，请在术语后用括号提供简短解释。
++
++4. **格式保持：**
++   - 保持原文中的任何格式，如段落分隔和对话结构。
++
++5. **输出格式：**
++   - 请直接输出翻译结果，翻译结果不要markdown代码编辑器输出，章节标题用h2标签输出，不附加任何额外的说明或信息。
++`
++
+ const ChatgptApp = {
    template,
    data: {
-     apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
-+    // apiBaseUrl: 'https://8080-cs-239467590834-default.cs-asia-southeast1-ajrg.cloudshell.dev',
+@@ -13,7 +36,7 @@ const ChatgptApp = {
      novels: [],
    },
    mounted(){  
-@@ -53,7 +54,12 @@ const ChatgptApp = {
-         text: novel.cnCont
+-    this.render();      // 11112
++    this.render(); 
+   },
+   render(){
+     var el = document.createElement('div');
+@@ -26,7 +49,19 @@ const ChatgptApp = {
+       }      
+     })
+   },
+-  async getNovelRows() {
++  clearCache(){
++    Store.delete('novels');
++    console.log('novels 缓存已清空');
++  },
++  async getNovelRows(refresh=false) {
++    let novels = []
++    if(!refresh){
++      novels = Store.get('novels') 
++      if(novels && novels.some(n => !n.enCont)){
++        return novels
++      }
++    } 
++
+     let apiBaseUrl = this.data['apiBaseUrl']
+     let res = await Util.request({
+       url: `${apiBaseUrl}/getNovelRows`,
+@@ -39,27 +74,53 @@ const ChatgptApp = {
+         count: 10,
        }
      })
--    console.log(res)
++    novels = res?.data
++    if(novels){
++      Store.set('novels', novels)
++    }
 +
-+    let cnSection = `### ${novel.cnTitle} \n\n${novel.cnCont}`
-+    let enSection = await Util.gptAsk(cnSection)
-+    console.log(enSection)
+     return res.data
+   },
+ 
++  async setRole(){
++    console.log('setRole');
++    await Util.gptAsk(role)
++  },
 +
-+    
+   async translate() {
++    console.log('translate start');
+     if (!this.novels) {
+       this.novels = await this.getNovelRows()
+     }
+-    let novel = this.novels.find(n => !n.isTranslated)
+-    let res = await Util.request({
+-      url: `http://localhost:9000/gptFillQuery`,
++    let novel = this.novels.find(n => !n.enCont)
++    console.log('novel', novel);
++
++    let cnSection = `# ${novel.cnTitle} \n\n${novel.cnCont}`
++    let enHtml = await Util.gptAsk(cnSection)
++    if(!enHtml){
++      console.log('翻译出错，请重试');
++      return;
++    }
++
++    let enTitle = ''
++    let enCont = enHtml.replace(/^<h2>(.*)<\/h2>/, (s, s1) => {
++      enTitle = s1
++      return ''
++    })
++
++    novel.enTitle = enTitle
++    novel.enCont = enCont
++    Store.set('novels', this.novels)
++
++    let apiBaseUrl = this.data['apiBaseUrl']
++    const res = await Util.request({
++      url: `${apiBaseUrl}/updateNovel`,
+       method: 'post',
+       data: {
+-        text: novel.cnCont
++        novel
+       }
+     })
+-
+-    let cnSection = `### ${novel.cnTitle} \n\n${novel.cnCont}`
+-    let enSection = await Util.gptAsk(cnSection)
+-    console.log(enSection)
+-
+-    
++    console.log('translate end', res);
    }
  }
  
+@@ -79,6 +140,13 @@ GM_addStyle(`
+     font-size: 12px;
+     padding: 3px 5px;
+   }
++  .chatgpt_app button:hover {
++    background-color: #388e3c;
++  }
++  .chatgpt_app button:active {
++    background-color: #005a30; 
++    transform: scale(0.98);
++  }
+ `)
+ 
+ ChatgptApp.mounted();
+diff --git a/tampermonkeys/chatgpt_monkey.js b/tampermonkeys/chatgpt_monkey.js
+index 46f9daf..e8f5fa1 100644
+--- a/tampermonkeys/chatgpt_monkey.js
++++ b/tampermonkeys/chatgpt_monkey.js
+@@ -1,28 +1,47 @@
+ // ==UserScript==
+ // @name         chatgpt
+ // @namespace    http://tampermonkey.net/
+-// @version      2024-8-1
++// @version      2024-08-01
+ // @description  try to take over the world!
+ // @author       You
+-// @match        https://chagtgpt.com/*
++// @match        https://chatgpt.com
++// @match        https://chatgpt.com/*
+ // @icon         https://www.google.com/s2/favicons?sz=64&domain=chatgpt.com
+ // @grant        GM_xmlhttpRequest
+ // @grant        GM_addStyle
+ // @grant        unsafeWindow
+ // @require      https://code.jquery.com/jquery-3.5.1.min.js
+-// @require      https://unpkg.com/vue@3.2.26/dist/vue.global.prod.js
++// @require      file://D:\www\leb\node-gpt\classes\Util.js
++// @require      file://D:\www\leb\node-gpt\classes\Store.js
+ // @require      file://D:\www\leb\node-gpt\tampermonkeys\chatgpt\ChatgptApp.js
+ // @require      file://D:\www\leb\node-gpt\tampermonkeys\chatgpt_monkey.js
+ // ==/UserScript==
+ 
+-// (async () => {
+-//   console.log(111)
+-//   if (unsafeWindow.Vue === undefined) {
+-//     unsafeWindow.Vue = Vue;
+-//   }
+ 
+-//   var el = document.createElement('div');
+-//   document.body.appendChild(el);
+-//   const { createApp } = Vue;
+-//   createApp(ChatgptApp).mount(el)
+-// })();
+\ No newline at end of file
++const GptPage = {
++  changeUI(){
++
++  }
++}
++
++GM_addStyle(`
++  /* 隐藏左上角chatgpt切换 */
++  [aria-haspopup="menu"]{
++    display: none;
++  }
++
++  /* 隐藏升级plus弹窗 */
++  .absolute.bottom-full{
++    display: none;
++  }
++
++  /* 隐藏输入框提示 */
++  #prompt-textarea::placeholder{
++    visibility: hidden;
++  }
++
++  /* 隐藏底部chatgpt小字 */
++  .relative.px-2.py-2.text-center.text-xs.text-token-text-secondary>span{
++    display: none;
++  }
++`)
 
