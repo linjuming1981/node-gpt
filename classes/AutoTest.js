@@ -34,17 +34,7 @@ class AutoTest {
   async gptFillQuery(text) {
     try {
       const page = await this.getPage('chatgpt.com');
-
-      // 点击输入框并输入文本
-      await page.click('#prompt-textarea');
-      await page.keyboard.type('  ');
-      // 传递 text 作为参数给 page.evaluate
-      await page.evaluate((text) => {
-        const inputEl = document.querySelector('#prompt-textarea');
-        if (inputEl) {
-          inputEl.value = text;
-        }
-      }, text);
+      await page.fill('#prompt-textarea', text)
       await page.click('[data-testid="send-button"]');
       
       // 等待 stop-button 可见
@@ -78,7 +68,8 @@ if(module === require.main){
   (async () => {
     const autoTest = new AutoTest();
     await autoTest.initialize();
-    const unswer = await autoTest.gptFillQuery('随机生成一篇200字的散文')
+    const text = '今天星期几'
+    const unswer = await autoTest.gptFillQuery(text)
     console.log(unswer);
     await autoTest.closeBrowser();
   })();

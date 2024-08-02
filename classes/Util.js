@@ -36,6 +36,18 @@
         })
       })
     },
+
+    async gptAsk(text){
+      let res = await this.request({
+        url: `http://localhost:9000/gptFillQuery`,
+        method: 'post',
+        data: {
+          text
+        }
+      })
+      return res.data
+    }
+
   };
 
   return Util;

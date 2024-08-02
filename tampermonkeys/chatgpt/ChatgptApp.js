@@ -9,6 +9,7 @@ const ChatgptApp = {
   template,
   data: {
     apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
+    // apiBaseUrl: 'https://8080-cs-239467590834-default.cs-asia-southeast1-ajrg.cloudshell.dev',
     novels: [],
   },
   mounted(){  
@@ -53,7 +54,12 @@ const ChatgptApp = {
         text: novel.cnCont
       }
     })
-    console.log(res)
+
+    let cnSection = `### ${novel.cnTitle} \n\n${novel.cnCont}`
+    let enSection = await Util.gptAsk(cnSection)
+    console.log(enSection)
+
+    
   }
 }
 
