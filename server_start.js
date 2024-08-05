@@ -291,10 +291,10 @@ app.get('/novelPreview/:id', async (req, res) => {
   console.log('/novelPreview')   
   const productId = req.params.id
   let datas = await gSheet.getSheetDatas({filter:{productId}})
-  const ContentRender = require('./classes/Novel.js')
-  const render = new Novel()
-  let cnHtml = render.renderHtml(datas[0], 'cn')
-  let enHtml = render.renderHtml(datas[0], 'en')
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+  let cnHtml = novel.renderHtml(datas[0], 'cn')
+  let enHtml = novel.renderHtml(datas[0], 'en')
   const html =`
     <div class="novel_box">
       ${cnHtml}
