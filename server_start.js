@@ -291,7 +291,6 @@ app.get('/novelPreview/:id', async (req, res) => {
   console.log('/novelPreview')   
   const productId = req.params.id
   let datas = await novelSheet.getSheetDatas({filter:{productId}})
-  console.log(111111, datas[0])
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   let cnHtml = novel.renderHtml(datas[0], 'cn')
