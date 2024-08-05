@@ -303,6 +303,13 @@ app.get('/novelPreview/:id', async (req, res) => {
     <style>
       *{margin: 0; padding:0;}
       .novel_box{display: flex;}
+      main {
+        width: 50%;
+        flex: 1;
+        padding: 20px;
+        height: 100vh;
+        overflow-y: overlay;
+      }
     </style>
   `
   res.set('Content-Type', 'text/html');  
