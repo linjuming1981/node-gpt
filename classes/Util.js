@@ -40,18 +40,37 @@ var Util = {};
       })
     },
 
-    async gptAsk(text){
+    getGptPort(){
       let port = 9222
       if(navigator.userAgent.includes('Chrome/127.0.0.0')) { // 本地默认商用chrome浏览器是127，chromium是128
         port = 9224
       }
-      console.log({port, text});
+      return port
+    },
 
+    async gptAsk(text){
+      let port = this.getGptPort()
+      console.log({port, text});
       let res = await this.request({
         url: `http://localhost:9000/gptFillQuery`,
         method: 'post',
         data: {
           text,
+          port,
+        }
+      })
+      if(!res.data){
+        console.log('gptAsk返回false');
+      }
+      return res.data
+    },
+
+    async gptStop(){
+      let port = this.getGptPort();
+      let res = await this.request({
+        url: `http://localhost:9000/gptStop`,
+        method: 'post',
+        data: {
           port,
         }
       })

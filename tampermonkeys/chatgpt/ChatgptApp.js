@@ -1,8 +1,9 @@
 const template = `
   <div class="chatgpt_app">
     <button _onclick="setRole">角色设定</button>
-    <button _onclick="translate">翻译一章</button>
     <button _onclick="clearCache">清空缓存</button>
+    <button _onclick="translate">翻译一章</button>
+    <button _onclick="stop">停止翻译</button>
   </div>
 `
 
@@ -88,6 +89,7 @@ const ChatgptApp = {
   },
 
   async translate() {
+    this.isStop = false;
     console.log('translate start');
     if (!this.novels) {
       this.novels = await this.getNovelRows()
@@ -106,12 +108,20 @@ const ChatgptApp = {
       return;
     }
 
-    Util.getAsk(role)
-    const enTitle = await Util.getAsk(`请翻译章节标题： ${novel.title}`)
+    if(this.isStop) return;
+
+    let isTrue = await Util.gptAsk(`${role} \n\n你如果已经准备好，请回复“我已准备就绪”`)
+    if(this.isStop || !isTrue) return;    
+
+    const enTitle = await Util.gptAsk(`请翻译章节标题： ${novel.cnTitle}`)
+    if(!enTitle) return;
+
     const enContArr = []
     for(let i=0; i<novel.cnParts.length; i++){
       let cnPart = novel.cnParts[i]
-      enPart = await Util.getAsk(`请翻译以下章节片段： \n\n${cnPart}`)
+      enPart = await Util.gptAsk(`请翻译以下章节片段： \n\n${cnPart}`)
+      if(this.isStop || !enPart) return;   
+
       enContArr.push(enPart)
     }
     const enCont = enContArr.join('<br></br>')
@@ -144,6 +154,7 @@ const ChatgptApp = {
     novel.enCont = enCont
     Store.set('novels', this.novels)
 
+    if(this.isStop) return;    
     let apiBaseUrl = this.data['apiBaseUrl']
     const res = await Util.request({
       url: `${apiBaseUrl}/updateNovel`,
@@ -154,8 +165,15 @@ const ChatgptApp = {
     })
     console.log('translate end', res);
 
+    if(this.isStop) return;  
+
     // 翻译下一章节
     this.translate();
+  },
+
+  async stop(){
+    this.isStop = true;
+    await Util.gptStop()
   }
 }
 

@@ -38,9 +38,21 @@ app.post('/gptFillQuery', async (req, res) => {
   const {text, port} = req.body
   const AutoTest = require('./classes/AutoTest.js')
   const autoTest = new AutoTest({port})
+  console.log(11111);
   await autoTest.initialize();
+  console.log(22);
   const unswer = await autoTest.gptFillQuery(text)
+  console.log(33);
   res.send({code: 200, data: unswer})
+})
+
+app.post('/gptStop', async (req, res) => {
+  const {port} = req.body
+  const AutoTest = require('./classes/AutoTest.js')
+  const autoTest = new AutoTest({port})
+  await autoTest.initialize();
+  await autoTest.gptStop()
+  res.send({code: 200, data: true})
 })
 
 // 服务监听开启  

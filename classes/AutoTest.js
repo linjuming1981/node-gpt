@@ -78,6 +78,18 @@ class AutoTest {
     }
   }
 
+  // gpt点击停止
+  async gptStop(){
+    const page = await this.getPage('chatgpt.com');
+    await page.evaluate(() => {
+      const stopBtn = document.querySelector('[data-testid="stop-button"]')
+      if(stopBtn){
+        stopBtn.click()
+      }
+    })
+  }
+
+
 }
 
 module.exports = AutoTest

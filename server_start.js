@@ -248,6 +248,7 @@ app.post('/getNovelRows', async (req, res) => {
     // })
     // n.cnParts = cnParts
   })
+  console.log(12345);
 
   let idsObj = {}
   for(let i=0; i<10; i++){
