@@ -72,7 +72,7 @@ class Novel {
         <article class="novel_cont">${cont}</article>
       </div>
     `
-    const tplHtml = fs.readFileSync(path.resolve(__dirname, '../public/novel_tpl.html'))
+    const tplHtml = fs.readFileSync(path.resolve(__dirname, '../public/novel_tpl.html')).toString()
     let html = tplHtml.replace('{{novelHtml}}', novelHtml)
     return html
   }
