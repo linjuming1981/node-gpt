@@ -27,7 +27,7 @@ const GptPage = {
 GM_addStyle(`
   /* 隐藏左上角chatgpt切换 */
   [aria-haspopup="menu"]{
-    display: none;
+    font-size: 0;
   }
 
   /* 隐藏升级plus弹窗 */

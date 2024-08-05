@@ -35,10 +35,9 @@ app.all('*', function(req, res, next) {
 });
 
 app.post('/gptFillQuery', async (req, res) => {
-  console.log(1111111);
-  const {text} = req.body
+  const {text, port} = req.body
   const AutoTest = require('./classes/AutoTest.js')
-  const autoTest = new AutoTest()
+  const autoTest = new AutoTest({port})
   await autoTest.initialize();
   const unswer = await autoTest.gptFillQuery(text)
   res.send({code: 200, data: unswer})

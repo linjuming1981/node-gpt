@@ -39,7 +39,7 @@ class Novel {
     bookSheet.addSheetDatas({datas: items})
   }
 
-  splitChapterContent(chapterCont, perWordCont = 500) {
+  splitChapterContent(chapterCont, perWordCont = 2500) {
     let outPutArr = [];
     let currentSegment = '';
     let currentLength = 0;

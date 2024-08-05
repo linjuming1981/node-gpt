@@ -240,12 +240,13 @@ app.post('/getNovelRows', async (req, res) => {
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   datas.forEach(n => {
-    let arr = novel.splitChapterContent(n.cnCont)
-    let cnParts = {}
-    arr.forEach((n1, i1) => {
-      cnParts[`part${i1}`] = n1
-    })
-    n.cnParts = cnParts
+    let arr = novel.splitChapterContent(n.cnCont, 2500)
+    n.cnParts = arr
+    // let cnParts = {}
+    // arr.forEach((n1, i1) => {
+    //   cnParts[`part${i1}`] = n1
+    // })
+    // n.cnParts = cnParts
   })
 
   let idsObj = {}
