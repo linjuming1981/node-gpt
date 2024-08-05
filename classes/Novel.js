@@ -68,7 +68,7 @@ class Novel {
     let novelHtml = `
       <div class="novel_detail">
         <h2 class="novel_title">${title}</h2>
-        <article class="novel_cont">${enCont}</article>
+        <article class="novel_cont">${cont}</article>
       </div>
     `
     const tplHtml = fs.readFileSync(path.resolve(__dirname, '../public/novel_tpl.html'))
