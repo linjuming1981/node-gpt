@@ -7,9 +7,7 @@
       <el-table :data="novels" style="width: 100%" :row-class-name="getRowClsName">
         <el-table-column prop="productId" label="productId" width="100" />
         <el-table-column prop="cnTitle" label="cnTitle" width="180" />
-        <el-table-column prop="cnCont" label="cnCont" width="300" />
         <el-table-column prop="enTitle" label="enTitle" width="180" />
-        <el-table-column prop="enCont" label="enCont" width="300" />
         <el-table-column prop="postedToBlogger" label="postedToBlogger" width="100" />
         <el-table-column fixed="right" label="Operations" width="160">
           <template #default="scope">

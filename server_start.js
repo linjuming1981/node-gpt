@@ -242,11 +242,6 @@ app.post('/getNovelRows', async (req, res) => {
   datas.forEach(n => {
     let arr = novel.splitChapterContent(n.cnCont, 2500)
     n.cnParts = arr
-    // let cnParts = {}
-    // arr.forEach((n1, i1) => {
-    //   cnParts[`part${i1}`] = n1
-    // })
-    // n.cnParts = cnParts
   })
   console.log(12345);
 
@@ -291,6 +286,28 @@ app.post('/updateNovel', async (req, res) => {
   novelSheet.updateRow({product: novel})
   res.send({code: 200, data: novel})
 })
+
+app.get('/novelPreview', async (req, res) => {
+  const productId = req.params.id
+  let datas = await gSheet.getSheetDatas({filter:{productId}})
+  const ContentRender = require('./classes/Novel.js')
+  const render = new Novel()
+  let cnHtml = render.renderHtml(datas[0], 'cn')
+  let enHtml = render.renderHtml(datas[0], 'en')
+  const html =`
+    <div class="novel_box">
+      ${cnHtml}
+      ${enHtml}
+    </div>
+    <style>
+      *{margin: 0; padding:0;}
+      .novel_box{display: flex;}
+    </style>
+  `
+  res.set('Content-Type', 'text/html');  
+  res.send(html);
+})
+
 
 // 服务监听开启  
 const port = 8080

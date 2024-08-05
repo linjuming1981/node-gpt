@@ -53,21 +53,6 @@ class AutoTest {
       const elements = page.locator('div[data-testid^="conversation-turn-"]');
       const lastElement = elements.nth(await elements.count() - 1);
       
-      // 检查最后一个 conversation-turn 元素是否包含含有指定字符串的子元素
-      const isBloken = await lastElement.evaluate((element) => {
-        let _isBloken = Array.from(element.children).some(child => 
-          child.innerHTML.includes('此内容可能违反了我们的')
-        );
-        if(_isBloken){
-          console.log('违反使用政策被终止，翻译不完整');
-        }
-        return _isBloken
-      });
-
-      if(isBloken){
-        return false
-      }
-
       // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
       const markdownElement = lastElement.locator('.markdown');
       const markdownHtml = await markdownElement.innerHTML();

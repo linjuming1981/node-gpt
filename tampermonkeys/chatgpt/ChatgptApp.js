@@ -26,14 +26,13 @@ const role = `
    - 保持原文中的任何格式，如段落分隔和对话结构。
 
 5. **输出格式：**
-   - 请直接输出翻译结果，翻译结果不要markdown代码编辑器输出，章节标题用h2标签输出，格式如"Chapter 24: The Divine Weapon"，不附加任何额外的说明或信息。
+   - 请直接输出翻译结果，翻译结果不要markdown代码编辑器输出，不附加任何额外的说明或信息。
 `
 
 const ChatgptApp = {
   template,
   data: {
     apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
-    // apiBaseUrl: 'https://8080-cs-239467590834-default.cs-asia-southeast1-ajrg.cloudshell.dev',
     novels: [],
   },
   mounted(){  
@@ -113,8 +112,9 @@ const ChatgptApp = {
     let isTrue = await Util.gptAsk(`${role} \n\n你如果已经准备好，请回复“我已准备就绪”`)
     if(this.isStop || !isTrue) return;    
 
-    const enTitle = await Util.gptAsk(`请翻译章节标题： ${novel.cnTitle}`)
+    const enTitle = await Util.gptAsk(`请翻译章节标题（输出格式示例"Chapter 16: Admitting Defeat"）：\n ${novel.cnTitle}`)
     if(!enTitle) return;
+    enTitle = enTitle.replace('<p>', '').replace('</p>', '')
 
     const enContArr = []
     for(let i=0; i<novel.cnParts.length; i++){
@@ -124,31 +124,8 @@ const ChatgptApp = {
 
       enContArr.push(enPart)
     }
+    console.log('enContArr', enContArr);
     const enCont = enContArr.join('<br></br>')
-
-    // let cnSection = `# ${novel.cnTitle} \n\n${novel.cnCont}`
-    // let askCont = `${role} \n\n 下面是你要翻译的章节内容： \n\n ${cnSection}`
-    // let enHtml = await Util.gptAsk(askCont)
-    // if(!enHtml){
-    //   console.log('翻译出错，请重试');
-
-    //   GM_notification({
-    //     title: '翻译任务出错中断',
-    //     text: `翻译任务出错中断`,
-    //     timeout: 5000,
-    //     onclick: () => {
-    //       unsafeWindow.focus(); // 并不一定能用 
-    //     }
-    //   })
-
-    //   return;
-    // }
-
-    // let enTitle = ''
-    // let enCont = enHtml.replace(/^<h2>(.*)<\/h2>/, (s, s1) => {
-    //   enTitle = s1
-    //   return ''
-    // })
 
     novel.enTitle = enTitle
     novel.enCont = enCont
