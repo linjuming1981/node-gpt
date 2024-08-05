@@ -288,6 +288,7 @@ app.post('/updateNovel', async (req, res) => {
 })
 
 app.get('/novelPreview', async (req, res) => {
+  console.log('/novelPreview11')   
   const productId = req.params.id
   let datas = await gSheet.getSheetDatas({filter:{productId}})
   const ContentRender = require('./classes/Novel.js')
