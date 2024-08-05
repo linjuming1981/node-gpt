@@ -65,7 +65,11 @@ class GoogleSheet {
       if(Object.keys(filter).length){      
         datas = datas.filter(n => {
           return Object.keys(filter).every( key => {
-            return n[key] === (filter[key]?.trim?.() || '') 
+            let val = filter[key]
+            if(val === 'NOT_EMPTY'){
+              return n[key] !== ''
+            }
+            return n[key] === (val?.trim?.() || '') 
           } )
         })
       }

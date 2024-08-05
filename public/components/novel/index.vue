@@ -48,8 +48,8 @@ export default {
           url: '/getNovelRows',
           method: 'post',
           data: {
-            filter: {postedToBlogger: '0'}, 
-            count: 10,
+            filter: {postedToBlogger: '0', enTitle: 'NOT_EMPTY'}, 
+            count: 50,
           }
         })
         this.novels = res.data.data;
