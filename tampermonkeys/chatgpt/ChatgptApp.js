@@ -1,8 +1,8 @@
 const template = `
   <div class="chatgpt_app">
-    <button _onclick="setRole">角色设定</button>
+    <button _onclick="toggleText">隐藏文字</button>
     <button _onclick="clearCache">清空缓存</button>
-    <button _onclick="translate">翻译一章</button>
+    <button _onclick="translate">开始翻译</button>
     <button _onclick="stop">停止翻译</button>
   </div>
 `
@@ -37,6 +37,9 @@ const ChatgptApp = {
   },
   mounted(){  
     this.render(); 
+    if(Store.get('isAutoTranslate')){
+      this.translate()
+    }
   },
   render(){
     var el = document.createElement('div');
@@ -71,7 +74,7 @@ const ChatgptApp = {
           enCont: '',
           postedToBlogger: '0'
         },
-        count: 10,
+        count: 20,
       }
     })
     novels = res?.data
@@ -87,8 +90,23 @@ const ChatgptApp = {
     await Util.gptAsk(role)
   },
 
-  async translate() {
+  toggleText(){
+    const body = document.body
+    if (body.classList.contains('body-hide-text')) {
+      body.classList.remove('body-hide-text');
+    } else {
+      body.classList.add('body-hide-text');
+    }
+  },
+
+  async translate(count=0) {
+    if(count >= 5 ){
+      Store.set('isAutoTranslate', true)
+      await Util.refreshGptPage()
+      return
+    }
     this.isStop = false;
+    Store.set('isAutoTranslate', false);
     console.log('translate start');
     if (!this.novels) {
       this.novels = await this.getNovelRows()
@@ -112,7 +130,7 @@ const ChatgptApp = {
     let isTrue = await Util.gptAsk(`${role} \n\n你如果已经准备好，请回复“我已准备就绪”`)
     if(this.isStop || !isTrue) return;    
 
-    const enTitle = await Util.gptAsk(`请翻译章节标题（输出格式示例"Chapter 16: Admitting Defeat"）：\n ${novel.cnTitle}`)
+    let enTitle = await Util.gptAsk(`请翻译章节标题（输出格式示例"Chapter 16: Admitting Defeat"）：\n ${novel.cnTitle}`)
     if(!enTitle) return;
     enTitle = enTitle.replace('<p>', '').replace('</p>', '')
 
@@ -145,7 +163,7 @@ const ChatgptApp = {
     if(this.isStop) return;  
 
     // 翻译下一章节
-    this.translate();
+    this.translate(count + 1);
   },
 
   async stop(){
@@ -176,6 +194,9 @@ GM_addStyle(`
   .chatgpt_app button:active {
     background-color: #005a30; 
     transform: scale(0.98);
+  }
+  .body-hide-text .text-token-text-primary[data-testid^="conversation-turn-"] {
+    display: none;
   }
 `)
 

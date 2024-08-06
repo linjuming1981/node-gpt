@@ -74,6 +74,11 @@ class AutoTest {
     })
   }
 
+  // 刷新页面，防止内存越来越高
+  async refreshGptPage(){
+    const page = await this.getPage('chatgpt.com');
+    await page.goto('https://chatgpt.com')
+  }
 
 }
 
@@ -82,8 +87,9 @@ module.exports = AutoTest
 // 调试
 if(module === require.main){
   (async () => {
-    const autoTest = new AutoTest();
+    const autoTest = new AutoTest({port: 9224});
     await autoTest.initialize();
+    await autoTest.refreshGptPage();
     const text = '今天星期几'
     const unswer = await autoTest.gptFillQuery(text)
     console.log(unswer);

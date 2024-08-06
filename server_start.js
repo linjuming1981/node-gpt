@@ -219,6 +219,22 @@ app.post('/createBlogPost', async (req, res) => {
   res.send({code: 200, ret})
 })
 
+app.post('/createNovelBlogPost', async (req, res) => {
+  const {product} = req.body
+  const Novel = require('./class/Novel.js')
+  const novel = new Novel()
+  const html = novel.renderHtml(product, 'en')
+
+  const GoogleBlogger = require('./classes/GoogleBlogger.js') 
+  const blogger = new GoogleBlogger()
+  const blogId = '8875046865650114267' // 小说的博客id
+  const ret = await blogger.createPost({blogId, title, content: html, isDraft: false})
+  console.log('/createNovelBlogPost', ret);
+  product.postedToBlogger = '1'
+  novelSheet.updateRow({product})
+  res.send({code: 200, ret})
+})
+
 app.post('/getNovelRows', async (req, res) => {
   console.log('/getNovelRows');
   let {filter, update, count} = req.body

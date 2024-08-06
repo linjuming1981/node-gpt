@@ -55,6 +55,15 @@ app.post('/gptStop', async (req, res) => {
   res.send({code: 200, data: true})
 })
 
+app.post('/refreshGptPage', async (req, res) => {
+  const {port} = req.body
+  const AutoTest = require('./classes/AutoTest.js')
+  const autoTest = new AutoTest({port})
+  await autoTest.initialize();
+  await autoTest.refreshGptPage()
+  res.send({code: 200, data: true})
+})
+
 // 服务监听开启  
 const port = 9000
 app.listen(port, function(){

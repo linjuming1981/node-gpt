@@ -17,13 +17,6 @@
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\chatgpt_monkey.js
 // ==/UserScript==
 
-
-const GptPage = {
-  changeUI(){
-
-  }
-}
-
 GM_addStyle(`
   /* 隐藏左上角chatgpt切换 */
   [aria-haspopup="menu"]{
@@ -44,4 +37,5 @@ GM_addStyle(`
   .relative.px-2.py-2.text-center.text-xs.text-token-text-secondary>span{
     display: none;
   }
+
 `)

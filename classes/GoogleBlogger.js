@@ -15,17 +15,18 @@ class GoogleBlogger {
     return google.blogger({ version: 'v3', auth: authClient });
   }
 
-  async createPost({title, content }) {
+  async createPost({blogId, title, content, isDraft=true }) {
     try {
       const oauthClient = this.authHelper.getOAuthClient()
       const tokens = await this.authHelper.getOAuthToken()
       oauthClient.setCredentials(tokens)
 
+      blogId = blogId || config.blogger.blogId
       const blogger = google.blogger('v3')
       const res = await blogger.posts.insert({
         auth: oauthClient,
         blogId: config.blogger.blogId,
-        isDraft: true, // 使用 isDraft 参数
+        isDraft,
         resource: {
           title: title,
           content: content,

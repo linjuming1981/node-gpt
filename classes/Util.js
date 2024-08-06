@@ -75,6 +75,18 @@ var Util = {};
         }
       })
       return res.data
+    },
+
+    async refreshGptPage(){
+      let port = this.getGptPort();
+      let res = await this.request({
+        url: `http://localhost:9000/refreshGptPage`,
+        method: 'post',
+        data: {
+          port,
+        }
+      })
+      return res.data
     }
 
   };

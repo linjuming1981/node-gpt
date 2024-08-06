@@ -13,7 +13,6 @@
           <template #default="scope">
             <div class="action">
               <a class="preview" :href="`/novelPreview/${scope.row.productId}`" target="previewFrame" @click="isPreview=true">预览</a>
-              <a class="json" :href="`/novelDetail/${scope.row.productId}`" target="_blank">json</a>
               <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
             </div>
           </template>
@@ -61,10 +60,10 @@ export default {
     async createBlogPost(novel){
       novel.postedToBlogger = '1'
       let res = await axios({
-        url: '/updateNovel',
+        url: '/createNovelBlogPost',
         method: 'post',
         data: {
-          novel
+          product
         }
       })
       console.log({res})
