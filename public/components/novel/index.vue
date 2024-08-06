@@ -63,7 +63,7 @@ export default {
         url: '/createNovelBlogPost',
         method: 'post',
         data: {
-          product
+          product: novel
         }
       })
       console.log({res})
