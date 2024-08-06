@@ -228,7 +228,7 @@ app.post('/createNovelBlogPost', async (req, res) => {
   const GoogleBlogger = require('./classes/GoogleBlogger.js') 
   const blogger = new GoogleBlogger()
   const blogId = '8875046865650114267' // 小说的博客id
-  const ret = await blogger.createPost({blogId, title, content: html, isDraft: false})
+  const ret = await blogger.createPost({blogId, title:product.enTitle, content: html, isDraft: false})
   console.log('/createNovelBlogPost', ret);
   product.postedToBlogger = '1'
   novelSheet.updateRow({product})
