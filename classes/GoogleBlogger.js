@@ -25,7 +25,7 @@ class GoogleBlogger {
       const blogger = google.blogger('v3')
       const res = await blogger.posts.insert({
         auth: oauthClient,
-        blogId: config.blogger.blogId,
+        blogId,
         isDraft,
         resource: {
           title: title,
