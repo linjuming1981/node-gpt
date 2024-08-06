@@ -14,7 +14,7 @@
 export default {
   data(){
     return {
-      page: 'amazon'
+      page: 'novel'
     }
   },
   methods: {
