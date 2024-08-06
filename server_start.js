@@ -221,7 +221,7 @@ app.post('/createBlogPost', async (req, res) => {
 
 app.post('/createNovelBlogPost', async (req, res) => {
   const {product} = req.body
-  const Novel = require('./class/Novel.js')
+  const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   const html = novel.renderHtml(product, 'en')
 
