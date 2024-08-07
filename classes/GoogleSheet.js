@@ -299,7 +299,7 @@ class GoogleSheet {
     console.log( `${sheetTabName}!A${rowI + 2}:${endColumnLetter}${rowI + 2}`)
   
     let sheets = google.sheets('v4');
-    // await sheets.spreadsheets.values.update(request);
+    await sheets.spreadsheets.values.update(request);
     return true;
   }
 
