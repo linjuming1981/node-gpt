@@ -230,7 +230,10 @@ app.post('/createNovelBlogPost', async (req, res) => {
   const blogId = '8875046865650114267' // 小说的博客id
   const ret = await blogger.createPost({blogId, title:product.enTitle, content: html, isDraft: false})
   console.log('/createNovelBlogPost', ret.id);
-  product.postedToBlogger = '1'
+  product = {
+    productId: product.productId,
+    postedToBlogger: '1'
+  }
   novelSheet.updateRow({product})
   res.send({code: 200, ret})
 })
