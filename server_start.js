@@ -232,7 +232,8 @@ app.post('/createNovelBlogPost', async (req, res) => {
   console.log('/createNovelBlogPost', ret.id);
   product = {
     productId: product.productId,
-    postedToBlogger: '1'
+    postedToBlogger: '1',
+    bloggerPostId: ret.id,
   }
   novelSheet.updateRow({product})
   res.send({code: 200, ret})
