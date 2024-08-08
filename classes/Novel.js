@@ -76,6 +76,22 @@ class Novel {
     return html
   }
 
+  async postToBlogger(product){
+    let html = this.renderHtml(product, 'en')
+    const GoogleBlogger = require('./GoogleBlogger.js') 
+    const blogger = new GoogleBlogger()
+    const blogId = '8875046865650114267' // 小说的博客id
+    const ret = await blogger.createPost({blogId, title:product.enTitle, content: html, isDraft: false})
+    product = {
+      productId: product.productId,
+      postedToBlogger: '1',
+      bloggerPostId: ret.id,
+    }
+    const novelSheet = this.getGSheet()
+    await novelSheet.updateRow({product})
+    return ret
+  }
+
 
 }
 

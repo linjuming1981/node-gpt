@@ -46,11 +46,6 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-
-// app.get("/", function (req, res) {
-//   res.sendFile(path.join(__dirname, "/public/index.html"));
-// });
-
 app.get('/test', async (req, res) => {
   // const GoogleSheet = require('./classes/GoogleSheet.js')
   // const gSheet = new GoogleSheet()
@@ -223,19 +218,7 @@ app.post('/createNovelBlogPost', async (req, res) => {
   let {product} = req.body
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
-  const html = novel.renderHtml(product, 'en')
-
-  const GoogleBlogger = require('./classes/GoogleBlogger.js') 
-  const blogger = new GoogleBlogger()
-  const blogId = '8875046865650114267' // 小说的博客id
-  const ret = await blogger.createPost({blogId, title:product.enTitle, content: html, isDraft: false})
-  console.log('/createNovelBlogPost', ret.id);
-  product = {
-    productId: product.productId,
-    postedToBlogger: '1',
-    bloggerPostId: ret.id,
-  }
-  novelSheet.updateRow({product})
+  const ret = await novel.postToBlogger(product)
   res.send({code: 200, ret})
 })
 
@@ -305,6 +288,27 @@ app.post('/updateNovel', async (req, res) => {
   novelSheet.updateRow({product: novel})
   res.send({code: 200, data: novel})
 })
+
+// 通过cloudFlare定时任务发博文到blooger
+app.get('/cronPostNovelToBlogger', async (req, res) => {
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+
+  let filter = {
+    postedToBlogger: '0', 
+    enTitle: 'NOT_EMPTY'
+  }  
+  let datas = await novelSheet.getSheetDatas({filter})
+  const rets = []
+  datas = datas.slice(0, 2)
+  datas.forEach(async n => {
+    let ret = await novel.postToBlogger(n)
+    rets.push(ret)
+  })
+
+  res.send({code: 200, data: rets})
+})
+
 
 app.get('/novelPreview/:id', async (req, res) => {
   console.log('/novelPreview')   

@@ -173,11 +173,20 @@ const ChatgptApp = {
 }
 
 GM_addStyle(`
+  .chatgpt_app:hover{
+    width: auto;
+    height: auto;
+    opacity: 1;
+  }
   .chatgpt_app {
     position: fixed;
     z-index: 1000;
     right: 0;
     top: 20%;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    opacity: 0.05;
   }
   .chatgpt_app button {
     display: block;
