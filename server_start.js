@@ -301,10 +301,12 @@ app.get('/cronPostNovelToBlogger', async (req, res) => {
   let datas = await novelSheet.getSheetDatas({filter})
   const rets = []
   datas = datas.slice(0, 2)
-  datas.forEach(async n => {
-    let ret = await novel.postToBlogger(n)
-    rets.push(ret)
-  })
+
+  for (let i = 0; i < datas.length; i++) {
+    const n = datas[i];
+    const ret = await novel.postToBlogger(n);
+    rets.push(ret);
+  }
 
   res.send({code: 200, data: rets})
 })
