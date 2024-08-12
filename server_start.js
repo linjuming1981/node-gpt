@@ -47,7 +47,7 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/test', async (req, res) => {
-
+  console.log('111ddd')
   // 调通测试
   res.send({data: [{name:'a', value: 111}]})
 
