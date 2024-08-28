@@ -149,20 +149,25 @@ class GoogleSheet {
             console.log("Error getting data from sheet:", error);
             resolve([]);
           } else {
-            let [headerRow, ...dataRows] = response.data.values;
+            const [headerRow, ...dataRows] = response.data.values;
             this.header = headerRow;
             console.log('header', this.header);
-            let datas = dataRows.map(row => {
-              return row.reduce((obj, value, index) => {
-                obj[headerRow[index]] = value;
-                return obj;
+      
+            const datas = dataRows.map(row => {
+              // 使用对象初始化语法直接构造对象
+              const obj = headerRow.reduce((acc, header, index) => {
+                acc[header] = row[index] || ''; // 如果值不存在，使用空字符串代替
+                return acc;
               }, {});
+      
+              return obj;
             });
-
+      
             resolve(datas);
           }
         }
       );
+      
     })
   }
 

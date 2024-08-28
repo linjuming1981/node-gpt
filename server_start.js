@@ -47,10 +47,33 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/test', async (req, res) => {
-  console.log('111ddd')
-  // 调通测试
-  res.send({data: [{name:'a', value: 111}]})
+  // const GoogleSheet = require('./classes/GoogleSheet.js')
+  // const gSheet = new GoogleSheet()
+  // let sheetId = AMAZON_SHEET_ID
+  // let sheetTabName = '工作表1'
 
+  // 调通测试
+  // res.send({data: [{name:'a', value: 111}]})
+
+  // 查询数据调试
+  // let datas = await gSheet.getSheetDatas({sheetId, sheetTabName, columns:['productId', 'postedToBlogger']})
+  let datas = await gSheet.getSheetDatas({dealJson:true})
+  res.send(datas)
+
+  // 新增数据调试 1111
+  // let datas = [{
+  //   productId: 'kkkk',
+  //   productTitle: 'title',
+  //   productDescription: 'kk desc', 
+  //   cost: 11,
+  //   bookDescription: 'bookDescription',
+  //   featurebullets: 'featurebullets',
+  //   editorialReviews: 'editorialReviews',`
+  //   detailBullets: 'detailBullets',
+  //   imgs: 'imgs',
+  // }]
+  // let ret = gSheet.addSheetDatas(sheetId, sheetTabName, datas)
+  // res.send(ret)  
   
 })
 
