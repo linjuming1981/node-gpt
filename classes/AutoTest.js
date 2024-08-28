@@ -50,7 +50,7 @@ class AutoTest {
       await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
 
       // 抓取最后一个 conversation-turn 元素的 HTML 内容
-      const elements = page.locator('div[data-testid^="conversation-turn-"]');
+      const elements = page.locator('article[data-testid^="conversation-turn-"]');
       const lastElement = elements.nth(await elements.count() - 1);
       
       // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
@@ -80,6 +80,28 @@ class AutoTest {
     await page.goto('https://chatgpt.com')
   }
 
+  // 使用 request API 直接发出 HTTP 请求的方法
+  async sendHttpRequest(url) {
+    try {
+      // 在当前的浏览器上下文中使用 request API 发出请求
+      const response = await this.context.request.get(url);
+
+      // 检查响应状态
+      if (response.ok()) {
+        // 返回响应数据
+        const data = await response.json();
+        return data;
+      } else {
+        console.log(`Request failed with status: ${response.status()}`);
+        return null;
+      }
+    } catch (err) {
+      console.error('sendHttpRequest 执行失败:', err);
+      return null;
+    }
+  }
+
+
 }
 
 module.exports = AutoTest
@@ -89,10 +111,18 @@ if(module === require.main){
   (async () => {
     const autoTest = new AutoTest({port: 9224});
     await autoTest.initialize();
-    await autoTest.refreshGptPage();
+    // await autoTest.getPage('chatgpt.com');
+    
+    // await autoTest.refreshGptPage();
     const text = '今天星期几'
     const unswer = await autoTest.gptFillQuery(text)
     console.log(unswer);
+
+    // 调用 sendHttpRequest
+    // const apiUrl = 'https://8080-cs-239467590834-default.cs-europe-west4-pear.cloudshell.dev/test';
+    // const response = await autoTest.sendHttpRequest(apiUrl);
+    // console.log(response);
+
     await autoTest.closeBrowser();
   })();
 }

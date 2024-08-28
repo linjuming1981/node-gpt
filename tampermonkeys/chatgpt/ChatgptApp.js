@@ -3,6 +3,7 @@ const template = `
     <button _onclick="toggleText">隐藏文字</button>
     <button _onclick="clearCache">清空缓存</button>
     <button _onclick="translate">开始翻译</button>
+    <button _onclick="createImgPrompts">图片prompt</button>
     <button _onclick="stop">停止翻译</button>
   </div>
 `
@@ -53,10 +54,11 @@ const ChatgptApp = {
     })
   },
   clearCache(){
+    this.novels = [];
     Store.delete('novels');
     console.log('novels 缓存已清空');
   },
-  async getNovelRows(refresh=false) {
+  async getNovelRows({refresh=false, filter=null, count=20}) {
     let novels = []
     if(!refresh){
       novels = Store.get('novels') 
@@ -65,16 +67,20 @@ const ChatgptApp = {
       }
     } 
 
+    if(!filter){
+      filter = {
+        enCont: '',
+        postedToBlogger: '0'
+      }
+    }
+
     let apiBaseUrl = this.data['apiBaseUrl']
     let res = await Util.request({
       url: `${apiBaseUrl}/getNovelRows`,
       method: 'post',
       data: {
-        filter: {
-          enCont: '',
-          postedToBlogger: '0'
-        },
-        count: 20,
+        filter,
+        count,
       }
     })
     novels = res?.data
@@ -108,7 +114,7 @@ const ChatgptApp = {
     this.isStop = false;
     Store.set('isAutoTranslate', false);
     console.log('translate start');
-    if (!this.novels) {
+    if (!this.novels?.length) {
       this.novels = await this.getNovelRows()
     }
 
@@ -142,7 +148,6 @@ const ChatgptApp = {
 
       enContArr.push(enPart)
     }
-    console.log('enContArr', enContArr);
     const enCont = enContArr.join('<br></br>')
 
     novel.enTitle = enTitle
@@ -164,6 +169,59 @@ const ChatgptApp = {
 
     // 翻译下一章节
     this.translate(count + 1);
+  },
+
+  async createImgPrompts(count){
+    if(count >= 5 ){
+      Store.set('isAutoImgPrompt', true)
+      await Util.refreshGptPage()
+      return
+    }
+    this.isStop = false;
+    Store.set('isAutoImgPrompt', false);
+    console.log('createImgPrompts start');
+    if (!this.novels?.length) {
+      // const filter = {imgPrompt:''}
+      const filter = {}
+      this.novels = await this.getNovelRows({filter});
+    }
+
+    let novel = this.novels.find(n => !n.imgPrompt)
+    if(!novel){
+      GM_notification({
+        title: '所有图片prompt任务已执行完毕',
+        text: `所有图片prompt任务已执行完毕`,
+        timeout: 5000,
+        onclick: () => {
+          unsafeWindow.focus(); // 并不一定能用 
+        }
+      })
+      return;
+    }
+    if(this.isStop) return;
+
+    const wordsCount = 100; // 多少个单词
+    let imgPrompt = await Util.gptAsk(`你是一个专业的小说家，你精通Stable Diffusion图片prompt提示工程，请你根据我提供给你的以下小说章节内容，生成一个${wordsCount}个英文单词左右用于Stable Diffusion生成图片的英文prompt，请不要输出多余无关信息，只输出prompt。以下是我提供的小说章节内容：<br>${novel.cnCont}`)
+    imgPrompt = imgPrompt.replace('<p>', '').replace('</p>', '')
+    imgPrompt = imgPrompt.replace(/<strong>[^<]+<\/strong>/g, '')
+    console.log(imgPrompt);
+
+    let apiBaseUrl = this.data['apiBaseUrl']
+    const res = await Util.request({
+      url: `${apiBaseUrl}/updateNovel`,
+      method: 'post',
+      data: {
+        novel: {
+          productId: novel.productId,
+          imgPrompt,
+        }
+      }
+    })
+    console.log('prompt生成end', res);
+
+    // 翻译下一章节
+    this.createImgPrompts(count + 1);
+
   },
 
   async stop(){

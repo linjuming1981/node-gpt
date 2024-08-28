@@ -151,6 +151,7 @@ class GoogleSheet {
           } else {
             let [headerRow, ...dataRows] = response.data.values;
             this.header = headerRow;
+            console.log('header', this.header);
             let datas = dataRows.map(row => {
               return row.reduce((obj, value, index) => {
                 obj[headerRow[index]] = value;
