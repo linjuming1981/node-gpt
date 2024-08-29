@@ -205,6 +205,8 @@ const ChatgptApp = {
     imgPrompt = imgPrompt.replace('<p>', '').replace('</p>', '')
     imgPrompt = imgPrompt.replace(/<strong>[^<]+<\/strong>/g, '')
     console.log(imgPrompt);
+    novel.imgPrompt = imgPrompt;
+    Store.set('novels', this.novels)
 
     let apiBaseUrl = this.data['apiBaseUrl']
     const res = await Util.request({
