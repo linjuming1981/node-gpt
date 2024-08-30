@@ -96,7 +96,7 @@ class Novel {
   // 调用ai创建图片，返回图片链接
   async createNovelChaterImg(imgPrompt){
     const cloudFlareApiUrl = 'https://stable-img.mingfish.workers.dev';
-    try{
+    // try{
       const response = await axios.post(cloudFlareApiUrl, {prompt: imgPrompt}, {
         responseType: 'arraybuffer'  // 确保接收的是二进制数据
       })
@@ -107,10 +107,10 @@ class Novel {
       const imgurLink = await imgur.uploadImage(imageBuffer)
       console.log('imgurLink', imgurLink)
       return imgurLink
-    } catch (error) {
-      console.error('Error creating novel chapter image:', error.message);
-      return false
-    }
+    // } catch (error) {
+    //   console.error('Error creating novel chapter image:', error.message);
+    //   return false
+    // }
   }
 
 }
