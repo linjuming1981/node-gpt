@@ -26,7 +26,6 @@ class Imgur{
   }
 
   async uploadImage(filePath){
-    const clientId = '5b6d29b81f42b6e'
     const image = fs.createReadStream(filePath)
 
     const form = new FormData();
@@ -35,7 +34,7 @@ class Imgur{
     try{
       const response = await axios.post('https://api.imgur.com/3/upload', form, {
         headers: {
-          'Authorization': `Client-ID ${clientId}`,
+          'Authorization': `Client-ID ${this.clientId}`,
           ...form.getHeaders()
         }
       })
@@ -51,7 +50,7 @@ class Imgur{
     }
   }
 
-  // oauth2授权入口： https://api.imgur.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code
+  // oauth2授权入口： https://api.imgur.com/oauth2/authorize?client_id=5b6d29b81f42b6e&response_type=code
   async getOauth2Token(authorizationCode){
     try{
       const response = await axios.post('https://api.imgur.com/oauth2/token', {
