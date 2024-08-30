@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const axios = require('axios');
 
 class Novel {
   constructor(){} 
@@ -92,6 +93,25 @@ class Novel {
     return ret
   }
 
+  // 调用ai创建图片，返回图片链接
+  async createNovelChaterImg(imgPrompt){
+    const cloudFlareApiUrl = 'https://stable-img.mingfish.workers.dev';
+    try{
+      const response = await axios.post(cloudFlareApiUrl, {prompt: imgPrompt}, {
+        responseType: 'arraybuffer'  // 确保接收的是二进制数据
+      })
+      const imageBuffer = Buffer.from(response.data);
+      
+      const Imgur = require('./Imgur.js')
+      const imgur = new Imgur()
+      const imgurLink = await imgur.uploadImage(imageBuffer)
+      console.log('imgurLink', imgurLink)
+      return imgurLink
+    } catch (error) {
+      console.error('Error creating novel chapter image:', error.message);
+      return false
+    }
+  }
 
 }
 
@@ -100,6 +120,8 @@ module.exports = Novel;
 if(module === require.main){
   const novel = new Novel();
 
+  const imgPrompt = `In a rugged mountain village, a group of children, from toddlers to teens, exercises energetically on a grassy field at dawn. A muscular man in animal skins supervises, his bronze skin glowing in the golden morning light. Nearby, a small toddler, with a clumsy but determined effort, mimics the older kids, drawing smiles from the villagers. The scene includes strong warriors training with bone clubs and metal swords, ancient stone houses, and a massive charred tree. The atmosphere is a blend of intense training and playful camaraderie, framed by the majestic, towering mountains.`
+  novel.createNovelChaterImg(imgPrompt)
 
 }
 

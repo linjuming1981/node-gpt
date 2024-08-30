@@ -29,8 +29,13 @@ class Imgur{
     this.accessToken = 'f57296f2e855f238bef025a3e591eacac6d51dab' // 有效期为10年
   }
 
-  async uploadImage(filePath, withAccount=true){
-    const image = fs.createReadStream(filePath)
+  async uploadImage({filePath='', imageBuffer='', withAccount=true}){
+    let image
+    if(imageBuffer){
+      image = imageBuffer.toString('base64')
+    } else if(filePath){
+      image = fs.createReadStream(filePath)
+    }
 
     const form = new FormData();
     form.append('image', image)   
@@ -84,7 +89,7 @@ module.exports = Imgur
 if(module === require.main){
   (async () => {
     const imgur = new Imgur()
-    const url = await imgur.uploadImage('../1.jpeg')
+    const url = await imgur.uploadImage({filePath: '../1.jpeg'})
     console.log(1111, url)
   })()
 }

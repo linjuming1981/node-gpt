@@ -349,6 +349,18 @@ app.get('/saveImgurOauth2Token', async (req, res) => {
   res.send(accessToken)
 })
 
+// 创建章节图片
+app.post('/createNovelChapterImg', async (req, res) => {
+  const {product} = req.body
+  const {productId, imgPrompt} = product
+
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+
+  const imgLink = await novel.createNovelChaterImg(imgPrompt)
+  console.log('imgLink', imgLink)
+  res.send({code: 200, imgLink})
+})
 
 // 服务监听开启  
 const port = 8080
