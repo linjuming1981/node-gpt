@@ -13,6 +13,9 @@
 // 	9bf53350800bb3f7475e8da149a89e12c8fadf42
 // 	爱伊姆古尔？加入我们的团队
 		
+// oauth2 access_token: f57296f2e855f238bef025a3e591eacac6d51dab // 有效期为10年
+
+
 const axios = require('axios');
 const { json } = require('body-parser');
 const FormData = require('form-data');
@@ -23,13 +26,21 @@ class Imgur{
     this.clientId = '5b6d29b81f42b6e'
     this.clientSecret = '9bf53350800bb3f7475e8da149a89e12c8fadf42'
     this.redirectUrl = 'https://8080-cs-239467590834-default.cs-europe-west4-pear.cloudshell.dev/'
+    this.accessToken = 'f57296f2e855f238bef025a3e591eacac6d51dab'
   }
 
-  async uploadImage(filePath){
+  async uploadImage(filePath, withAccount=true){
     const image = fs.createReadStream(filePath)
 
     const form = new FormData();
     form.append('image', image)   
+
+    const headers = {...form.getHeaders()}
+    if(withAccount){
+      headers['Authorization'] = `Bearer ${accessToken}` // 使用 OAuth 2.0 令牌
+    } else {
+      headers['Authorization'] = `Client-ID ${this.clientId}`, // 匿名上传，这种上传图片不会永久存储
+    }
     
     try{
       const response = await axios.post('https://api.imgur.com/3/upload', form, {
