@@ -61,10 +61,10 @@ class Imgur{
         redirect_url: this.redirectUrl
       })
 
-      const accessToken = response.data.access_token;
-      fs.writeFileSync('./imgur_token.json', JSON.stringify(accessToken))
-      console.log('Access Token:', accessToken);
-      return accessToken;
+      const token = response.data;
+      fs.writeFileSync('./imgur_token.json', JSON.stringify(token))
+      console.log('Token:', token);
+      return token;
     } catch (error) {
       console.error('Error getting access token:', error.response.data);
     }
