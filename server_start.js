@@ -341,6 +341,14 @@ app.get('/novelPreview/:id', async (req, res) => {
   res.send(html);
 })
 
+app.get('/saveImgurOauth2Token', async (req, res) => {
+  const code = req.query.code
+  const Imgur = require('./classes/Imgur.js')
+  const imgur = new Imgur()
+  const accessToken = await imgur.getOauth2Token(code)
+  res.send(accessToken)
+})
+
 
 // 服务监听开启  
 const port = 8080

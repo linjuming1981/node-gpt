@@ -14,10 +14,17 @@
 // 	爱伊姆古尔？加入我们的团队
 		
 const axios = require('axios');
+const { json } = require('body-parser');
 const FormData = require('form-data');
 const fs = require('fs');
 
 class Imgur{
+  constructor(){
+    this.clientId = '5b6d29b81f42b6e'
+    this.clientSecret = '9bf53350800bb3f7475e8da149a89e12c8fadf42'
+    this.redirectUrl = 'https://8080-cs-239467590834-default.cs-europe-west4-pear.cloudshell.dev/'
+  }
+
   async uploadImage(filePath){
     const clientId = '5b6d29b81f42b6e'
     const image = fs.createReadStream(filePath)
@@ -43,12 +50,34 @@ class Imgur{
       console.error('Error uploading image:', error.message);
     }
   }
+
+  // oauth2授权入口： https://api.imgur.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&response_type=code
+  async getOauth2Token(authorizationCode){
+    try{
+      const response = await axios.post('https://api.imgur.com/oauth2/token', {
+        client_id: this.clientId,
+        client_secret: this.clientSecret,
+        grant_type: 'authorization_code',
+        code: authorizationCode,
+        redirect_url: this.redirectUrl
+      })
+
+      const accessToken = response.data.access_token;
+      fs.writeFileSync('./imgur_token.json', JSON.stringify(accessToken))
+      console.log('Access Token:', accessToken);
+      return accessToken;
+    } catch (error) {
+      console.error('Error getting access token:', error.response.data);
+    }
+  }
+
 }
 
 module.exports = Imgur
 if(module === require.main){
   (async () => {
-    const imgur = new Imgur
-    imgur.uploadImage('../1.jpeg')
+    const imgur = new Imgur()
+    const url = await imgur.uploadImage('../1.jpeg')
+    console.log(1111, url)
   })()
 }
