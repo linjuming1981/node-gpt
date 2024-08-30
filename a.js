@@ -1,35 +1,33 @@
-const { GoogleAdsApi } = require('google-ads-api')
+const axios = require('axios');
+const FormData = require('form-data');
+const fs = require('fs');
 
-// 替换以下信息为你的配置
-const client = new GoogleAdsApi({
-    client_id: 'YOUR_CLIENT_ID',
-    client_secret: 'YOUR_CLIENT_SECRET',
-    developer_token: 'YOUR_DEVELOPER_TOKEN',
-})
+async function uploadImageToImgur(filePath) {
+    const clientId = 'YOUR_IMGUR_CLIENT_ID'; // 替换为你的 Imgur 客户端 ID
+    const image = fs.createReadStream(filePath); // 读取本地图片文件
 
-const customerId = 'YOUR_CUSTOMER_ID' // Google Ads客户ID
+    const form = new FormData();
+    form.append('image', image);
 
-// 错误处理略过，具体请参考API文档
-const main = async () => {
-    const customer = client.Customer({
-        customer_id: customerId,
-        refresh_token: 'YOUR_REFRESH_TOKEN', 
-    })
+    try {
+        const response = await axios.post('https://api.imgur.com/3/upload', form, {
+            headers: {
+                'Authorization': `Client-ID ${clientId}`,
+                ...form.getHeaders()
+            }
+        });
 
-    const query = `
-        SELECT
-            keyword_plan_forecast_monthly_impressions,
-            keyword_plan_forecast_monthly_clicks,
-            keyword_plan_forecast_average_cpc,
-            keyword_idea_text
-        FROM
-            keyword_plan_idea
-        WHERE
-            keyword_idea_text = 'example keyword'
-    `
-
-    const response = await customer.query(query)
-    console.log(response)
+        // 检查响应结果并获取图片链接
+        if (response.data.success) {
+            console.log('Image uploaded successfully:', response.data.data.link);
+            return response.data.data.link;
+        } else {
+            console.error('Failed to upload image:', response.data);
+        }
+    } catch (error) {
+        console.error('Error uploading image:', error.message);
+    }
 }
 
-main()
+// 使用路径上传图片
+uploadImageToImgur('path/to/your/image.jpg');
