@@ -1,9 +1,0 @@
-{
-  "access_token": "f57296f2e855f238bef025a3e591eacac6d51dab",
-  "expires_in": 315360000,
-  "token_type": "bearer",
-  "scope": null,
-  "refresh_token": "ff19a1242ec28b3c76b3307d139e4ebb0f0cf3ac",
-  "account_id": 183041177,
-  "account_username": "linjuming"
-}

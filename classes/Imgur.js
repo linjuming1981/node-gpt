@@ -26,7 +26,7 @@ class Imgur{
     this.clientId = '5b6d29b81f42b6e'
     this.clientSecret = '9bf53350800bb3f7475e8da149a89e12c8fadf42'
     this.redirectUrl = 'https://8080-cs-239467590834-default.cs-europe-west4-pear.cloudshell.dev/'
-    this.accessToken = 'f57296f2e855f238bef025a3e591eacac6d51dab'
+    this.accessToken = 'f57296f2e855f238bef025a3e591eacac6d51dab' // 有效期为10年
   }
 
   async uploadImage(filePath, withAccount=true){
@@ -37,17 +37,14 @@ class Imgur{
 
     const headers = {...form.getHeaders()}
     if(withAccount){
-      headers['Authorization'] = `Bearer ${accessToken}` // 使用 OAuth 2.0 令牌
+      headers['Authorization'] = `Bearer ${this.accessToken}` // 使用 OAuth 2.0 令牌
     } else {
-      headers['Authorization'] = `Client-ID ${this.clientId}`, // 匿名上传，这种上传图片不会永久存储
+      headers['Authorization'] = `Client-ID ${this.clientId}` // 匿名上传，这种上传图片不会永久存储
     }
     
     try{
       const response = await axios.post('https://api.imgur.com/3/upload', form, {
-        headers: {
-          'Authorization': `Client-ID ${this.clientId}`,
-          ...form.getHeaders()
-        }
+        headers
       })
 
       // 检查响应结果并获取图片连续
