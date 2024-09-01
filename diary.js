@@ -59,3 +59,6 @@ server=="cloudflare" && port=="443" && header="Forbidden" && country=="新加坡
 5. **输出格式：**
    - 请直接输出翻译结果，不附加任何额外的说明或信息。
 
+
+v2rayN系统代理设置（我去掉清空了，现在能开代理的情况下能连cloudflare）
+dash.cloudflare.com;www.cloudflare.com
