@@ -127,7 +127,7 @@ module.exports = Novel;
 
 if(module === require.main){
   const novel = new Novel();
-  const imgPrompt = `In a rugged mountain village, a group of children, from toddlers to teens, exercises energetically on a grassy field at dawn. A muscular man in animal skins supervises, his bronze skin glowing in the golden morning light. Nearby, a small toddler, with a clumsy but determined effort, mimics the older kids, drawing smiles from the villagers. The scene includes strong warriors training with bone clubs and metal swords, ancient stone houses, and a massive charred tree. The atmosphere is a blend of intense training and playful camaraderie, framed by the majestic, towering mountains.`
+  const imgPrompt = `In a rugged mountain village, a group of children, from toddlers to teens, exercises energetically on a grassy field at dawn. `
   novel.createNovelChaterImg(imgPrompt)
 }
 
