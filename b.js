@@ -3,28 +3,31 @@ const fs = require('fs');
 
 async function query(data) {
   try {
+    // 发起 POST 请求
     const response = await axios.post(
-      'https://api-inference.huggingface.co/models/XLabs-AI/flux-lora-collection',
+      'https://api-inference.huggingface.co/models/latent-consistency/lcm-lora-sdxl',
       data,
       {
         headers: {
           Authorization: 'Bearer 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',  // 替换为你的 Hugging Face API 密钥
           'Content-Type': 'application/json'
         },
-        responseType: 'blob'  // 确保响应作为 Blob 返回
+        responseType: 'arraybuffer'  // 使用 arraybuffer 处理二进制数据
       }
     );
 
-    // 将 Blob 作为文件保存到本地（可选）
-    const writer = fs.createWriteStream('output.png');
-    response.data.pipe(writer);
-
-    writer.on('finish', () => {
-      console.log('Image saved as output.png');
+    // 将响应数据写入文件
+    fs.writeFile('output.png', Buffer.from(response.data), (err) => {
+      if (err) {
+        console.error('Error saving image:', err);
+      } else {
+        console.log('Image saved as output.png');
+      }
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error calling Hugging Face API:', error);
   }
 }
 
+// 调用函数
 query({ inputs: 'Astronaut riding a horse' });
