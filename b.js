@@ -23,7 +23,7 @@ async function query(data) {
       console.log('Image saved as output.png');
     });
   } catch (error) {
-    console.error('Error:', error.response ? error.response.statusText : error.message);
+    console.error('Error:', error);
   }
 }
 
