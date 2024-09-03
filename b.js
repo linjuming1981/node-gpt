@@ -1,30 +1,30 @@
 const axios = require('axios');
+const fs = require('fs');
 
-async function callHuggingFaceAPI(prompt) {
-  const apiUrl = 'https://api-inference.huggingface.co/models/XLabs-AI/flux-lora-collection';
-  const apiKey = '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';  // 替换为你的 Hugging Face API 密钥
-
+async function query(data) {
   try {
     const response = await axios.post(
-      apiUrl,
-      {
-        inputs: prompt,  // 仅包含输入文本
-      },
+      'https://api-inference.huggingface.co/models/XLabs-AI/flux-lora-collection',
+      data,
       {
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
+          Authorization: 'Bearer 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',  // 替换为你的 Hugging Face API 密钥
           'Content-Type': 'application/json'
-        }
+        },
+        responseType: 'blob'  // 确保响应作为 Blob 返回
       }
     );
 
-    return response.data;
+    // 将 Blob 作为文件保存到本地（可选）
+    const writer = fs.createWriteStream('output.png');
+    response.data.pipe(writer);
+
+    writer.on('finish', () => {
+      console.log('Image saved as output.png');
+    });
   } catch (error) {
-    console.error(`Error calling Hugging Face API: ${error.response ? error.response.statusText : error.message}`);
-    throw error;
+    console.error('Error:', error.response ? error.response.statusText : error.message);
   }
 }
 
-callHuggingFaceAPI("A futuristic city skyline at sunset")
-  .then(result => console.log("Generated Text:", result))
-  .catch(err => console.error("Error:", err));
+query({ inputs: 'Astronaut riding a horse' });
