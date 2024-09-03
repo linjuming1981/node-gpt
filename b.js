@@ -8,12 +8,7 @@ async function callHuggingFaceAPI(prompt) {
     const response = await axios.post(
       apiUrl,
       {
-        inputs: prompt,
-        parameters: {
-          // 可选：根据模型的具体配置调整参数
-          max_length: 50,
-          num_return_sequences: 1,
-        },
+        inputs: prompt,  // 仅包含输入文本
       },
       {
         headers: {
