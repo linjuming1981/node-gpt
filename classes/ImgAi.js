@@ -1,20 +1,21 @@
 const axios = require('axios');
-const { response } = require('express');
+const fs = require('fs')
+const path = require('path')
 
 class ImgAi {
 
   // 调用huggingface接口，返回图片二进制数据
-  async createImg(params){
+  async createImg(params, savePath=''){
     const response = await axios.post(
       'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
       {
         inputs: params.prompt,
-        guidance_scale: 7.5 || params.guidance_scale, // 控制生成图像的多样性与提示词的相关性。较高的值会使生成的图像更贴近提示词，通常在 4 到 9 之间调整。
-        num_inference_steps: 4 || params.num_inference_steps, // 指定模型生成图像所需的推理步骤数。FLUX.1 [schnell] 模型通常建议使用 1 到 4 步骤，以实现快速生成。
-        max_sequence_length: 256 || params.max_sequence_length, // 设置输入提示的最大序列长度，通常为 256。
-        generator: {seed: 0}, // 用于设置随机种子，以确保生成的图像具有可重复性。例如，可以使用 torch.Generator("cpu").manual_seed(0) 来设置固定的随机种子。
-        width: 1024,
-        height: 1024,
+        guidance_scale: params.guidance_scale || 7.5, // 控制生成图像的多样性与提示词的相关性。较高的值会使生成的图像更贴近提示词，通常在 4 到 9 之间调整。
+        num_inference_steps: params.num_inference_steps || 4, // 指定模型生成图像所需的推理步骤数。FLUX.1 [schnell] 模型通常建议使用 1 到 4 步骤，以实现快速生成。
+        max_sequence_length: params.max_sequence_length || 10000, // 设置输入提示的最大序列长度，通常为 256。
+        generator: params.generator || {seed: 0}, // 用于设置随机种子，以确保生成的图像具有可重复性。例如，可以使用 torch.Generator("cpu").manual_seed(0) 来设置固定的随机种子。
+        width: params.width || 1024,
+        height: params.height || 1024,
         options: { // 可能包含其他选项，如是否使用缓存等。
           use_cache: params?.options?.use_cache || false, // 是否使用缓存
           wait_for_model: params?.options?.wait_for_model || true, // 设置为 true 时，如果模型正在加载，API 会等待模型准备好再返回结果。这在模型需要时间加载时非常有用。
@@ -41,11 +42,31 @@ class ImgAi {
           Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
           'Content-Type': 'application/json',
         },
-        response: 'arraybuffer', // 将响应数据类型设置为 arraybuffer 以处理二进制数据
+        responseType: 'arraybuffer', // 将响应数据类型设置为 arraybuffer 以处理二进制数据
       }
     )
+    
+    if(savePath){
+      const filePath = path.join(__dirname, savePath);
+      fs.writeFileSync(filePath, response.data);
+      console.log('Image saved as ' + savePath);
+    }
+
     return response.data
   }
 }
 
 module.exports = ImgAi
+
+if(module == require.main){
+  (async() => {
+    const imgAi = new ImgAi()
+    const params = {
+      prompt: 'A dramatic scene of a mountain village\'s celebration after a successful hunt, with a backdrop of a sacred stone altar. The scene includes a group of proud hunters, rugged and muscular, displaying large exotic creatures like dragon-horned elephants and winged serpents. Villagers, including women and children, are gathered in joy, their faces reflecting relief and excitement. The village, bathed in the golden hues of the setting sun, looks ancient and sacred, with long shadows cast by the returning hunters. The atmosphere is filled with awe and reverence, with some mysterious and large beast footprints hinting at greater dangers lurking beyond.',
+      // prompt: 'In a rugged mountain village, a group of children, from toddlers to teens, exercises energetically on a grassy field at dawn.'
+      // prompt: 'Astronaut riding a horse',
+
+    }
+    await imgAi.createImg(params, '../output.png')
+  })()
+}

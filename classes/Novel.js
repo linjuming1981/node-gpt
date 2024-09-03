@@ -123,11 +123,11 @@ class Novel {
 
 }
 
-module.exports = Novel;
+module.exports = Novel;     
 
 if(module === require.main){
   const novel = new Novel();
-  const imgPrompt = `In a rugged mountain village, a group of children, from toddlers to teens, exercises energetically on a grassy field at dawn. `
+  const imgPrompt = `A dramatic scene of a mountain village's celebration after a successful hunt, with a backdrop of a sacred stone altar. The scene includes a group of proud hunters, rugged and muscular, displaying large exotic creatures like dragon-horned elephants and winged serpents. Villagers, including women and children, are gathered in joy, their faces reflecting relief and excitement. The village, bathed in the golden hues of the setting sun, looks ancient and sacred, with long shadows cast by the returning hunters. The atmosphere is filled with awe and reverence, with some mysterious and large beast footprints hinting at greater dangers lurking beyond.`
   novel.createNovelChaterImg(imgPrompt)
 }
 

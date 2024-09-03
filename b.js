@@ -18,7 +18,7 @@ async function query(data) {
     );
 
     // 将二进制数据保存为文件（假设返回的是图像）
-    const filePath = path.join(__dirname, 'output1.png');
+    const filePath = path.join(__dirname, 'output.png');
     fs.writeFileSync(filePath, response.data);
 
     console.log('Image saved as output.png');
