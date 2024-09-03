@@ -1,30 +1,29 @@
-const path = require('path');
-const {google} = require('googleapis');
-const blogger = google.blogger('v3');
+const axios = require('axios');
 
-async function runSample() {
-  const auth = new google.auth.GoogleAuth({
-    keyFilename: path.join(__dirname, './config/service.json'),
-    scopes: 'https://www.googleapis.com/auth/blogger',
-  });
+// 替换为你的 Hugging Face API Token
+const API_TOKEN = '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';
 
-  const authClient = await auth.getClient();
-
-  google.options({auth: authClient});
-
-  const res = await blogger.posts.insert({
-    blogId: '8563811807642467410',
-    requestBody: {
-      title: 'Hello from the googleapis npm module!',
-      content:
-        'Visit https://github.com/google/google-api-nodejs-client to learn more!',
-    },
-  });
-  console.log(res.data);
-  return res.data;
-}
-
-if (module === require.main) {
-    runSample().catch(console.error);
+// 设置请求的参数
+const data = {
+  "inputs": "A beautiful sunset over the mountains",  // 你的提示词
+  "options": {
+    "use_cache": false,
   }
-  module.exports = runSample;
+};
+
+// 调用 API
+axios({
+  method: 'post',
+  url: 'https://api-inference.huggingface.co/models/XLabs-AI/flux-lora-collection',
+  headers: {
+    'Authorization': `Bearer ${API_TOKEN}`,
+    'Content-Type': 'application/json',
+  },
+  data: JSON.stringify(data),
+})
+.then(function (response) {
+  console.log("生成的图像链接:", response.data.data[0].url);  // 根据返回的格式调整
+})
+.catch(function (error) {
+  console.log("请求失败:", error);
+});
