@@ -47,3 +47,5 @@ class ImgAi {
     return response.data
   }
 }
+
+module.exports = ImgAi
