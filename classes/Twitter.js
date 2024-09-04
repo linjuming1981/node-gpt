@@ -4,6 +4,7 @@
 // oauth2凭证
 // Client ID： dHdLRzhleUo2aDlrcDh1bUlKM206MTpjaQ
 // Client SECRECT: FuLvossJ_sqaQCNyF9JSt6iO4D-_QHZc7PtBnKb2sqAiUPN7F3
+// Bearer Token: AAAAAAAAAAAAAAAAAAAAAKnLvgEAAAAA3%2FIq4TFmVwd0zLX5k%2BImuB8jwuc%3DobhNOOAh4ZkvBU8suneOwI5OOnWIQAHaXifTZUmF9ujSkUNu2p
 
 
 class Twitter {
