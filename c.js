@@ -24,18 +24,21 @@ const token = {
 
 // 3. 发帖到 X.com
 async function postToX(content) {
-  const url = 'https://api.twitter.com/2/tweets';
+  const url = 'https://api.twitter.com/1.1/statuses/update.json'; // 注意：使用 API v1.1 端点
   const requestData = {
     url,
     method: 'POST',
-    data: { text: content },
+    data: { status: content }, // 在 v1.1 中，字段是 `status` 而非 `text`
   };
 
   try {
-    const response = await axios.post(url, requestData.data, {
+    const authHeader = oauth.toHeader(oauth.authorize(requestData, token));
+
+    const response = await axios.post(url, null, {
+      params: requestData.data, // 使用 `params` 发送数据
       headers: {
-        Authorization: oauth.toHeader(oauth.authorize(requestData, token)).Authorization,
-        'Content-Type': 'application/json',
+        ...authHeader,
+        'Content-Type': 'application/x-www-form-urlencoded', // v1.1 的格式要求
       },
     });
 
