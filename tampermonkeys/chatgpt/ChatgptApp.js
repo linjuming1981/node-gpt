@@ -201,7 +201,7 @@ const ChatgptApp = {
     }
     if(this.isStop) return;
 
-    let subCont = await Util.gptAsk(`你是一位才华横溢的小说家，我将提供一段小说章节内容。请从中提取最精彩、最吸引读者的连续部分，字数不超过300个字符，确保能激发读者的兴趣。只输出英文原文精华内容，无需任何额外解释。以下为章节内容：<br>${novel.cnCont}`)
+    let subCont = await Util.gptAsk(`你是一位才华横溢的小说家，我将提供一段小说章节内容。请从中提取最精彩、最吸引读者的连续部分，字数不超过300个字符，确保能激发读者的兴趣。只输出英文原文精华内容，无需任何额外解释。以下为章节内容：<br>${novel.enCont}`)
     subCont = subCont.replace('<p>', '').replace('</p>', '')
     subCont = subCont.replace(/<strong>[^<]+<\/strong>/g, '')
     console.log(subCont);
