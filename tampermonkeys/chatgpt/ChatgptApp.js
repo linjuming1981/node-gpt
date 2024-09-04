@@ -171,6 +171,60 @@ const ChatgptApp = {
     this.translate(count + 1);
   },
 
+  // 生成摘要
+  async createSubConts(count){
+    if(count >= 5 ){
+      Store.set('isAutoSubCont', true)
+      await Util.refreshGptPage()
+      return
+    }
+    this.isStop = false;
+    Store.set('isAutoSubCont', false);
+    console.log('createSubConts start');
+    if (!this.novels?.length) {
+      const filter = {subCont: ''}
+      this.novels = await this.getNovelRows({filter});
+    }
+
+    let novel = this.novels.find(n => !n.subCont)
+    if(!novel){
+      GM_notification({
+        title: '所有摘要subCont已执行完毕',
+        text: `所有摘要subCont已执行完毕`,
+        timeout: 5000,
+        onclick: () => {
+          unsafeWindow.focus(); // 并不一定能用 
+        }
+      })
+      return;
+    }
+    if(this.isStop) return;
+
+    let subCont = await Util.gptAsk(`你是一位才华横溢的小说家，我将提供一段小说章节内容。请从中提取最精彩、最吸引读者的连续部分，字数不超过300个字符，确保能激发读者的兴趣。只输出英文原文精华内容，无需任何额外解释。以下为章节内容：<br>${novel.cnCont}`)
+    subCont = subCont.replace('<p>', '').replace('</p>', '')
+    subCont = subCont.replace(/<strong>[^<]+<\/strong>/g, '')
+    console.log(subCont);
+    novel.subCont = subCont;
+    Store.set('novels', this.novels)
+
+    let apiBaseUrl = this.data['apiBaseUrl']
+    const res = await Util.request({
+      url: `${apiBaseUrl}/updateNovel`,
+      method: 'post',
+      data: {
+        novel: {
+          productId: novel.productId,
+          subCont,
+        }
+      }
+    })
+    console.log('subCont生成end', res);
+
+    // 翻译下一章节
+    this.createSubConts(count + 1);
+  },
+
+  // 生产图片prompt
   async createImgPrompts(count){
     if(count >= 5 ){
       Store.set('isAutoImgPrompt', true)
@@ -181,8 +235,7 @@ const ChatgptApp = {
     Store.set('isAutoImgPrompt', false);
     console.log('createImgPrompts start');
     if (!this.novels?.length) {
-      // const filter = {imgPrompt:''}
-      const filter = {}
+      const filter = {imgPrompt:''}
       this.novels = await this.getNovelRows({filter});
     }
 
