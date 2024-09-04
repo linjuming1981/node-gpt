@@ -63,6 +63,20 @@ class Imgur{
     }
   }
 
+  // 下载图片到本地
+  async downloadImage(imgUrl, filePath){
+    const res = await axios({
+      url: imgUrl,
+      responseType: 'stream',
+    })
+    return new Promise((resolve, reject) => {
+      const writer = fs.createWriteStream(filePath)
+      res.data.pipe(writer)
+      writer.on('finish', resolve)
+      writer.on('error', reject)
+    })
+  }
+
   // oauth2授权入口： https://api.imgur.com/oauth2/authorize?client_id=5b6d29b81f42b6e&response_type=code
   async getOauth2Token(authorizationCode){
     try{
@@ -89,7 +103,7 @@ module.exports = Imgur
 if(module === require.main){
   (async () => {
     const imgur = new Imgur()
-    const url = await imgur.uploadImage({filePath: '../1.jpeg'})
-    console.log(1111, url)
+    await imgur.downloadImage('https://i.imgur.com/j9B0am3.jpeg', '../output.png')
+    console.log(111)
   })()
 }
