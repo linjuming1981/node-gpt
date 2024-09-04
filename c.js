@@ -1,17 +1,40 @@
 const axios = require('axios');
+const OAuth = require('oauth-1.0a');
+const crypto = require('crypto');
 
-// 1. 设置 Bearer Token
-const bearerToken = 'AAAAAAAAAAAAAAAAAAAAAKnLvgEAAAAAe6u2h5K9KNMLS049UtCzsxaYpSA%3DLsGgBCsfiIIRrEaZkxfbuNwTV1z4gKBkFOtKHmKtIZ8miKzkSA';
+// 设置你的 API 密钥和访问令牌
+const apiKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i';
+const apiSecretKey = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7';
+const accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe';
+const accessTokenSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI';
 
-// 2. 发帖到 X.com 使用 API v2
-async function postToX(content) {
+// 创建 OAuth 1.0a 实例
+const oauth = OAuth({
+  consumer: { key: apiKey, secret: apiSecretKey },
+  token: { key: accessToken, secret: accessTokenSecret },
+  signature_method: 'HMAC-SHA1',
+  hash_function(baseString, key) {
+    return crypto.createHmac('sha1', key).update(baseString).digest('base64');
+  },
+});
+
+// 发帖到 Twitter
+async function postToTwitter(content) {
   const url = 'https://api.twitter.com/2/tweets';
-  const data = { text: content }; // v2 使用 `text` 字段
+  const requestData = {
+    url,
+    method: 'POST',
+    data: { text: content },
+  };
 
   try {
-    const response = await axios.post(url, data, {
+    const headers = oauth.toHeader(oauth.authorize(requestData, {
+      key: accessToken,
+      secret: accessTokenSecret,
+    }));
+    const response = await axios.post(url, requestData.data, {
       headers: {
-        Authorization: `Bearer ${bearerToken}`,  // 使用Bearer Token进行认证
+        ...headers,
         'Content-Type': 'application/json',
       },
     });
@@ -22,5 +45,5 @@ async function postToX(content) {
   }
 }
 
-// 3. 调用函数发帖
-postToX('Hello, World! This is a post from my Node.js app.');
+// 调用函数发帖
+postToTwitter('Hello, World! This is a post from my Node.js app.');
