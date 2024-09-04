@@ -87,6 +87,22 @@ var Util = {};
         }
       })
       return res.data
+    },
+
+    // 函数：将文本截取到最大长度，并确保不会断开单词
+    truncateText(text, maxLength = 280) {
+      if (text.length <= maxLength) return text;
+
+      let truncated = text.slice(0, maxLength);
+      
+      // 查找最后一个空格，确保不会截断单词
+      const lastSpace = truncated.lastIndexOf(' ');
+      if (lastSpace > -1) {
+        truncated = truncated.slice(0, lastSpace);
+      }
+
+      // 添加省略号
+      return truncated + '...';
     }
 
   };
