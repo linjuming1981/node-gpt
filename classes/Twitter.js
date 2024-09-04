@@ -37,7 +37,7 @@ class Twitter {
     });
 
     // 截取文本
-    const truncatedText = Util.truncateText(text, 280);
+    const truncatedText = Util.truncateText(text, 270);
 
     const postData = {
       text: truncatedText,
