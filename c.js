@@ -1,6 +1,7 @@
 const axios = require('axios');
 const OAuth = require('oauth-1.0a');
 const crypto = require('crypto');
+const qs = require('qs');  // 用于格式化请求参数
 
 // 1. 设置你的 API 密钥和访问令牌
 const apiKey = 'A6ObcfxZVoetRs19p2RucDFb6';
@@ -24,21 +25,20 @@ const token = {
 
 // 3. 发帖到 X.com
 async function postToX(content) {
-  const url = 'https://api.twitter.com/1.1/statuses/update.json'; // 注意：使用 API v1.1 端点
+  const url = 'https://api.twitter.com/1.1/statuses/update.json';
   const requestData = {
     url,
     method: 'POST',
-    data: { status: content }, // 在 v1.1 中，字段是 `status` 而非 `text`
+    data: { status: content },  // 这里必须是 `status`
   };
 
   try {
     const authHeader = oauth.toHeader(oauth.authorize(requestData, token));
 
-    const response = await axios.post(url, null, {
-      params: requestData.data, // 使用 `params` 发送数据
+    const response = await axios.post(url, qs.stringify(requestData.data), {
       headers: {
-        ...authHeader,
-        'Content-Type': 'application/x-www-form-urlencoded', // v1.1 的格式要求
+        Authorization: authHeader.Authorization,  // 确保 Authorization header 正确
+        'Content-Type': 'application/x-www-form-urlencoded',  // 确保内容类型正确
       },
     });
 
