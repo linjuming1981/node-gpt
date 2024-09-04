@@ -16,10 +16,10 @@
 
 class Twitter {
   constructor(){
-    this.appKey = 'A6ObcfxZVoetRs19p2RucDFb6'
-    this.appSecret = 'CbgTPyIvYPWF8iUdIiLkwNwHzK2CkZMKQ7X5ecZE95kXr07ZpB'
-    this.accessToken = '420767326-FqeiNTaogrv8emHieBqICtAMJ6joOCIrg1SYLxLD'
-    this.accessSecret = 'lPw412aWdWmq4gdxxOtlSdNwek9uFTSE2Itr4GXHfu70E'
+    this.appKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i'
+    this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
+    this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
+    this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
   }
 
   async createPost(){
