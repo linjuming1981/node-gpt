@@ -33,7 +33,6 @@ async function postToX(content) {
 
   try {
     const authHeader = oauth.toHeader(oauth.authorize(requestData, token));
-
     const response = await axios.post(url, requestData.data, {
       headers: {
         Authorization: authHeader.Authorization,  // 使用OAuth生成的认证头
