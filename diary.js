@@ -62,3 +62,11 @@ server=="cloudflare" && port=="443" && header="Forbidden" && country=="新加坡
 
 v2rayN系统代理设置（我去掉清空了，现在能开代理的情况下能连cloudflare）
 dash.cloudflare.com;www.cloudflare.com
+
+
+需要做的事情：
+   根据正文生成章节引导简介
+   根据正文生成图片prompt
+   根据图片prompt生成图片，上传到imgurl
+   将章节简洁和图片上传到twitter
+   
