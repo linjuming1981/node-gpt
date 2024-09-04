@@ -1,10 +1,17 @@
-// api key: A6ObcfxZVoetRs19p2RucDFb6
-// api secret: CbgTPyIvYPWF8iUdIiLkwNwHzK2CkZMKQ7X5ecZE95kXr07ZpB
+// Consumer Keys
+// - API Key: GnmPjOvbpvIHf8N0ggAeDAY0i
+// - API Key Secret: sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7
 
-// oauth2凭证
-// Client ID： dHdLRzhleUo2aDlrcDh1bUlKM206MTpjaQ
-// Client SECRECT: FuLvossJ_sqaQCNyF9JSt6iO4D-_QHZc7PtBnKb2sqAiUPN7F3
-// Bearer Token: AAAAAAAAAAAAAAAAAAAAAKnLvgEAAAAA3%2FIq4TFmVwd0zLX5k%2BImuB8jwuc%3DobhNOOAh4ZkvBU8suneOwI5OOnWIQAHaXifTZUmF9ujSkUNu2p
+// Authentication Tokens
+// - Bearer Token: AAAAAAAAAAAAAAAAAAAAAKnLvgEAAAAAe6u2h5K9KNMLS049UtCzsxaYpSA%3DLsGgBCsfiIIRrEaZkxfbuNwTV1z4gKBkFOtKHmKtIZ8miKzkSA
+// - Access Token: 420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe
+// - Access Token Secret: 7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI
+
+// OAuth 2.0 Client ID and Client Secret
+// - Client ID : dHdLRzhleUo2aDlrcDh1bUlKM206MTpjaQ
+// - Client Secret: Bz5tAWxstfF-HyuF3S6qQLtGF-2_LUD1a__3zvCup6_wk_Sa22
+
+
 
 
 class Twitter {

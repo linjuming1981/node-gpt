@@ -3,10 +3,10 @@ const OAuth = require('oauth-1.0a');
 const crypto = require('crypto');
 
 // 1. 设置你的 API 密钥和访问令牌
-const apiKey = 'A6ObcfxZVoetRs19p2RucDFb6';
-const apiSecretKey = 'CbgTPyIvYPWF8iUdIiLkwNwHzK2CkZMKQ7X5ecZE95kXr07ZpB';
-const accessToken = '420767326-FqeiNTaogrv8emHieBqICtAMJ6joOCIrg1SYLxLD';
-const accessTokenSecret = 'lPw412aWdWmq4gdxxOtlSdNwek9uFTSE2Itr4GXHfu70E';
+const apiKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i';
+const apiSecretKey = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7';
+const accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe';
+const accessTokenSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI';
 
 // 2. 创建 OAuth 1.0a 实例
 const oauth = OAuth({
@@ -28,7 +28,7 @@ async function postToX(content) {
   const requestData = {
     url,
     method: 'POST',
-    data: { text: content }, // v2 使用 `text` 而不是 `status`
+    data: { text: content }, // v2 使用 `text` 字段
   };
 
   try {
@@ -36,7 +36,7 @@ async function postToX(content) {
 
     const response = await axios.post(url, requestData.data, {
       headers: {
-        Authorization: authHeader.Authorization,  // OAuth 认证
+        Authorization: authHeader.Authorization,  // 使用OAuth生成的认证头
         'Content-Type': 'application/json',      // 确保内容类型为 JSON
       },
     });
