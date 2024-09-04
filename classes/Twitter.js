@@ -35,7 +35,7 @@ class Twitter {
 
     // 发送一个推文
     try {
-      const tweet = await client.v1.tweet('Hello, world! This is a tweet from Node.js');
+      const tweet = await client.v2.tweet('Hello, world! This is a tweet from Node.js');
       console.log('Tweet sent:', tweet);
     } catch (error) {
       console.error('Error sending tweet:', error);
