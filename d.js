@@ -28,7 +28,7 @@ async function downloadImage(imgUrl, filePath) {
 // 发帖并附上图片
 async function postTweetWithImage() {
   try {
-    const imgUrl = 'https://i.imgur.com/j9B0am3.jpeg'; // Imgur图片URL
+    const imgUrl = 'https://i.imgur.com/j9B0am3.jpeg'; // Imgur图片URL  
     const imagePath = path.resolve(__dirname, 'image.jpeg'); // 保存图片的路径
 
     // 下载图片
