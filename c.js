@@ -28,10 +28,17 @@ async function postToTwitter(content) {
   };
 
   try {
-    const headers = oauth.toHeader(oauth.authorize(requestData, {
+    // 为 OAuth 签名准备请求数据
+    const headers = oauth.toHeader(oauth.authorize({
+      url,
+      method: requestData.method,
+      data: requestData.data
+    }, {
       key: accessToken,
-      secret: accessTokenSecret,
+      secret: accessTokenSecret
     }));
+
+    // 发送 POST 请求
     const response = await axios.post(url, requestData.data, {
       headers: {
         ...headers,
