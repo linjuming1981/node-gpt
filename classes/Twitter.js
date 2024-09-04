@@ -37,9 +37,6 @@ class Twitter {
 
     const postData = {
       text,
-      media: {
-        media_id: []
-      }
     }
 
     // 上传图片到 twitter
@@ -48,6 +45,8 @@ class Twitter {
       const imgPath = path.resolve(__dirname, 'temp_img.jpeg')
       await imgur.downloadImage(imgUrl, imgPath)
       const mediaId = await client.v1.uploadMedia(imgPath)
+      postData.media ||= {}
+      postData.media.media_id ||= []
       postData.media.media_id.push(mediaId)
       fs.unlinkSync(imgPath)
     }
