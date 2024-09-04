@@ -11,7 +11,6 @@ const accessTokenSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI';
 // 创建 OAuth 1.0a 实例
 const oauth = OAuth({
   consumer: { key: apiKey, secret: apiSecretKey },
-  token: { key: accessToken, secret: accessTokenSecret },
   signature_method: 'HMAC-SHA1',
   hash_function(baseString, key) {
     return crypto.createHmac('sha1', key).update(baseString).digest('base64');
@@ -22,24 +21,24 @@ const oauth = OAuth({
 async function postToTwitter(content) {
   const url = 'https://api.twitter.com/2/tweets';
   const requestData = {
-    url,
-    method: 'POST',
-    data: { text: content },
+    text: content,
   };
 
   try {
     // 为 OAuth 签名准备请求数据
-    const headers = oauth.toHeader(oauth.authorize({
+    const request = {
       url,
-      method: requestData.method,
-      data: requestData.data
-    }, {
+      method: 'POST',
+      data: requestData,
+    };
+
+    const headers = oauth.toHeader(oauth.authorize(request, {
       key: accessToken,
-      secret: accessTokenSecret
+      secret: accessTokenSecret,
     }));
 
     // 发送 POST 请求
-    const response = await axios.post(url, requestData.data, {
+    const response = await axios.post(url, requestData, {
       headers: {
         ...headers,
         'Content-Type': 'application/json',
