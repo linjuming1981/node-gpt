@@ -108,7 +108,7 @@ class Novel {
     return imgurLink
   }
 
-  // 调用huggingface接口生成小说图片
+  // 调用huggingface接口生成小说图片111
   async createNovelChaterImg(imgPrompt){
     const ImgAi = require('./ImgAi.js')
     const imgAi = new ImgAi()
