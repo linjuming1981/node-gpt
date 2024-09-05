@@ -174,7 +174,7 @@ const ChatgptApp = {
   },
 
   // 生成摘要
-  async createSubConts(count){
+  async createSubConts(count=0){
     if(count >= 5 ){
       Store.set('isAutoSubCont', true)
       await Util.refreshGptPage()
@@ -227,7 +227,7 @@ const ChatgptApp = {
   },
 
   // 生产图片prompt
-  async createImgPrompts(count){
+  async createImgPrompts(count=0){
     if(count >= 5 ){
       Store.set('isAutoImgPrompt', true)
       await Util.refreshGptPage()
@@ -256,7 +256,7 @@ const ChatgptApp = {
     if(this.isStop) return;
 
     const wordsCount = 100; // 多少个单词
-    let imgPrompt = await Util.gptAsk(`你是一个专业的小说家，你精通Stable Diffusion图片prompt提示工程，请你根据我提供给你的以下小说章节内容，生成一个${wordsCount}个英文单词左右用于Stable Diffusion生成图片的英文prompt，请不要输出多余无关信息，只输出prompt。以下是我提供的小说章节内容：<br>${novel.cnCont}`)
+    let imgPrompt = await Util.gptAsk(`你是一个专业的小说家，你精通Stable Diffusion图片prompt提示工程，请你根据我提供给你的以下小说章节内容，生成一个${wordsCount}个英文单词左右用于Stable Diffusion生成图片的英文prompt，请不要输出多余无关信息，只输出prompt，不要提供多个答案供我选择，只提供一个答案。以下是我提供的小说章节内容：<br>${novel.cnCont}`)
     imgPrompt = imgPrompt.replace('<p>', '').replace('</p>', '')
     imgPrompt = imgPrompt.replace(/<strong>[^<]+<\/strong>/g, '')
     console.log(imgPrompt);
@@ -287,7 +287,7 @@ const ChatgptApp = {
   },
 
   // 生成其他字段
-  async createNovelOthers(){
+  async createNovelOthers(count=0){
     if(count >= 5 ){
       Store.set('isAutoOthers', true)
       await Util.refreshGptPage()
@@ -319,7 +319,7 @@ const ChatgptApp = {
 
     // 生产图片prompt
     const wordsCount = 100; // 多少个单词
-    let imgPrompt = await Util.gptAsk(`你精通Stable Diffusion图片prompt提示工程，请你根据我提供给你以上小说章节内容，仅输出一个${wordsCount}个英文单词左右用于Stable Diffusion生成图片的英文prompt正文，无需任何额外解释。`)
+    let imgPrompt = await Util.gptAsk(`你精通Stable Diffusion图片prompt提示工程，请你根据我提供给你以上小说章节内容，仅输出一个${wordsCount}个英文单词左右用于Stable Diffusion生成图片的英文prompt正文，无需任何额外解释。不要提供多个答案供我选择，只提供一个答案。`)
     imgPrompt = imgPrompt.replace('<p>', '').replace('</p>', '')
     imgPrompt = imgPrompt.replace(/<strong>[^<]+<\/strong>/g, '')
     console.log('imgPrompt', imgPrompt);
@@ -327,7 +327,7 @@ const ChatgptApp = {
     Store.set('novels', this.novels)
 
     // 生成精彩不问内容，用于发送到twitter
-    let subCont = await Util.gptAsk(`请从中小说章节内容中提取最精彩、最吸引读者的连续部分，字数不超过300个字符，确保能激发读者的兴趣。只输出英文原文精华内容，无需任何额外解释。`)
+    let subCont = await Util.gptAsk(`请从小说章节内容中提取最精彩、最吸引读者的连续部分，字数不超过300个字符，确保能激发读者的兴趣。只输出英文原文精华内容，无需任何额外解释。不要提供多个答案供我选择，只提供一个答案。`)
     subCont = subCont.replace('<p>', '').replace('</p>', '')
     subCont = subCont.replace(/<strong>[^<]+<\/strong>/g, '')
     novel.subCont = subCont

@@ -41,10 +41,10 @@ var Util = {};
     },
 
     getGptPort(){
-      let port = 9222
-      if(navigator.userAgent.includes('Chrome/127.0.0.0')) { // 本地默认商用chrome浏览器是127，chromium是128
-        port = 9224
-      }
+      let port = 9224
+      // if(navigator.userAgent.includes('Chrome/127.0.0.0')) { // 本地默认商用chrome浏览器是127，chromium是128
+      //   port = 9224
+      // }
       return port
     },
 

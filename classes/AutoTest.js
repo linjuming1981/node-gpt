@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 
 class AutoTest {
-  constructor({port=9222}){
+  constructor({port=9224}){
     this.browser = null;
     this.context = null;
     this.port = port;
