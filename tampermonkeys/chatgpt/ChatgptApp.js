@@ -4,7 +4,8 @@ const template = `
     <button _onclick="clearCache">清空缓存</button>
     <button _onclick="translate">开始翻译</button>
     <button _onclick="createImgPrompts">图片prompt</button>
-    <button _onclick="createSubCont">生成摘要</button>
+    <button _onclick="createSubConts">生成摘要</button>
+    <button _onclick="createNovelOthers">prompt&摘要</button>
     <button _onclick="stop">停止翻译</button>
   </div>
 `
