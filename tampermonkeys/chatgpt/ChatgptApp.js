@@ -280,6 +280,78 @@ const ChatgptApp = {
 
   },
 
+  // 提供小说章节内容
+  async provideNovelChapterCont(novel, key='enCont'){
+    await Util.gptAsk(`你是一位才华横溢的小说家，我将提供一篇小说章节内容给你，你接收到内容后，请仅回复“我已准备就绪”，我后续会针对小说内容给你提其他的需求。下面我将提供小说章节内容：\n${novel[key]}`)
+  },
+
+  // 生成其他字段
+  async createNovelOthers(){
+    if(count >= 5 ){
+      Store.set('isAutoOthers', true)
+      await Util.refreshGptPage()
+      return
+    }
+    this.isStop = false;
+    Store.set('isAutoOthers', false);
+    console.log('createNovelOthers start');
+    if (!this.novels?.length) {
+      const filter = {imgPrompt:'', subCont: ''}
+      this.novels = await this.getNovelRows({filter});
+    }
+
+    let novel = this.novels.find(n => !n.imgPrompt && !n.subCont)
+    if(!novel){
+      GM_notification({
+        title: 'createNovelOthers已执行完毕',
+        text: `createNovelOthers已执行完毕`,
+        timeout: 5000,
+        onclick: () => {
+          unsafeWindow.focus();
+        }
+      })
+      return;
+    }
+    if(this.isStop) return;
+
+    await this.provideNovelChapterCont(novel, 'enCont')
+
+    // 生产图片prompt
+    const wordsCount = 100; // 多少个单词
+    let imgPrompt = await Util.gptAsk(`你精通Stable Diffusion图片prompt提示工程，请你根据我提供给你以上小说章节内容，仅输出一个${wordsCount}个英文单词左右用于Stable Diffusion生成图片的英文prompt正文，无需任何额外解释。`)
+    imgPrompt = imgPrompt.replace('<p>', '').replace('</p>', '')
+    imgPrompt = imgPrompt.replace(/<strong>[^<]+<\/strong>/g, '')
+    console.log('imgPrompt', imgPrompt);
+    novel.imgPrompt = imgPrompt;
+    Store.set('novels', this.novels)
+
+    // 生成精彩不问内容，用于发送到twitter
+    let subCont = await Util.gptAsk(`请从中小说章节内容中提取最精彩、最吸引读者的连续部分，字数不超过300个字符，确保能激发读者的兴趣。只输出英文原文精华内容，无需任何额外解释。`)
+    subCont = subCont.replace('<p>', '').replace('</p>', '')
+    subCont = subCont.replace(/<strong>[^<]+<\/strong>/g, '')
+    novel.subCont = subCont
+    console.log('subCont', subCont);
+
+    
+
+    let apiBaseUrl = this.data['apiBaseUrl']
+    const res = await Util.request({
+      url: `${apiBaseUrl}/updateNovel`,
+      method: 'post',
+      data: {
+        novel: {
+          productId: novel.productId,
+          imgPrompt,
+          subCont,
+        }
+      }
+    })
+    console.log('createNovelOthers end', res);
+
+    // 处理下一章节
+    this.createNovelOthers(count + 1);
+  },
+
   async stop(){
     this.isStop = true;
     await Util.gptStop()
