@@ -332,8 +332,6 @@ const ChatgptApp = {
     novel.subCont = subCont
     console.log('subCont', subCont);
 
-    
-
     let apiBaseUrl = this.data['apiBaseUrl']
     const res = await Util.request({
       url: `${apiBaseUrl}/updateNovel`,
