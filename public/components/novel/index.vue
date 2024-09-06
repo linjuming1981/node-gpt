@@ -86,7 +86,7 @@ export default {
     async createImgUrl(product){
       let res = await axios({
         url: '/createNovelChapterImg',
-        meghod: 'post',
+        method: 'post',
         data: {
           product
         }
