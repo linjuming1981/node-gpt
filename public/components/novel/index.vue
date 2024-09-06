@@ -11,7 +11,7 @@
         <el-table-column prop="postedToBlogger" label="postedToBlogger" width="100" />
         <el-table-column prop="imgUrl" label="imgUrl" width="100">
           <template #default="scope">
-            <div clsss="imgUrl">
+            <div class="imgUrl">
               <div v-if="scope.row.imgUrl">
                 <img :src="scope.row.imgUrl" />
               </div>
