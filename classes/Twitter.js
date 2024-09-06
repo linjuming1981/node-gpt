@@ -37,7 +37,7 @@ class Twitter {
     });
 
     // 加入标题和链接
-    const link = `<a href="${bloggerPostUrl}">[more...]</a>`
+    const link = `... More Here: ${bloggerPostUrl}`
 
     // 截取文本
     const truncatedText = Util.truncateText(text, 280, link);
@@ -50,7 +50,6 @@ class Twitter {
     if(imgUrl){
       const imgur = new Imgur()
       const imgPath = path.resolve(__dirname, '../temp/temp_img.jpeg')
-      console.log('11111',imgUrl, imgPath)
       await imgur.downloadImage(imgUrl, imgPath)
       const mediaId = await client.v1.uploadMedia(imgPath)
       postData.media ||= {}
