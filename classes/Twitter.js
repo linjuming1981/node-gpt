@@ -52,8 +52,8 @@ class Twitter {
       const mediaId = await client.v1.uploadMedia(imgPath)
       console.log(2222, mediaId)
       postData.media ||= {}
-      postData.media.media_id ||= []
-      postData.media.media_id.push(mediaId)
+      postData.media.media_ids ||= []
+      postData.media.media_ids.push(mediaId)
       fs.unlinkSync(imgPath)
     }
 
