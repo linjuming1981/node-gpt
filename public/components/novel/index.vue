@@ -13,7 +13,12 @@
           <template #default="scope">
             <div class="imgUrl">
               <div v-if="scope.row.imgUrl">
-                <img :src="scope.row.imgUrl" />
+                <el-tooltip>
+                  <template #content>
+                    <img class="bigImg" :src="scope.row.imgUrl" />
+                  </template>
+                  <img :src="scope.row.imgUrl" />
+                </el-tooltip>
               </div>
               <div v-else>
                 <el-button link type="primary" size="small" @click="createImgUrl(scope.row)">生成</el-button>
@@ -146,14 +151,18 @@ export default {
   position: relative;
 }
 .imgUrl img{
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
 }
-.imgUrl:hover img{
+/* .imgUrl:hover img{
   position: absolute;
   left: 0;
   right: 0;
   width: auto;
   height: auto;
+} */
+.bigImg{
+  width: 500px;
+  height: 500px;
 }
 </style>
