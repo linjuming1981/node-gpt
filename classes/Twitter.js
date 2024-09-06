@@ -37,7 +37,7 @@ class Twitter {
     });
 
     // 加入标题和链接
-    const link = `... More Here: ${bloggerPostUrl}`
+    const link = `... ${bloggerPostUrl}`
 
     // 截取文本
     const truncatedText = Util.truncateText(text, 280, link);
