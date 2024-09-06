@@ -359,7 +359,7 @@ app.post('/createNovelChapterImg', async (req, res) => {
 
   const imgUrl = await novel.createNovelChaterImg(imgPrompt)
   console.log('imgUrl', imgUrl)
-  
+
   const _product = {
     productId,
     imgUrl
@@ -368,6 +368,15 @@ app.post('/createNovelChapterImg', async (req, res) => {
   res.send({code: 200, imgUrl})
 })
 
+// 发贴到twitter
+app.post('/postNovelToTwitter', async (req, res) => {
+  const {product} = req.body
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+
+  const ret = await novel.postToTwitter(product)
+  res.send({code: 200, data: ret})
+})
 
 
 

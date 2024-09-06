@@ -154,13 +154,6 @@ export default {
   width: 50px;
   height: 50px;
 }
-/* .imgUrl:hover img{
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: auto;
-  height: auto;
-} */
 .bigImg{
   width: 500px;
   height: 500px;

@@ -108,7 +108,7 @@ class Novel {
     return imgurLink
   }
 
-  // 调用huggingface接口生成小说图片111
+  // 调用huggingface接口生成小说图片
   async createNovelChaterImg(imgPrompt){
     const ImgAi = require('./ImgAi.js')
     const imgAi = new ImgAi()
@@ -119,6 +119,17 @@ class Novel {
     const imgurLink = await imgur.uploadImage({imageBuffer})
     console.log('imgurLink', imgurLink)
     return imgurLink
+  }
+
+  // 发帖到twitter
+  async postToTwitter(product){
+    const Twitter = require('./Twitter.js')
+    const twitter = new Twitter()
+    const res = twitter.createPost({
+      text: product.subCont,
+      imgUrl: product.imgUrl
+    })
+    return res
   }
 
 }
