@@ -56,6 +56,11 @@ class AutoTest {
       // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
       const markdownElement = lastElement.locator('.markdown');
       const markdownHtml = await markdownElement.innerHTML();
+
+      // 达到了每小时限制次数
+      if(markdownHtml.includes('reached our limit of messages')){
+        return false
+      }
       return markdownHtml;
     } catch (err) {
       console.error('gptFillQuery 执行失败:', err);

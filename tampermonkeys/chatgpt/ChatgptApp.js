@@ -294,12 +294,8 @@ const ChatgptApp = {
     if(count >= 5 ){
       location.href = 'https://chatgpt.com/?action=createNovelOthers'
       return
-      Store.set('isAutoOthers', true)
-      await Util.refreshGptPage()
-      return
     }
     this.isStop = false;
-    Store.set('isAutoOthers', false);
     console.log('createNovelOthers start');
     if (!this.novels?.length) {
       const filter = {imgPrompt:'', subCont: ''}
