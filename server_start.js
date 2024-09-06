@@ -357,10 +357,19 @@ app.post('/createNovelChapterImg', async (req, res) => {
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
 
-  const imgLink = await novel.createNovelChaterImg(imgPrompt)
-  console.log('imgLink', imgLink)
-  res.send({code: 200, imgLink})
+  const imgUrl = await novel.createNovelChaterImg(imgPrompt)
+  console.log('imgUrl', imgUrl)
+  
+  const _product = {
+    productId,
+    imgUrl
+  }
+  novelSheet.updateRow({product: _product})
+  res.send({code: 200, imgUrl})
 })
+
+
+
 
 // 服务监听开启  
 const port = 8080

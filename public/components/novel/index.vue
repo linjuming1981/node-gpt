@@ -84,13 +84,13 @@ export default {
     // 生成预览图片
     async createImgUrl(product){
       let res = await aixio({
-        url: '/createNovelImgUrl',
+        url: '/createNovelChapterImg',
         meghod: 'post',
         data: {
           product
         }
       })
-      product.imgUrl = res.data.data
+      product.imgUrl = res.data.imgUrl
     }
   }
 }
@@ -140,5 +140,21 @@ export default {
     padding: 5px;
     background-color: #fff;
     border: 1px solid #d5dce2;
+}
+.body .imgUrl{
+  position: relative;
+  img{
+    width: 30px;
+    height: 30px;
+  }
+  &:hover{
+    img{
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: auto;
+      height: auto;
+    }
+  }
 }
 </style>
