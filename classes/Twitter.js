@@ -48,14 +48,16 @@ class Twitter {
       const imgur = new Imgur()
       const imgPath = path.resolve(__dirname, 'temp_img.jpeg')
       await imgur.downloadImage(imgUrl, imgPath)
+      console.log(111)
       const mediaId = await client.v1.uploadMedia(imgPath)
+      console.log(2222, mediaId)
       postData.media ||= {}
       postData.media.media_id ||= []
       postData.media.media_id.push(mediaId)
       fs.unlinkSync(imgPath)
     }
 
-    console.log('111111111111')
+    console.log(333)
     const tweet = await client.v2.tweet(postData)
     console.log('Twitter推文已生成：', tweet)
     return tweet
@@ -68,8 +70,8 @@ if(module === require.main){
   (async () => {
     const twitter = new Twitter()
     await twitter.createPost({
-      text: 'The night was deep and pitch-black, rendering the landscape invisible. Yet the mountains were far from tranquil; wild beasts roared, shaking the mountains and rivers, while countless trees trembled and leaves fell in a rustling cascade.Among the countless mountains and ravines, ancient feral beasts roamed, primordial species emerged, and terrifying sounds echoed in the darkness, threatening to tear apart the heavens and earth.In the mountains, from a distance, a soft light appeared, like a flickering candle amidst the boundless darkness and myriad peaks, seemingly on the verge of extinguishing at any moment.As one drew closer, a massive charred tree trunk became visible, with a diameter of several meters. Apart from the half of the trunk, only a slender, vibrant branch remained, adorned with jade-green leaves that emitted a gentle glow, casting a protective light over a village.Specifically, this was a Thunderstruck Tree. Many years ago, it had been struck by a lightning bolt that reached the heavens, destroying the massive crown and vibrant life of the old willow.'
-      // text: 'The night was deep and pitch-black, rendering the landscape invisible'
+      text: 'The night was deep and pitch-black, rendering the landscape invisible. Yet the mountains were far from tranquil; wild beasts roared, shaking the mountains and rivers, while countless trees trembled and leaves fell in a rustling cascade.Among the countless mountains and ravines, ancient feral beasts roamed, primordial species emerged, and terrifying sounds echoed in the darkness, threatening to tear apart the heavens and earth.In the mountains, from a distance, a soft light appeared, like a flickering candle amidst the boundless darkness and myriad peaks, seemingly on the verge of extinguishing at any moment.As one drew closer, a massive charred tree trunk became visible, with a diameter of several meters. Apart from the half of the trunk, only a slender, vibrant branch remained, adorned with jade-green leaves that emitted a gentle glow, casting a protective light over a village.Specifically, this was a Thunderstruck Tree. Many years ago, it had been struck by a lightning bolt that reached the heavens, destroying the massive crown and vibrant life of the old willow.',
+      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
     })
 
   })()
