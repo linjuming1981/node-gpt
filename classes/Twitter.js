@@ -48,16 +48,13 @@ class Twitter {
       const imgur = new Imgur()
       const imgPath = path.resolve(__dirname, 'temp_img.jpeg')
       await imgur.downloadImage(imgUrl, imgPath)
-      console.log(111)
       const mediaId = await client.v1.uploadMedia(imgPath)
-      console.log(2222, mediaId)
       postData.media ||= {}
       postData.media.media_ids ||= []
       postData.media.media_ids.push(mediaId)
       fs.unlinkSync(imgPath)
     }
 
-    console.log(333)
     const tweet = await client.v2.tweet(postData)
     console.log('Twitter推文已生成：', tweet)
     return tweet
