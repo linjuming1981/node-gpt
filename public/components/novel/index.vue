@@ -9,6 +9,18 @@
         <el-table-column prop="cnTitle" label="cnTitle" width="180" />
         <el-table-column prop="enTitle" label="enTitle" width="180" />
         <el-table-column prop="postedToBlogger" label="postedToBlogger" width="100" />
+        <el-table-column prop="imgUrl" label="imgUrl" width="100">
+          <template #default="scope">
+            <div clsss="imgUrl">
+              <div v-if="scope.row.imgUrl">
+                <img :src="scope.row.imgUrl" />
+              </div>
+              <div v-else>
+                <el-button link type="primary" size="small" @click="createImgUrl(scope.row)">生成</el-button>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column fixed="right" label="Operations" width="160">
           <template #default="scope">
             <div class="action">
@@ -68,6 +80,18 @@ export default {
       })
       console.log({res})
     },
+
+    // 生成预览图片
+    async createImgUrl(product){
+      let res = await aixio({
+        url: '/createNovelImgUrl',
+        meghod: 'post',
+        data: {
+          product
+        }
+      })
+      product.imgUrl = res.data.data
+    }
   }
 }
 </script>
