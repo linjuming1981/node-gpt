@@ -142,7 +142,7 @@ export default {
     background-color: #fff;
     border: 1px solid #d5dce2;
 }
-.body .imgUrl{
+.imgUrl{
   position: relative;
   img{
     width: 30px;
