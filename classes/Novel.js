@@ -90,6 +90,7 @@ class Novel {
       productId: product.productId,
       postedToBlogger: '1',
       bloggerPostId: ret.id,
+      bloggerPostUrl: ret.url,
     }
     const novelSheet = this.getGSheet()
     await novelSheet.updateRow({product})
