@@ -130,8 +130,10 @@ class Novel {
     const Twitter = require('./Twitter.js')
     const twitter = new Twitter()
     const res = await twitter.createPost({
+      title: product.enTitle,
       text: product.subCont,
-      imgUrl: product.imgUrl
+      bloggerPostUrl: product.bloggerPostUrl,
+      imgUrl: product.imgUrl,
     })
     return res
   }

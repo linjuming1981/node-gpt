@@ -25,7 +25,7 @@ class Twitter {
     this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
   }
 
-  async createPost({text, imgUrl}){
+  async createPost({title, text, bloggerPostUrl, imgUrl}){
     const { TwitterApi } = require('twitter-api-v2');
 
     // 替换成你自己的 API 密钥和令牌
@@ -36,8 +36,11 @@ class Twitter {
       accessSecret: this.accessSecret,
     });
 
+    // 加入标题和链接
+    const link = `<a href="${bloggerPostUrl}">[more...]</a>`
+
     // 截取文本
-    const truncatedText = Util.truncateText(text, 270);
+    const truncatedText = Util.truncateText(text, 280, link);
 
     const postData = {
       text: truncatedText,

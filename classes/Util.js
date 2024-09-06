@@ -90,10 +90,11 @@ var Util = {};
     },
 
     // 函数：将文本截取到最大长度，并确保不会断开单词
-    truncateText(text, maxLength = 280) {
-      if (text.length <= maxLength) return text;
+    truncateText(text, maxLength = 280, tailStr='...') {
+      const alltext = `${text}${tailStr}`
+      if (alltext.length <= maxLength) return text;
 
-      let truncated = text.slice(0, maxLength);
+      let truncated = text.slice(0, maxLength - tailStr.length);
       
       // 查找最后一个空格，确保不会截断单词
       const lastSpace = truncated.lastIndexOf(' ');
@@ -102,7 +103,7 @@ var Util = {};
       }
 
       // 添加省略号
-      return truncated + '...';
+      return truncated + tailStr;
     }
 
   };
