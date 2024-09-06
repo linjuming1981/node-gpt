@@ -84,7 +84,7 @@ export default {
 
     // 生成预览图片
     async createImgUrl(product){
-      let res = await aixio({
+      let res = await axios({
         url: '/createNovelChapterImg',
         meghod: 'post',
         data: {
