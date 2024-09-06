@@ -69,6 +69,9 @@ class Novel {
     let cont = novel[`${lang}Cont`]
     let novelHtml = `
       <div class="novel_detail">
+        <div class="chapter_img">
+          <img src="${novel.imgUrl}" alt="${title}" />
+        </div>
         <article class="novel_cont">${cont}</article>
       </div>
     `
