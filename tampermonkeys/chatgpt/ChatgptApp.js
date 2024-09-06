@@ -40,8 +40,11 @@ const ChatgptApp = {
   },
   mounted(){  
     this.render(); 
-    if(Store.get('isAutoTranslate')){
-      this.translate()
+    // if(Store.get('isAutoTranslate')){
+    //   this.translate()
+    // }
+    if(location.href.includes('action=createNovelOthers')){
+      this.createNovelOthers()
     }
   },
   render(){
@@ -289,6 +292,8 @@ const ChatgptApp = {
   // 生成其他字段
   async createNovelOthers(count=0){
     if(count >= 5 ){
+      location.href = 'https://chatgpt.com/?action=createNovelOthers'
+      return
       Store.set('isAutoOthers', true)
       await Util.refreshGptPage()
       return
