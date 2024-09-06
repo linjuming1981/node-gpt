@@ -3,3 +3,5 @@ package-lock.json
 /.npmrc
 /changes.patch
 output.png
+/temp/*
+!/temp/readme.txt

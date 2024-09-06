@@ -47,7 +47,7 @@ class Twitter {
     if(imgUrl){
       console.log('11111',imgUrl)
       const imgur = new Imgur()
-      const imgPath = path.resolve(__dirname, 'temp_img.jpeg')
+      const imgPath = path.resolve(__dirname, '../temp/temp_img.jpeg')
       await imgur.downloadImage(imgUrl, imgPath)
       const mediaId = await client.v1.uploadMedia(imgPath)
       postData.media ||= {}
