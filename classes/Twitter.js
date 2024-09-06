@@ -45,9 +45,9 @@ class Twitter {
 
     // 上传图片到 twitter
     if(imgUrl){
-      console.log('11111',imgUrl)
       const imgur = new Imgur()
       const imgPath = path.resolve(__dirname, '../temp/temp_img.jpeg')
+      console.log('11111',imgUrl, imgPath)
       await imgur.downloadImage(imgUrl, imgPath)
       const mediaId = await client.v1.uploadMedia(imgPath)
       postData.media ||= {}
