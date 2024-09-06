@@ -32,7 +32,6 @@ class GoogleBlogger {
           content: content,
         }
       });
-      console.log('Post created blog detail:', res.data)
       return res.data;
     } catch (error) {
       console.error("Error creating Blogger post:", error);
