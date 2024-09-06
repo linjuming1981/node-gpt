@@ -59,7 +59,8 @@ export default {
           url: '/getNovelRows',
           method: 'post',
           data: {
-            filter: {postedToBlogger: '0', enTitle: 'NOT_EMPTY'}, 
+            // filter: {postedToBlogger: '0', enTitle: 'NOT_EMPTY'}, 
+            filter: {imgPrompt: 'NOT_EMPTY'},
             count: 50,
           }
         })
