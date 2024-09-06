@@ -125,7 +125,7 @@ class Novel {
   async postToTwitter(product){
     const Twitter = require('./Twitter.js')
     const twitter = new Twitter()
-    const res = twitter.createPost({
+    const res = await twitter.createPost({
       text: product.subCont,
       imgUrl: product.imgUrl
     })
