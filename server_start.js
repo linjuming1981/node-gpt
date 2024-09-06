@@ -371,11 +371,12 @@ app.post('/createNovelChapterImg', async (req, res) => {
 // 发贴到twitter
 app.post('/postNovelToTwitter', async (req, res) => {
   const {product} = req.body
-  const Novel = require('./classes/Novel.js')
-  const novel = new Novel()
+  res.send({code: 200});
+  // const Novel = require('./classes/Novel.js')
+  // const novel = new Novel()
 
-  const ret = await novel.postToTwitter(product)
-  res.send({code: 200, data: ret})
+  // const ret = await novel.postToTwitter(product)
+  // res.send({code: 200, data: ret})
 })
 
 
