@@ -30,7 +30,8 @@
           <template #default="scope">
             <div class="action">
               <a class="preview" :href="`/novelPreview/${scope.row.productId}`" target="previewFrame" @click="isPreview=true">预览</a>
-              <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发帖</el-button>
+              <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发blogger</el-button>
+              <el-button link type="primary" size="small" @click="createTwitterPost(scope.row)">发twitter</el-button>
             </div>
           </template>
         </el-table-column>
@@ -97,7 +98,18 @@ export default {
         }
       })
       product.imgUrl = res.data.imgUrl
+    },
+
+    async createTwitterPost(product){
+      const res = await axios({
+        url: '/postNovelToTwitter',
+        method: 'post',
+        data: {
+          product
+        }
+      })
     }
+
   }
 }
 </script>
