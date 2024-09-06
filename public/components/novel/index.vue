@@ -85,7 +85,7 @@ export default {
         }
       })
       novel.postedToBlogger = '1'
-      novel.imgUrl = res.data.ret.url
+      novel.bloggerPostUrl = res.data.ret.url
     },
 
     // 生成预览图片
