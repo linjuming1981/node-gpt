@@ -4,8 +4,8 @@
   "scripts": {
     "start1": "node server_start.js",
     "deploy": "node deploy.js",
-    "pm2_start": "pm2 start pm2_config.js",
-    "pm2_stop": "pm2 stop pm2_config.js",
+    "pm2_start": "pm2 start server_start.js --watch --ignore-watch=\"temp,logs\"",
+    "pm2_stop": "pm2 start server_start.js",
     "pm2_list": "pm2 list"
   },
   "dependencies": {
