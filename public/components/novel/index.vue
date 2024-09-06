@@ -77,7 +77,6 @@ export default {
     },
 
     async createBlogPost(novel){
-      novel.postedToBlogger = '1'
       let res = await axios({
         url: '/createNovelBlogPost',
         method: 'post',
@@ -85,7 +84,8 @@ export default {
           product: novel
         }
       })
-      console.log({res})
+      novel.postedToBlogger = '1'
+      novel.imgUrl = res.data.ret.url
     },
 
     // 生成预览图片
