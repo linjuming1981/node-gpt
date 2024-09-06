@@ -56,7 +56,6 @@ class Twitter {
     }
 
     console.log('111111111111')
-    return {}
     const tweet = await client.v2.tweet(postData)
     console.log('Twitter推文已生成：', tweet)
     return tweet
