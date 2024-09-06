@@ -144,18 +144,16 @@ export default {
 }
 .imgUrl{
   position: relative;
-  img{
-    width: 30px;
-    height: 30px;
-  }
-  &:hover{
-    img{
-      position: absolute;
-      left: 0;
-      right: 0;
-      width: auto;
-      height: auto;
-    }
-  }
+}
+.imgUrl img{
+  width: 30px;
+  height: 30px;
+}
+.imgUrl:hover img{
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: auto;
 }
 </style>
