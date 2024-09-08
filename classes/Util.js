@@ -52,8 +52,8 @@ var Util = {};
       let port = this.getGptPort()
       console.log({port, text});
       let res = await this.request({
-        // url: `http://localhost:9000/gptFillQuery`,
-        url: `http://localhost:9000/diaFillQuery`,
+        url: `http://localhost:9000/gptFillQuery`,
+        // url: `http://localhost:9000/diaFillQuery`,
         method: 'post',
         data: {
           text,

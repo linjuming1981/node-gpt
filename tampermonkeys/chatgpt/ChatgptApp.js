@@ -48,6 +48,7 @@ const ChatgptApp = {
     }
   },
   render(){
+    console.log(1111)
     var el = document.createElement('div');
     el.innerHTML = this.template
     document.body.appendChild(el)
@@ -143,7 +144,7 @@ const ChatgptApp = {
 
     let enTitle = await Util.gptAsk(`请翻译章节标题（输出格式示例"Chapter 16: Admitting Defeat"）：\n ${novel.cnTitle}`)
     if(!enTitle) return;
-    enTitle = enTitle.replace('<p>', '').replace('</p>', '')
+    enTitle = $(enTitle).text();
 
     const enContArr = []
     for(let i=0; i<novel.cnParts.length; i++){
@@ -363,7 +364,7 @@ const ChatgptApp = {
 
 }
 
-GM_addStyle(`
+const styles = `
   .chatgpt_app:hover{
     width: auto;
     height: auto;
@@ -398,7 +399,10 @@ GM_addStyle(`
   .body-hide-text .text-token-text-primary[data-testid^="conversation-turn-"] {
     display: none;
   }
-`)
+`
 
-ChatgptApp.mounted();
-unsafeWindow.ChatgptApp = ChatgptApp;
+setTimeout(() => {
+  GM_addStyle(styles)
+  ChatgptApp.mounted();
+  unsafeWindow.ChatgptApp = ChatgptApp;
+}, 5000)
