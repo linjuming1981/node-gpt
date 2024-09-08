@@ -112,15 +112,15 @@ const ChatgptApp = {
 
   async translate(count=0) {
     if(count >= 5 ){
-      Store.set('isAutoTranslate', true)
-      await Util.refreshGptPage()
+      location.href = location.origin
       return
     }
     this.isStop = false;
-    Store.set('isAutoTranslate', false);
+    // Store.set('isAutoTranslate', false);
     console.log('translate start');
     if (!this.novels?.length) {
-      this.novels = await this.getNovelRows()
+      const filter = {enCont: ''}
+      this.novels = await this.getNovelRows({filter})
     }
 
     let novel = this.novels.find(n => !n.enCont)
@@ -354,8 +354,13 @@ const ChatgptApp = {
 
   async stop(){
     this.isStop = true;
-    await Util.gptStop()
+    if(location.hostname === 'chat.notdiamond.ai'){
+      await Util.diaStop()
+    } else {
+      await Util.gptStop()
+    }
   }
+
 }
 
 GM_addStyle(`

@@ -52,7 +52,8 @@ var Util = {};
       let port = this.getGptPort()
       console.log({port, text});
       let res = await this.request({
-        url: `http://localhost:9000/gptFillQuery`,
+        // url: `http://localhost:9000/gptFillQuery`,
+        url: `http://localhost:9000/diaFillQuery`,
         method: 'post',
         data: {
           text,
@@ -69,6 +70,18 @@ var Util = {};
       let port = this.getGptPort();
       let res = await this.request({
         url: `http://localhost:9000/gptStop`,
+        method: 'post',
+        data: {
+          port,
+        }
+      })
+      return res.data
+    },
+
+    async diaStop(){
+      let port = this.getGptPort();
+      let res = await this.request({
+        url: `http://localhost:9000/diaStop`,
         method: 'post',
         data: {
           port,

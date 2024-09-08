@@ -46,12 +46,34 @@ app.post('/gptFillQuery', async (req, res) => {
   res.send({code: 200, data: unswer})
 })
 
+// 使用 notdiamond.ai 回复
+app.post('/diaFillQuery', async (req, res) => {
+  const {text, port} = req.body
+  const AutoTest = require('./classes/AutoTest.js')
+  const autoTest = new AutoTest({port})
+  console.log(11111);
+  await autoTest.initialize();
+  console.log(22);
+  const unswer = await autoTest.diaFillQuery(text)
+  console.log(33);
+  res.send({code: 200, data: unswer})
+})
+
 app.post('/gptStop', async (req, res) => {
   const {port} = req.body
   const AutoTest = require('./classes/AutoTest.js')
   const autoTest = new AutoTest({port})
   await autoTest.initialize();
   await autoTest.gptStop()
+  res.send({code: 200, data: true})
+})
+
+app.post('/diaStop', async (req, res) => {
+  const {port} = req.body
+  const AutoTest = require('./classes/AutoTest.js')
+  const autoTest = new AutoTest({port})
+  await autoTest.initialize();
+  await autoTest.diaStop()
   res.send({code: 200, data: true})
 })
 

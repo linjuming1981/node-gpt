@@ -112,16 +112,6 @@ class AutoTest {
     })
   }
 
-  async diaStop(){
-    const page = await this.getPage('chat.notdiamond.ai');
-    await page.evaluate(() => {
-      const stopBtn = document.querySelector('[data-testid="stop-submit-chat-message"]')
-      if(stopBtn){
-        stopBtn.click()
-      }
-    })
-  }
-
   // 刷新页面，防止内存越来越高
   async refreshGptPage(){
     const page = await this.getPage('chatgpt.com');
@@ -163,7 +153,7 @@ if(module === require.main){
     
     // await autoTest.refreshGptPage();
     const text = '今天星期几'
-    const unswer = await autoTest.gptFillQuery(text)
+    const unswer = await autoTest.diaFillQuery(text)
     console.log(unswer);
 
     // 调用 sendHttpRequest
