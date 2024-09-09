@@ -35,23 +35,35 @@ class AutoTest {
   async gptFillQuery(text) {
     try {
       const page = await this.getPage('chatgpt.com');
-      await page.fill('#prompt-textarea', text)
+      await page.fill('#prompt-textarea', text);
 
-      // --- 这里怎么等待2秒后再执行后续操作
-      // await page.waitForTimeout(2000);
+      // 等待2秒后再执行后续操作
+      await page.waitForTimeout(2000);
+
       await page.click('[data-testid="send-button"]');
       
-      // 等待 stop-button 可见
-      const stopBtn = page.locator('[data-testid="stop-button"]');
-      await stopBtn.waitFor({ state: 'visible' });
-      console.log('GPT 在回答中...');
+      try {
+        // 等待 stop-button 可见
+        const stopBtn = page.locator('[data-testid="stop-button"]');
+        await stopBtn.waitFor({ state: 'visible', timeout: 10000 });
+        console.log('GPT 在回答中...');
 
-      // 等待 stop-button 消失（即变成 send-button）
-      await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
+        // 等待 stop-button 消失（即变成 send-button）
+        await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
+      } catch(err) {
+        console.log('未检测到 stop-button，继续执行');
+      }
 
       // 抓取最后一个 conversation-turn 元素的 HTML 内容
       const elements = page.locator('article[data-testid^="conversation-turn-"]');
-      const lastElement = elements.nth(await elements.count() - 1);
+      const lastElement = elements.last();
+
+      // 获取最后一个元素的内容
+      const lastElementContent = await lastElement.innerText();
+
+      if (lastElementContent.includes("我已准备就绪")) {
+        return '我已准备就绪';
+      }
       
       // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
       const markdownElement = lastElement.locator('.markdown');
@@ -59,7 +71,7 @@ class AutoTest {
 
       // 达到了每小时限制次数
       if(markdownHtml.includes('reached our limit of messages')){
-        return false
+        return false;
       }
       return markdownHtml;
     } catch (err) {

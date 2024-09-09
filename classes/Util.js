@@ -117,6 +117,19 @@ var Util = {};
 
       // 添加省略号
       return truncated + tailStr;
+    },
+
+    // 给url添加传参
+    addUrlParams(key, value, url='') {
+      let urlObj = new URL(url || location.href);
+      
+      if (urlObj.searchParams.has(key)) {
+        urlObj.searchParams.set(key, value);
+      } else {
+        urlObj.searchParams.append(key, value);
+      }
+      
+      return urlObj.toString();
     }
 
   };

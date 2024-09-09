@@ -29,7 +29,7 @@ const role = `
    - 保持原文中的任何格式，如段落分隔和对话结构。
 
 5. **输出格式：**
-   - 请直接输出翻译结果，翻译结果不要markdown代码编辑器输出，不附加任何额外的说明或信息。
+   - 请直接输出翻译结果，确保输出结果为标准文本格式，不包含任何Markdown代码块或格式，不附加任何额外的说明或信息。
 `
 
 const ChatgptApp = {
@@ -46,9 +46,11 @@ const ChatgptApp = {
     if(location.href.includes('action=createNovelOthers')){
       this.createNovelOthers()
     }
+    if(location.href.includes('action=translate')){
+      this.translate()
+    }
   },
   render(){
-    console.log(1111)
     var el = document.createElement('div');
     el.innerHTML = this.template
     document.body.appendChild(el)
@@ -112,8 +114,8 @@ const ChatgptApp = {
   },
 
   async translate(count=0) {
-    if(count >= 5 ){
-      location.href = location.origin
+    if(count >= 1 ){
+      location.href = Util.addUrlParams('action', 'translate', location.origin)
       return
     }
     this.isStop = false;
@@ -149,7 +151,7 @@ const ChatgptApp = {
     const enContArr = []
     for(let i=0; i<novel.cnParts.length; i++){
       let cnPart = novel.cnParts[i]
-      enPart = await Util.gptAsk(`请翻译以下章节片段： \n\n${cnPart}`)
+      enPart = await Util.gptAsk(`请翻译以下章节内容为英文，确保输出结果为标准文本格式，不包含任何Markdown代码块或格式： \n\n${cnPart}`)
       if(this.isStop || !enPart) return;   
 
       enContArr.push(enPart)
@@ -166,7 +168,11 @@ const ChatgptApp = {
       url: `${apiBaseUrl}/updateNovel`,
       method: 'post',
       data: {
-        novel
+        novel: {
+          productId: novel.productId,
+          enTitle,
+          enCont,
+        }
       }
     })
     console.log('translate end', res);
@@ -405,4 +411,4 @@ setTimeout(() => {
   GM_addStyle(styles)
   ChatgptApp.mounted();
   unsafeWindow.ChatgptApp = ChatgptApp;
-}, 5000)
+}, 3000)
