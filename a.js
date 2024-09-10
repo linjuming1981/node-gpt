@@ -1,4 +1,6 @@
 const tumblr = require('tumblr.js');
+const fs = require('fs');
+
 const client = tumblr.createClient({
   consumer_key: 'gzBMbQWEVfOcY2zClcVzpzCP8QP2XcrDpmGAYQWLNuDCFBfVik',
   consumer_secret: 'ZI9p4Yxpaee3EqE0bbQtx7YSIR5RBEpw3RR8I4m4XZiuMjv5cI',
@@ -7,13 +9,17 @@ const client = tumblr.createClient({
 });
 
 const blogName = 'linjuming.tumblr.com';
+
+// 读取图片文件
+const imagePath = './temp/output.png';
+const imageData = fs.readFileSync(imagePath);
+console.log(imageData) // 确定有数据
+
 const postOptions = {
   type: 'photo',
   caption: 'This is a photo post',
   tags: ['nodejs', 'tumblr'],
-  data: [
-    './temp/output.png',  
-  ]
+  data: [imageData]  // 直接传递文件数据
 };
 
 client.createPost(blogName, postOptions)
