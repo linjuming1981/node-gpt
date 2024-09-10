@@ -13,7 +13,7 @@ const blogName = 'linjuming.tumblr.com';
 // 读取图片文件
 const imagePath = './temp/output.png';
 const imageData = fs.readFileSync(imagePath);
-console.log(imageData) // 确定有数据  
+console.log(imageData) // 确定有数据    
 
 const postOptions = {
   type: 'photo',
