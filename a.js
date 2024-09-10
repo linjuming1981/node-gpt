@@ -12,7 +12,7 @@ const postOptions = {
   caption: 'This is a photo post',
   tags: ['nodejs', 'tumblr'],
   data: [
-    './temp/output.png',
+    './temp/output.png',  
   ]
 };
 
