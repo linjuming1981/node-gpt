@@ -38,4 +38,18 @@ GM_addStyle(`
     display: none;
   }
 
+  /*chat.notdiamond.ai 样式*/
+  body>div>div[class*="dark"]{
+    width: 10px;
+    padding: 0;
+  }
+  body>div>div[class*="dark"]:hover {
+    width: 200px;
+  }
+
+  body>div>div[class*="dark"] .max-h-screen button{
+    margin: 10px;
+  }
+
+
 `)

@@ -45,11 +45,11 @@ class AutoTest {
       try {
         // 等待 stop-button 可见
         const stopBtn = page.locator('[data-testid="stop-button"]');
-        await stopBtn.waitFor({ state: 'visible', timeout: 10000 });
+        await stopBtn.waitFor({ state: 'visible', timeout: 600000 });
         console.log('GPT 在回答中...');
 
         // 等待 stop-button 消失（即变成 send-button）
-        await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
+        await stopBtn.waitFor({ state: 'hidden', timeout: 600000 });
       } catch(err) {
         console.log('未检测到 stop-button，继续执行');
       }
