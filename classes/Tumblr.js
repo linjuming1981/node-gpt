@@ -1,6 +1,8 @@
 const tumblr = require('tumblr.js');
 
-let requestToken, requestTokenSecret;
+// 通过 https://www.tumblr.com/oauth/apps -> Explore API工具生成
+let requestToken = 'GgB9Ksu9TM4BLWR4NXh41UP2GVMVm4AUZIhFVHxMcse4J3HKrS'
+let requestTokenSecret = 'zJHleutK7X1zBXJyGXy31TXjKTkAgB9Yn9PWKFkvAcOHL5jwO8'
 
 class Tumblr {
   constructor(){
@@ -10,6 +12,8 @@ class Tumblr {
   }
 
   getClient(){
+    console.log('Consumer Key:', this.OAuth_Consumer_Key);
+    console.log('Consumer Secret:', this.Secret_Key);
     const client = tumblr.createClient({
       consumer_key: this.OAuth_Consumer_Key ,
       consumer_secret: this.Secret_Key,

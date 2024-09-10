@@ -1,33 +1,25 @@
-const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
+const tumblr = require('tumblr.js');
+const client = tumblr.createClient({
+  consumer_key: 'gzBMbQWEVfOcY2zClcVzpzCP8QP2XcrDpmGAYQWLNuDCFBfVik',
+  consumer_secret: 'ZI9p4Yxpaee3EqE0bbQtx7YSIR5RBEpw3RR8I4m4XZiuMjv5cI',
+  token: '8gts2OcL09Sb3T64rWxRklJxWiJiCe0rs4yNq6LlunY9ZOlVqf',
+  token_secret: '22iUpuki9XEkfYFCtgS2BIz4BwhaZq5WiSWURQFRhxAeixCmi6'
+});
 
-async function uploadImageToImgur(filePath) {
-    const clientId = 'YOUR_IMGUR_CLIENT_ID'; // 替换为你的 Imgur 客户端 ID
-    const image = fs.createReadStream(filePath); // 读取本地图片文件
+const blogName = 'linjuming.tumblr.com';
+const postOptions = {
+  type: 'photo',
+  caption: 'This is a photo post',
+  tags: ['nodejs', 'tumblr'],
+  data: [
+    './temp/output.png',
+  ]
+};
 
-    const form = new FormData();
-    form.append('image', image);
-
-    try {
-        const response = await axios.post('https://api.imgur.com/3/upload', form, {
-            headers: {
-                'Authorization': `Client-ID ${clientId}`,
-                ...form.getHeaders()
-            }
-        });
-
-        // 检查响应结果并获取图片链接
-        if (response.data.success) {
-            console.log('Image uploaded successfully:', response.data.data.link);
-            return response.data.data.link;
-        } else {
-            console.error('Failed to upload image:', response.data);
-        }
-    } catch (error) {
-        console.error('Error uploading image:', error.message);
-    }
-}
-
-// 使用路径上传图片
-uploadImageToImgur('path/to/your/image.jpg');
+client.createPost(blogName, postOptions)
+  .then(response => {
+    console.log('Post created:', response.id);
+  })
+  .catch(error => {
+    console.error('Error creating post:', error);
+  });
