@@ -1,5 +1,4 @@
 const tumblr = require('tumblr.js');
-const open = require('open');
 
 let requestToken, requestTokenSecret;
 
@@ -27,6 +26,7 @@ class Tumblr {
       console.log(1111111, {requestToken, requestTokenSecret})
       
       const authUrl = `https://www.tumblr.com/oauth/authorize?oauth_token=${requestToken}`;
+      const open = (await import('open')).default; // 动态导入 open 模块
       open(authUrl);
     } catch (error) {
       console.error('Error getting request token:', error);
