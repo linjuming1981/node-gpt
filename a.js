@@ -27,7 +27,7 @@ const config = {
 
 axios.post(apiUrl, postData, config)
   .then(response => {
-    console.log(11111111)
+    console.log(11111111)   
     console.log('Post created:', response.data.response.id);
   })
   .catch(error => {
