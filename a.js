@@ -1,30 +1,34 @@
-const tumblr = require('tumblr.js');
-const fs = require('fs');
-
-const client = tumblr.createClient({
-  consumer_key: 'gzBMbQWEVfOcY2zClcVzpzCP8QP2XcrDpmGAYQWLNuDCFBfVik',
-  consumer_secret: 'ZI9p4Yxpaee3EqE0bbQtx7YSIR5RBEpw3RR8I4m4XZiuMjv5cI',
-  token: '8gts2OcL09Sb3T64rWxRklJxWiJiCe0rs4yNq6LlunY9ZOlVqf',
-  token_secret: '22iUpuki9XEkfYFCtgS2BIz4BwhaZq5WiSWURQFRhxAeixCmi6'
-});
+const axios = require('axios');
+const fs = require('fs')
 
 const blogName = 'linjuming.tumblr.com';
+const apiUrl = `https://api.tumblr.com/v2/blog/${blogName}/posts`;
 
 // 读取图片文件
 const imagePath = './temp/output.png';
 const imageData = fs.readFileSync(imagePath);
-console.log(imageData) // 确定有数据    
+// console.log(imageData) // 确定有数据    
 
-const postOptions = {
+const postData = {
   type: 'photo',
   caption: 'This is a photo post',
   tags: ['nodejs', 'tumblr'],
-  data: [imageData]  // 直接传递文件数据
+  data: [imageData]
 };
 
-client.createPost(blogName, postOptions)
+const config = {
+  params: {
+    api_key: 'gzBMbQWEVfOcY2zClcVzpzCP8QP2XcrDpmGAYQWLNuDCFBfVik'
+  },
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+
+axios.post(apiUrl, postData, config)
   .then(response => {
-    console.log('Post created:', response.id);
+    console.log(11111111)
+    console.log('Post created:', response.data.response.id);
   })
   .catch(error => {
     console.error('Error creating post:', error);
