@@ -1,166 +1,104 @@
-const { chromium } = require('playwright');
+const tumblr = require('tumblr.js');
+const express = require('express');
+const open = require('open');
 
-class AutoTest {
-  constructor({port=9224}){
-    this.browser = null;
-    this.context = null;
-    this.port = port;
-  }
+const app = express();
+const port = 3000;
 
-  async initialize() {
-    this.browser = await chromium.connectOverCDP(`http://localhost:${this.port}`);
-    this.context = this.browser.contexts()[0];
-  }
+// 替换为你的应用凭证
+const CONSUMER_KEY = 'YOUR_CONSUMER_KEY';
+const CONSUMER_SECRET = 'YOUR_CONSUMER_SECRET';
 
-  async closeBrowser() {
-    if (this.browser) {
-      await this.browser.close();
-    }
-  }
+const client = tumblr.createClient({
+  consumer_key: CONSUMER_KEY,
+  consumer_secret: CONSUMER_SECRET,
+  returnPromises: true
+});
 
-  async getPage(url, isExactEqual=false){
-    if (!this.context) {
-      throw new Error('Browser context is not initialized. Call initialize() first.');
-    }
-    const pages = await this.context.pages();
-    let page
-    if(isExactEqual){ // 精确匹配 
-      page = pages.find(n => n._mainFrame._url === url)
-    } else { // 模糊匹配
-      page = pages.find(n => n._mainFrame._url.includes(url))
-    }
-    return page
-  }
+let requestToken, requestTokenSecret;
 
-  async gptFillQuery(text) {
-    try {
-      const page = await this.getPage('chatgpt.com');
-      await page.fill('#prompt-textarea', text)
-
-      // --- 这里怎么等待2秒后再执行后续操作
-      // await page.waitForTimeout(2000);
-      await page.click('[data-testid="send-button"]');
-      
-      // 等待 stop-button 可见
-      const stopBtn = page.locator('[data-testid="stop-button"]');
-      await stopBtn.waitFor({ state: 'visible' });
-      console.log('GPT 在回答中...');
-
-      // 等待 stop-button 消失（即变成 send-button）
-      await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
-
-      // 抓取最后一个 conversation-turn 元素的 HTML 内容
-      const elements = page.locator('article[data-testid^="conversation-turn-"]');
-      const lastElement = elements.nth(await elements.count() - 1);
-      
-      // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
-      const markdownElement = lastElement.locator('.markdown');
-      const markdownHtml = await markdownElement.innerHTML();
-
-      // 达到了每小时限制次数
-      if(markdownHtml.includes('reached our limit of messages')){
-        return false
-      }
-      return markdownHtml;
-    } catch (err) {
-      console.error('gptFillQuery 执行失败:', err);
-      return false;
-    }
-  }
-
-  async diaFillQuery(text){
-    try {
-      const page = await this.getPage('chat.notdiamond.ai');
-      await page.fill('#chat-promt', text)
-
-      // --- 这里怎么等待2秒后再执行后续操作
-      // await page.waitForTimeout(2000);
-      await page.click('[data-testid="submit-chat-message"]');
-      
-      // 等待 stop-button 可见
-      const stopBtn = page.locator('[data-testid="stop-submit-chat-message"]');
-      await stopBtn.waitFor({ state: 'visible' });
-      console.log('GPT 在回答中...');
-
-      // 等待 stop-button 消失（即变成 send-button）
-      await stopBtn.waitFor({ state: 'hidden', timeout: 120000 });
-
-      // 抓取最后一个 conversation-turn 元素的 HTML 内容
-      const elements = page.locator('.prose');
-      const lastElement = elements.nth(await elements.count() - 1);
-      const markdownHtml = await lastElement.innerHTML();
-
-      // 达到了每小时限制次数
-      if(markdownHtml.includes('reached our limit of messages')){
-        return false
-      }
-      return markdownHtml;
-    } catch (err) {
-      console.error('diaFillQuery 执行失败:', err);
-      return false;
-    }  
-  }
-
-  // gpt点击停止
-  async gptStop(){
-    const page = await this.getPage('chatgpt.com');
-    await page.evaluate(() => {
-      const stopBtn = document.querySelector('[data-testid="stop-button"]')
-      if(stopBtn){
-        stopBtn.click()
-      }
-    })
-  }
-
-  // 刷新页面，防止内存越来越高
-  async refreshGptPage(){
-    const page = await this.getPage('chatgpt.com');
-    await page.goto('https://chatgpt.com')
-  }
-
-  // 使用 request API 直接发出 HTTP 请求的方法
-  async sendHttpRequest(url) {
-    try {
-      // 在当前的浏览器上下文中使用 request API 发出请求
-      const response = await this.context.request.get(url);
-
-      // 检查响应状态
-      if (response.ok()) {
-        // 返回响应数据
-        const data = await response.json();
-        return data;
-      } else {
-        console.log(`Request failed with status: ${response.status()}`);
-        return null;
-      }
-    } catch (err) {
-      console.error('sendHttpRequest 执行失败:', err);
-      return null;
-    }
-  }
-
-
-}
-
-module.exports = AutoTest
-
-// 调试
-if(module === require.main){
-  (async () => {
-    const autoTest = new AutoTest({port: 9224});
-    await autoTest.initialize();
-    // await autoTest.getPage('chatgpt.com');
+app.get('/', async (req, res) => {
+  try {
+    const response = await client.getRequestToken('http://localhost:' + port + '/callback');
+    requestToken = response.token;
+    requestTokenSecret = response.secret;
     
-    // await autoTest.refreshGptPage();
-    const text = '今天星期几'
-    const unswer = await autoTest.diaFillQuery(text)
-    console.log(unswer);
+    const authUrl = `https://www.tumblr.com/oauth/authorize?oauth_token=${requestToken}`;
+    open(authUrl);
+    res.send('Please check your browser for the Tumblr authorization page.');
+  } catch (error) {
+    console.error('Error getting request token:', error);
+    res.status(500).send('Error occurred');
+  }
+});
 
-    // 调用 sendHttpRequest
-    // const apiUrl = 'https://8080-cs-239467590834-default.cs-europe-west4-pear.cloudshell.dev/test';
-    // const response = await autoTest.sendHttpRequest(apiUrl);
-    // console.log(response);
+app.get('/callback', async (req, res) => {
+  const oauthToken = req.query.oauth_token;
+  const oauthVerifier = req.query.oauth_verifier;
 
-    await autoTest.closeBrowser();
-  })();
+  try {
+    const response = await client.getAccessToken(requestToken, requestTokenSecret, oauthVerifier);
+    const accessToken = response.token;
+    const accessTokenSecret = response.secret;
+
+    console.log('Access Token:', accessToken);
+    console.log('Access Token Secret:', accessTokenSecret);
+
+    res.send('Authorization successful! Check your console for the tokens.');
+    setTimeout(() => process.exit(), 1000);
+  } catch (error) {
+    console.error('Error getting access token:', error);
+    res.status(500).send('Error occurred');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+  open(`http://localhost:${port}`);
+});
+
+
+// ---------------- 发帖
+const tumblr = require('tumblr.js');
+
+// 使用获取到的访问令牌和密钥
+const client = tumblr.createClient({
+  consumer_key: 'YOUR_CONSUMER_KEY',
+  consumer_secret: 'YOUR_CONSUMER_SECRET',
+  token: 'YOUR_ACCESS_TOKEN',
+  token_secret: 'YOUR_ACCESS_TOKEN_SECRET'
+});
+
+const blogName = 'your-blog-name.tumblr.com'; // 你的博客名称
+
+// 发布文本帖子
+function postText() {
+  client.createTextPost(blogName, {
+    title: 'Hello World',
+    body: 'This is my first post using the Tumblr API!'
+  }, (err, data) => {
+    if (err) {
+      console.error('Error posting text:', err);
+    } else {
+      console.log('Text post created:', data);
+    }
+  });
 }
+
+// 发布图片帖子
+function postPhoto() {
+  client.createPhotoPost(blogName, {
+    caption: 'Check out this awesome photo!',
+    source: 'https://example.com/path/to/image.jpg' // 替换为你想发布的图片URL
+  }, (err, data) => {
+    if (err) {
+      console.error('Error posting photo:', err);
+    } else {
+      console.log('Photo post created:', data);
+    }
+  });
+}
+
+// 调用函数发布帖子
+postText();
+postPhoto();

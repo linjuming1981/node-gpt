@@ -379,7 +379,19 @@ app.post('/postNovelToTwitter', async (req, res) => {
   res.send({code: 200, data: ret})
 })
 
+app.get('/tumblrRequestToken', async (req, res) => {
+  const Tumblr = require('./classes/Tumblr.js')
+  const tumblr = new Tumblr()
+  tumblr.requestToken()
+  res.send({code: 200})
+})
 
+app.get('/tumblrCallbak', async (req, res) => {
+  const Tumblr = require('./classes/Tumblr.js')
+  const tumblr = new Tumblr()
+  const res = tumblr.getAccessToken(req.query.oauth_verifier)
+  res.send({code: 200, data: res})
+})
 
 // 服务监听开启  
 const port = 8080
