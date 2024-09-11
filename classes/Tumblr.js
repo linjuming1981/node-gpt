@@ -17,6 +17,7 @@ class Tumblr {
   }  
 
   createPost(){
+    const blogName = 'linjuming'
     try {
       await client.createPost(blogName, {
         content: [
