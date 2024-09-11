@@ -105,7 +105,7 @@ class Twitter {
       // 搜索推文，查询关键词并指定排序方式
       const searchResults = await this.client.v2.search(keyword, {
         max_results: 10,  // 最大返回数量
-        sort_order: 'relevant', // 按相关性排序（或者使用 'popular' 按受欢迎程度排序）
+        sort_order: 'popular', // 按相关性排序（或者使用 'popular' 按受欢迎程度排序）
       });
   
       // 处理并打印搜索结果
