@@ -23,7 +23,7 @@ async function createPost() {
         },
         {
           type: 'text',
-          text: 'This is a sample post with an <a href="https://example.com">aaa</a>'
+          text: 'This is a sample post with an <a href="https://example.com">example link</a>'
         }
       ],
     });
