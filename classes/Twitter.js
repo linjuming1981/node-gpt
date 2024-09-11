@@ -113,7 +113,7 @@ if(module === require.main){
     // })
 
     await twitter.replyPost({
-      tweetId: '1833768406891548829',
+      tweetId: '1833475004903919918',
       replyText: 'very good',
       imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
     })
