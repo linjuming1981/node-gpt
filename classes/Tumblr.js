@@ -2,8 +2,6 @@ const tumblr = require('tumblr.js');
 
 class Tumblr {
   constructor(){
-    this.OAuth_Consumer_Key = 'gzBMbQWEVfOcY2zClcVzpzCP8QP2XcrDpmGAYQWLNuDCFBfVik'
-    this.Secret_Key = 'ZI9p4Yxpaee3EqE0bbQtx7YSIR5RBEpw3RR8I4m4XZiuMjv5cI'
     this.client = this.getClient()
   }
 
@@ -18,7 +16,43 @@ class Tumblr {
     return client  
   }  
 
-
+  createPost(){
+    try {
+      await client.createPost(blogName, {
+        content: [
+          {
+            type: 'image',
+            media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
+            // url: 'https://i.imgur.com/j9B0am3.jpeg',    
+            "alt_text": "Sonic the Hedgehog and friends",
+            "caption": "I'm living my best life on earth.",
+          },
+          {
+            type: 'text',
+            text: 'Senate leaders are writing legislation to Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties'
+          },
+          {
+            "type": "link",
+            "url": "https://novel-focus.blogspot.com/2024/09/chapter-20-sudden-change.html",
+            // "title": "Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties",
+            "description": "",
+            // "author": "Thomas Kaplan and Robert Pear",
+            // "poster": [
+            //     {
+            //         "url": "https://i.imgur.com/j9B0am3.jpeg",
+            //         "type": "image/jpeg",
+            //         "width": 1024,
+            //         "height": 1024
+            //     }
+            // ]
+         }
+        ],
+      });
+      console.log('Post created successfully');
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
+  }
 
 }
 

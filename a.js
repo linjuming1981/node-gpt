@@ -15,12 +15,24 @@ async function createPost() {
   try {
     await client.createPost(blogName, {
       content: [
+        // {
+        //   type: 'image',
+        //   // media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
+        //   // url: 'https://i.imgur.com/j9B0am3.jpeg',  
+        //   "url": "http://69.media.tumblr.com/b06fe71cc4ab47e93749df060ff54a90/tumblr_nshp8oVOnV1rg0s9xo1_1280.jpg",  
+        //   "alt_text": "Sonic the Hedgehog and friends",
+        //   "caption": "I'm living my best life on earth.",
+        // },
         {
-          type: 'image',
-          media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
-          // url: 'https://i.imgur.com/j9B0am3.jpeg',    
-          "alt_text": "Sonic the Hedgehog and friends",
-          "caption": "I'm living my best life on earth.",
+          "type": "image",
+          "media": [
+              {
+                  "type": "image/jpeg",
+                  "url": "https://i.imgur.com/j9B0am3.jpeg",
+                  "width": 1024,
+                  "height": 1024
+              }
+          ]
         },
         {
           type: 'text',
