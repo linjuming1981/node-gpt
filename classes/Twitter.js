@@ -103,7 +103,7 @@ class Twitter {
   async getTrendsPosts(keyword) {
     try {
       // 搜索推文，查询关键词并指定最大返回数量
-      const searchResults = await this.client.v2.searchTweets(keyword, {
+      const searchResults = await this.client.v2.search(keyword, {
         max_results: 10,  // 最大返回数量
         'tweet.fields': 'created_at', // 请求推文字段，例如创建时间
         'expansions': 'author_id', // 请求额外数据，例如作者ID
@@ -130,6 +130,7 @@ class Twitter {
       return [];
     }
   }
+  
   
 
 }
