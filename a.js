@@ -22,10 +22,10 @@ async function createPost() {
           "alt_text": "Sonic the Hedgehog and friends",
           "caption": "I'm living my best life on earth.",
         },
-        // {
-        //   type: 'text',
-        //   text: 'This is a sample post with an <a href="https://example.com">example link</a>'
-        // },
+        {
+          type: 'text',
+          text: 'Senate leaders are writing legislation to Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties'
+        },
         {
           "type": "link",
           "url": "https://novel-focus.blogspot.com/2024/09/chapter-20-sudden-change.html",
