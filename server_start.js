@@ -371,7 +371,6 @@ app.post('/createNovelChapterImg', async (req, res) => {
 // 发贴到twitter
 app.post('/postNovelToTwitter', async (req, res) => {
   const {product} = req.body
-  // res.send({code: 200});
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
 
@@ -379,19 +378,17 @@ app.post('/postNovelToTwitter', async (req, res) => {
   res.send({code: 200, data: ret})
 })
 
-app.get('/tumblrRequestToken', async (req, res) => {
-  const Tumblr = require('./classes/Tumblr.js')
-  const tumblr = new Tumblr()
-  tumblr.requestToken()
-  res.send({code: 200})
+// 发贴到twitter
+app.post('/postNovelToTumblr', async (req, res) => {
+  const {product} = req.body
+  // res.send({code: 200});
+  const Novel = require('./classes/Novel.js')
+  const novel = new Novel()
+
+  const ret = await novel.postToTumblr(product)
+  res.send({code: 200, data: ret})
 })
 
-app.get('/tumblrCallbak', async (req, res) => {
-  const Tumblr = require('./classes/Tumblr.js')
-  const tumblr = new Tumblr()
-  const res = tumblr.getAccessToken(req.query.oauth_verifier)
-  res.send({code: 200, data: res})
-})
 
 // 服务监听开启  
 const port = 8080

@@ -17,7 +17,7 @@ class Tumblr {
   }  
 
   async createPost(product){
-    const {subCont, imgUrl} = product
+    const {subCont, imgUrl, bloggerPostUrl} = product
     const blogName = 'linjuming'
     try {
       const res = await client.createPost(blogName, {
@@ -44,7 +44,8 @@ class Tumblr {
          }
         ],
       });
-      console.log('Post created successfully', res);
+      console.log('Post created successfully');
+      return res.id
     } catch (error) {
       console.error('Error creating post:', error);
     }
