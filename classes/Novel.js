@@ -140,7 +140,7 @@ class Novel {
   
   // 发帖到Tumblr
   async postToTumblr(product){
-    const tumblr = require('./Tumblr.js')
+    const Tumblr = require('./Tumblr.js')
     const tumblr = new Tumblr()
     const res = await tumblr.createPost(product)
     return res
