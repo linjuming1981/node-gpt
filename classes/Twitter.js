@@ -142,13 +142,13 @@ if(module === require.main){
     //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
     // })
 
-    // await twitter.replyPost({
-    //   tweetId: '1833475004903919918',
-    //   replyText: 'very good',
-    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
-    // })
+    await twitter.replyPost({
+      tweetId: '1833768406891548829',
+      replyText: 'very good',
+      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
+    })
 
-    await twitter.getTrendsPosts('Funny')
+    // await twitter.getTrendsPosts('Funny')
 
   })()
 }
