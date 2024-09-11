@@ -25,6 +25,7 @@ async function createPost() {
         // },
         {
           "type": "image",
+          "caption": "I'm living my best life on earth.",
           "media": [
               {
                   "type": "image/jpeg",
