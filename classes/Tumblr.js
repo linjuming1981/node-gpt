@@ -16,40 +16,35 @@ class Tumblr {
     return client  
   }  
 
-  createPost(){
+  async createPost(product){
+    const {subCont, imgUrl} = product
     const blogName = 'linjuming'
     try {
-      await client.createPost(blogName, {
+      const res = await client.createPost(blogName, {
         content: [
           {
-            type: 'image',
-            media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
-            // url: 'https://i.imgur.com/j9B0am3.jpeg',    
-            "alt_text": "Sonic the Hedgehog and friends",
-            "caption": "I'm living my best life on earth.",
+            type: "image",
+            media: [
+                {
+                    "type": "image/jpeg",
+                    "url": imgUrl,
+                    "width": 1024,
+                    "height": 1024
+                }
+            ]
           },
           {
             type: 'text',
-            text: 'Senate leaders are writing legislation to Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties'
+            text: subCont,
           },
           {
-            "type": "link",
-            "url": "https://novel-focus.blogspot.com/2024/09/chapter-20-sudden-change.html",
-            // "title": "Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties",
-            "description": "",
-            // "author": "Thomas Kaplan and Robert Pear",
-            // "poster": [
-            //     {
-            //         "url": "https://i.imgur.com/j9B0am3.jpeg",
-            //         "type": "image/jpeg",
-            //         "width": 1024,
-            //         "height": 1024
-            //     }
-            // ]
+            type: "link",
+            url: bloggerPostUrl,
+            description: "",
          }
         ],
       });
-      console.log('Post created successfully');
+      console.log('Post created successfully', res);
     } catch (error) {
       console.error('Error creating post:', error);
     }

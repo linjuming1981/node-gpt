@@ -13,7 +13,7 @@ const blogName = 'linjuming';  // 替换为你的博客名称
 
 async function createPost() {
   try {
-    await client.createPost(blogName, {
+    const res = await client.createPost(blogName, {
       content: [
         // {
         //   type: 'image',
@@ -56,7 +56,7 @@ async function createPost() {
        }
       ],
     });
-    console.log('Post created successfully');
+    console.log('Post created successfully', res);
   } catch (error) {
     console.error('Error creating post:', error);
   }
