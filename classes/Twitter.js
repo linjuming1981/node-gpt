@@ -102,10 +102,11 @@ class Twitter {
 
   async getTrendsPosts(keyword) {
     try {
-      // 搜索推文，查询关键词并指定排序方式
-      const searchResults = await this.client.v2.search(keyword, {
+      // 搜索推文，查询关键词并指定最大返回数量
+      const searchResults = await this.client.v2.searchTweets(keyword, {
         max_results: 10,  // 最大返回数量
-        sort_order: 'popular', // 按相关性排序（或者使用 'popular' 按受欢迎程度排序）
+        'tweet.fields': 'created_at', // 请求推文字段，例如创建时间
+        'expansions': 'author_id', // 请求额外数据，例如作者ID
       });
   
       // 处理并打印搜索结果
@@ -129,6 +130,7 @@ class Twitter {
       return [];
     }
   }
+  
 
 }
 
@@ -142,13 +144,13 @@ if(module === require.main){
     //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
     // })
 
-    await twitter.replyPost({
-      tweetId: '1833768406891548829',
-      replyText: 'very good',
-      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
-    })
+    // await twitter.replyPost({
+    //   tweetId: '1833768406891548829',
+    //   replyText: 'very good',
+    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
+    // })
 
-    // await twitter.getTrendsPosts('Funny')
+    await twitter.getTrendsPosts('Funny')  // 为什么我这里请求返回403
 
   })()
 }
