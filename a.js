@@ -20,7 +20,7 @@ async function createPost() {
           media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
           // url: 'https://i.imgur.com/j9B0am3.jpeg',    
           "alt_text": "Sonic the Hedgehog and friends",
-          "caption": "I'm living my best life on earth."，
+          "caption": "I'm living my best life on earth.",
         },
         // {
         //   type: 'text',
