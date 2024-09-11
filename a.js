@@ -18,7 +18,7 @@ async function createPost() {
         {
           type: 'image',
           media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
-          // url: 'https://i.imgur.com/j9B0am3.jpeg',
+          // url: 'https://i.imgur.com/j9B0am3.jpeg',  
           alt_text: '…',
         },
         {
