@@ -103,7 +103,7 @@ module.exports = Imgur
 if(module === require.main){
   (async () => {
     const imgur = new Imgur()
-    await imgur.downloadImage('https://i.imgur.com/j9B0am3.jpeg', '../temp/output.png')
+    await imgur.downloadImage('https://i.imgur.com/j9B0am3.jpeg', '../output.png')
     console.log(111)
   })()
 }
