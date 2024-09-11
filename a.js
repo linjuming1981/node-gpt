@@ -15,16 +15,16 @@ async function createPost() {
   try {
     await client.createPost(blogName, {
       content: [
-        // {
-        //   type: 'image',
-        //   media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
-        //   // url: 'https://i.imgur.com/j9B0am3.jpeg',    
-        //   alt_text: '…',
-        //   attribution: {
-        //     "type": "link",
-        //     "url": "http://shahkashani.com/"
-        //   }
-        // },
+        {
+          type: 'image',
+          media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
+          // url: 'https://i.imgur.com/j9B0am3.jpeg',    
+          alt_text: '…',
+          attribution: {
+            "type": "link",
+            "url": "http://shahkashani.com/"
+          }
+        },
         // {
         //   type: 'text',
         //   text: 'This is a sample post with an <a href="https://example.com">example link</a>'
@@ -35,14 +35,14 @@ async function createPost() {
           // "title": "Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties",
           "description": "Senate leaders are writing legislation to repeal and replace the Affordable Care Act without a single hearing on the bill and without an open drafting session.",
           "author": "Thomas Kaplan and Robert Pear",
-          "poster": [
-              {
-                  "url": "https://i.imgur.com/j9B0am3.jpeg",
-                  "type": "image/jpeg",
-                  "width": 1024,
-                  "height": 1024
-              }
-          ]
+          // "poster": [
+          //     {
+          //         "url": "https://i.imgur.com/j9B0am3.jpeg",
+          //         "type": "image/jpeg",
+          //         "width": 1024,
+          //         "height": 1024
+          //     }
+          // ]
        }
       ],
     });
