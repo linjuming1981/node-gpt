@@ -66,7 +66,7 @@ class AutoTest {
       }
       
       // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
-      const markdownElement = lastElement.locator('.markdown');
+      const markdownElement = lastElement.locator('.markdown').first();
       const markdownHtml = await markdownElement.innerHTML();
 
       // 达到了每小时限制次数
