@@ -23,11 +23,11 @@ class Twitter {
     this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
     this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
     this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
+    this.client = this.getClient()
   }
 
-  async createPost({title, text, bloggerPostUrl, imgUrl}){
+  getClient(){
     const { TwitterApi } = require('twitter-api-v2');
-
     // 替换成你自己的 API 密钥和令牌
     const client = new TwitterApi({
       appKey: this.appKey,
@@ -35,6 +35,10 @@ class Twitter {
       accessToken: this.accessToken,
       accessSecret: this.accessSecret,
     });
+    return client
+  }
+
+  async createPost({title, text, bloggerPostUrl, imgUrl}){
 
     // 加入标题和链接
     const link = `... ${bloggerPostUrl}`
@@ -51,7 +55,7 @@ class Twitter {
       const imgur = new Imgur()
       const imgPath = path.resolve(__dirname, '../temp/temp_img.jpeg')
       await imgur.downloadImage(imgUrl, imgPath)
-      const mediaId = await client.v1.uploadMedia(imgPath)
+      const mediaId = await this.client.v1.uploadMedia(imgPath)
       postData.media ||= {}
       postData.media.media_ids ||= []
       postData.media.media_ids.push(mediaId)
@@ -62,6 +66,40 @@ class Twitter {
     console.log('Twitter推文已生成：', tweet)
     return tweet
   }
+
+  async replyPost({tweetId, replyText, imgUrl}) {
+    try {
+      const postData = {
+        text: replyText,
+        in_reply_to_status_id: tweetId,  // 指定要回复的推文ID
+      };
+
+      // 上传图片到 twitter（如果提供了图片）
+      if (imgUrl) {
+        const imgur = new Imgur();
+        const imgPath = path.resolve(__dirname, '../temp/temp_img_reply.jpeg');
+        await imgur.downloadImage(imgUrl, imgPath);
+        const mediaId = await this.client.v1.uploadMedia(imgPath);
+        postData.media ||= {};
+        postData.media.media_ids ||= [];
+        postData.media.media_ids.push(mediaId);
+        fs.unlinkSync(imgPath);
+      }
+
+      // 发布回复
+      const tweet = await this.client.v2.reply(replyText, tweetId, {
+        media: {
+          media_ids: postData.media?.media_ids || [],
+        },
+      });
+
+      console.log('Reply posted successfully:', tweet);
+      return tweet;
+    } catch (error) {
+      console.error('Error posting reply:', error);
+    }
+  }
+
 }
 
 module.exports = Twitter
@@ -69,9 +107,15 @@ module.exports = Twitter
 if(module === require.main){
   (async () => {
     const twitter = new Twitter()
-    await twitter.createPost({
-      text: 'The night was deep and pitch-black, rendering the landscape invisible. Yet the mountains were far from tranquil; wild beasts roared, shaking the mountains and rivers, while countless trees trembled and leaves fell in a rustling cascade.Among the countless mountains and ravines, ancient feral beasts roamed, primordial species emerged, and terrifying sounds echoed in the darkness, threatening to tear apart the heavens and earth.In the mountains, from a distance, a soft light appeared, like a flickering candle amidst the boundless darkness and myriad peaks, seemingly on the verge of extinguishing at any moment.As one drew closer, a massive charred tree trunk became visible, with a diameter of several meters. Apart from the half of the trunk, only a slender, vibrant branch remained, adorned with jade-green leaves that emitted a gentle glow, casting a protective light over a village.Specifically, this was a Thunderstruck Tree. Many years ago, it had been struck by a lightning bolt that reached the heavens, destroying the massive crown and vibrant life of the old willow.',
-      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
+    // await twitter.createPost({
+    //   text: 'The night was deep and pitch-black, rendering the landscape invisible.',
+    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
+    // })
+
+    await twitter.replyPost({
+      tweetId: '1833768406891548829',
+      replyText: 'very good',
+      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
     })
 
   })()
