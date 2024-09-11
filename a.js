@@ -19,11 +19,8 @@ async function createPost() {
           type: 'image',
           media: fs.createReadStream(path.resolve(__dirname, './output.png')),  
           // url: 'https://i.imgur.com/j9B0am3.jpeg',    
-          alt_text: '…',
-          attribution: {
-            "type": "link",
-            "url": "http://shahkashani.com/"
-          }
+          "alt_text": "Sonic the Hedgehog and friends",
+          "caption": "I'm living my best life on earth."，
         },
         // {
         //   type: 'text',
