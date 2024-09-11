@@ -100,6 +100,7 @@ class Twitter {
     }
   }
 
+  // temp1.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries[3].content.itemContent.tweet_results.result.legacy.full_text
   async getTrendsPosts(keyword) {
     try {
       // 搜索推文，查询关键词并指定最大返回数量
