@@ -28,9 +28,9 @@ async function createPost() {
         // },
         {
           "type": "link",
-          "url": "https://www.nytimes.com/2017/06/15/us/politics/secrecy-surrounding-senate-health-bill-raises-alarms-in-both-parties.html",
+          "url": "https://novel-focus.blogspot.com/2024/09/chapter-20-sudden-change.html",
           // "title": "Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties",
-          "description": "Senate leaders are writing legislation to repeal and replace the Affordable Care Act without a single hearing on the bill and without an open drafting session.",
+          "description": "Senate leaders are writing legislation to <a href=\"https://novel-focus.blogspot.com/2024/09/chapter-20-sudden-change.html\">example link</a>",
           "author": "Thomas Kaplan and Robert Pear",
           // "poster": [
           //     {
