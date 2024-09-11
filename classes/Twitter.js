@@ -100,6 +100,36 @@ class Twitter {
     }
   }
 
+  async getTrendsPosts(keyword) {
+    try {
+      // 搜索推文，查询关键词并指定排序方式
+      const searchResults = await this.client.v2.search(keyword, {
+        max_results: 10,  // 最大返回数量
+        sort_order: 'relevant', // 按相关性排序（或者使用 'popular' 按受欢迎程度排序）
+      });
+  
+      // 处理并打印搜索结果
+      const tweets = searchResults.data;
+      
+      if (!tweets) {
+        console.log('No tweets found for the given keyword.');
+        return [];
+      }
+  
+      // 获取帖子ID和文本内容
+      const results = tweets.map(tweet => ({
+        id: tweet.id,
+        text: tweet.text,
+      }));
+  
+      console.log('Trending Posts:', results);
+      return results;
+    } catch (error) {
+      console.error('Error fetching trending posts:', error);
+      return [];
+    }
+  }
+
 }
 
 module.exports = Twitter
@@ -112,11 +142,13 @@ if(module === require.main){
     //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
     // })
 
-    await twitter.replyPost({
-      tweetId: '1833475004903919918',
-      replyText: 'very good',
-      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
-    })
+    // await twitter.replyPost({
+    //   tweetId: '1833475004903919918',
+    //   replyText: 'very good',
+    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
+    // })
+
+    await twitter.getTrendsPosts('Funny')
 
   })()
 }
