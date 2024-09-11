@@ -26,12 +26,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="Operations" width="160">
+        <el-table-column fixed="right" label="Operations" width="240">
           <template #default="scope">
             <div class="action">
               <a class="preview" :href="`/novelPreview/${scope.row.productId}`" target="previewFrame" @click="isPreview=true">预览</a>
               <el-button link type="primary" size="small" @click="createBlogPost(scope.row)">发blogger</el-button>
               <el-button link type="primary" size="small" @click="createTwitterPost(scope.row)">发twitter</el-button>
+              <el-button link type="primary" size="small" @click="createTumblrPost(scope.row)">发tumblr</el-button>
             </div>
           </template>
         </el-table-column>
@@ -108,7 +109,17 @@ export default {
           product
         }
       })
-    }
+    },
+
+    async createTumblrPost(product){
+      const res = await axios({
+        url: '/postNovelToTumblr',
+        method: 'post',
+        data: {
+          product
+        }
+      })
+    },
 
   }
 }
