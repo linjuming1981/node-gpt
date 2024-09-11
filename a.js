@@ -17,9 +17,13 @@ async function createPost() {
       content: [
         {
           type: 'image',
-          media: fs.createReadStream(path.resolve(__dirname, './temp/output.png')),
+          media: fs.createReadStream(path.resolve(__dirname, './output.png')),
           alt_text: '…',
         },
+        {
+          type: 'text',
+          text: 'This is a sample post with an [external link](https://example.com).'
+        }
       ],
     });
     console.log('Post created successfully');
