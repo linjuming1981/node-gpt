@@ -37,7 +37,7 @@ async function createPost() {
         },
         {
           type: 'text',
-          text: 'Senate leaders are writing legislation to Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties'
+          text: 'Senate leaders are writing legislation to Secrecy Surrounding '.repeat(20)
         },
         {
           "type": "link",
