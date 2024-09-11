@@ -20,7 +20,7 @@ class Tumblr {
     const {subCont, imgUrl, bloggerPostUrl} = product
     const blogName = 'linjuming'
     try {
-      const res = await client.createPost(blogName, {
+      const res = await this.client.createPost(blogName, {
         content: [
           {
             type: "image",
