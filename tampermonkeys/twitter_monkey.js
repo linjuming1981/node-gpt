@@ -9,7 +9,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        unsafeWindow
-// @require      file://D:\www\leb\node-gpt\tampermonkeys\twitter.monkey.js
+// @require      file://D:\www\leb\node-gpt\tampermonkeys\twitter_monkey.js
 // ==/UserScript==
 
 
