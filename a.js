@@ -30,7 +30,7 @@ async function createPost() {
           "type": "link",
           "url": "https://novel-focus.blogspot.com/2024/09/chapter-20-sudden-change.html",
           // "title": "Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties",
-          // "description": "Senate leaders are writing legislation to Secrecy Surrounding Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties Senate Health Bill Raises Alarms in Both Parties",
+          "description": "",
           // "author": "Thomas Kaplan and Robert Pear",
           // "poster": [
           //     {
