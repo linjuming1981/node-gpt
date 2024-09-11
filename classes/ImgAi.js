@@ -62,11 +62,11 @@ if(module == require.main){
   (async() => {
     const imgAi = new ImgAi()
     const params = {
-      prompt: 'A dramatic scene of a mountain village\'s celebration after a successful hunt, with a backdrop of a sacred stone altar. The scene includes a group of proud hunters, rugged and muscular, displaying large exotic creatures like dragon-horned elephants and winged serpents. Villagers, including women and children, are gathered in joy, their faces reflecting relief and excitement. The village, bathed in the golden hues of the setting sun, looks ancient and sacred, with long shadows cast by the returning hunters. The atmosphere is filled with awe and reverence, with some mysterious and large beast footprints hinting at greater dangers lurking beyond.',
-      // prompt: 'In a rugged mountain village, a group of children, from toddlers to teens, exercises energetically on a grassy field at dawn.'
-      // prompt: 'Astronaut riding a horse',
-
+      prompt: `
+      A dramatic, intricate scene set in a dimly lit, cozy room filled with luxurious fabrics and elegant furnishings. At the center, a resolute figure stands with a calm expression, holding a small, enchanted child in their arms, surrounded by a dozen attentive, majestic cats. The figure's gaze is both solemn and protective. Soft, warm lighting highlights the deep textures and rich colors of the room. The cats, with their varied fur patterns and expressive eyes, are peacefully lounging around, suggesting a bond of trust and commitment. The overall atmosphere exudes a sense of unwavering devotion and quiet strength.      
+      `.trim()
+      
     }
-    await imgAi.createImg(params, '../output.png')
+    await imgAi.createImg(params, '../temp/output.png')
   })()
 }
