@@ -9,11 +9,15 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        unsafeWindow
+// @require      https://code.jquery.com/jquery-3.5.1.min.js
+// @require      file://D:\www\leb\node-gpt\classes\Util.js
+// @require      file://D:\www\leb\node-gpt\classes\Store.js
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\twitter_monkey.js
 // ==/UserScript==
 
 
 const TwitterMonkey = {
+  apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
 
   // 收集页面ajax请求
   collectAjaxs() {
@@ -147,8 +151,58 @@ const TwitterMonkey = {
   },
 
   // 模拟回复功能（这里需要你实现具体的回复逻辑）
-  reply(url) {
+  // temp1.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries[3].content.itemContent.tweet_results.result.legacy.full_text
+  async reply(url) {
+    // 帖子详情网址： https://x.com/linjuming_1/status/1833768406891548829
     console.log(url)
+    const regex = /status\/(\d+)/;
+    const postId = url.match(regex)[1];
+    let post
+    for(let i in unsafeWindow.ajaxs){
+      if(i.includes('SearchTimeline')){
+        let res = JSON.parse(unsafeWindow.ajaxs[i].response)
+        let posts = res.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries // 帖子列表
+        posts = posts.filter(n => n.content.__typename === "TimelineTimelineItem")
+        posts = posts.map(n => {
+          if(n.content?.itemContent?.tweet_results?.result?.legacy){
+            return n.content.itemContent.tweet_results.result.legacy
+          } else {
+            return {}
+          }
+        })
+        post = posts.find(n => n.id_str === postId)
+      }
+    }
+    console.log('post', post);
+
+    let res = await Util.gptAsk(`
+      ## 角色和能力：
+      - 1. 你是个画家，你想象力很丰富，可以根据我提供的帖子内容脑补生成画面，并且你精通stable diffunion prompt工程。
+      - 2. 同时你也是个英文幽默大师，你会根据我提供的帖子内容，输出幽默有趣的英文回复内容。
+      ## 要求：
+      - 1. 请你根据我提供的内容生成一个100个单词左右的英文prompt。
+      - 2. 请你根据我提供的内容生成一个270个字符左右的英文回复内容。
+      ## 输入：
+      - 1. 帖子内容会用"""<帖子内容>"""（三引号进行包裹）
+      ## 输出格式：
+      - 1. 要用json格式输出内容，不要嵌套在markdown编辑器内，直接输出，不附加任何额外的说明或信息。
+      - 2. 格式示例如: {"replyCont": "<英文回复内容>","imgPrompt":"<英文prompt>"}
+      ## 我提供的帖子内容如下："""\n${post.full_text}\n"""
+    `, 'text')
+    console.log('gpt reply res', res);
+    const {replyCont, imgPrompt} = JSON.parse(res)
+
+    const res = await Util.request({
+      url: `${apiBaseUrl}/twitterAiReply`,
+      method: 'post',
+      data: {
+        postId,
+        postCont: post.full_text,
+        replyCont
+        imgPrompt,
+      }
+    })
+    console.log('reply', res);
   }
 };
 

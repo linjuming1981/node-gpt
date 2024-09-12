@@ -35,14 +35,11 @@ app.all('*', function(req, res, next) {
 });
 
 app.post('/gptFillQuery', async (req, res) => {
-  const {text, port} = req.body
+  const {text, port, returnType='html'} = req.body
   const AutoTest = require('./classes/AutoTest.js')
   const autoTest = new AutoTest({port})
-  console.log(11111);
   await autoTest.initialize();
-  console.log(22);
-  const unswer = await autoTest.gptFillQuery(text)
-  console.log(33);
+  const unswer = await autoTest.gptFillQuery(text, returnType)
   res.send({code: 200, data: unswer})
 })
 
@@ -51,11 +48,8 @@ app.post('/diaFillQuery', async (req, res) => {
   const {text, port} = req.body
   const AutoTest = require('./classes/AutoTest.js')
   const autoTest = new AutoTest({port})
-  console.log(11111);
   await autoTest.initialize();
-  console.log(22);
   const unswer = await autoTest.diaFillQuery(text)
-  console.log(33);
   res.send({code: 200, data: unswer})
 })
 

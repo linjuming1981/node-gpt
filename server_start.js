@@ -389,6 +389,14 @@ app.post('/postNovelToTumblr', async (req, res) => {
   res.send({code: 200, data: ret})
 })
 
+// twitter评论
+app.post('/twitterAiReply', async (req, res) => {
+  const {postId, postCont, replyCont, imgPrompt} = req.body
+  const Twitter = require('./classes/Twitter.js')
+  const twitter = new Twitter
+  const ret = await twitter.aiReplyPost({postId, replyCont, imgPrompt})
+  res.send({code: 200, data: ret})
+})
 
 // 服务监听开启  
 const port = 8080

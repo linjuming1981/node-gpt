@@ -48,7 +48,7 @@ var Util = {};
       return port
     },
 
-    async gptAsk(text){
+    async gptAsk(text, returnType='html'){
       let port = this.getGptPort()
       console.log({port, text});
       let res = await this.request({
@@ -58,6 +58,7 @@ var Util = {};
         data: {
           text,
           port,
+          returnType,
         }
       })
       if(!res.data){

@@ -32,7 +32,7 @@ class AutoTest {
     return page
   }
 
-  async gptFillQuery(text) {
+  async gptFillQuery(text, returnType='html') {
     try {
       const page = await this.getPage('chatgpt.com');
       await page.fill('#prompt-textarea', text);
@@ -67,7 +67,12 @@ class AutoTest {
       
       // 在最后一个 conversation-turn 元素中抓取 class="markdown" 元素
       const markdownElement = lastElement.locator('.markdown').first();
-      const markdownHtml = await markdownElement.innerHTML();
+      let markdownHtml = await markdownElement.innerHTML();
+
+      // 提取 markdown 元素中的纯文本
+      if (returnType === 'text') { 
+        markdownHtml = await markdownElement.innerText();
+      }
 
       // 达到了每小时限制次数
       if(markdownHtml.includes('reached our limit of messages')){

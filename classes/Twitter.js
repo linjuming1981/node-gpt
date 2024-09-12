@@ -67,7 +67,7 @@ class Twitter {
     return tweet
   }
 
-  async replyPost({tweetId, replyText, imgUrl}) {
+  async replyPost({tweetId, replyText, imgUrl, imgBuffer}) {
     try {
       const postData = {
         text: replyText,
@@ -86,6 +86,17 @@ class Twitter {
         fs.unlinkSync(imgPath);
       }
 
+      // 处理 imgBuffer 上传
+      if (imgBuffer) {
+        const tempFilePath = path.resolve(__dirname, '../temp/temp_img_reply_buffer.jpeg');
+        fs.writeFileSync(tempFilePath, imgBuffer);
+        const mediaId = await this.client.v1.uploadMedia(tempFilePath);
+        postData.media ||= {};
+        postData.media.media_ids ||= [];
+        postData.media.media_ids.push(mediaId);
+        fs.unlinkSync(tempFilePath); // 上传后删除临时文件
+      }
+
       // 发布回复
       const tweet = await this.client.v2.reply(replyText, tweetId, {
         media: {
@@ -100,7 +111,19 @@ class Twitter {
     }
   }
 
-  // temp1.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries[3].content.itemContent.tweet_results.result.legacy.full_text
+  // 根据prompt生产图图片，使用gpt生成内容进行回复
+  async aiReplyPost({postId, replyCont, imgPrompt}){
+    const ImgAi = require('./ImgAi.js')
+    const imgAi = new ImgAi()
+    const imgBuffer = await imgAi.createImg({prompt: imgPrompt})
+
+    const res = await this.replyPost({tweetId: postId, replyText: replyCont, imgBuffer})
+    console.log(1111, res);
+    return res
+  }
+
+
+  // 权限不够，升级账号到基础账号才行，要100美元每月
   async getTrendsPosts(keyword) {
     try {
       // 搜索推文，查询关键词并指定最大返回数量
@@ -132,6 +155,7 @@ class Twitter {
     }
   }
   
+
   
 
 }
@@ -147,12 +171,16 @@ if(module === require.main){
     // })
 
     // await twitter.replyPost({
-    //   tweetId: '1833768406891548829',
+    //   tweetId: '1833768406891548829',  // 我自己的帖子 https://x.com/linjuming_1/status/1833768406891548829
     //   replyText: 'very good',
     //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
     // })
 
-    await twitter.getTrendsPosts('Funny')  // 为什么我这里请求返回403
+    await twitter.aiReplyPost({
+      postId: '1833768406891548829',
+      replyCont: 'very good !',
+      imgPrompt: 'Illustrate a comedic debate scene where two characters are arguing passionately.'
+    })
 
   })()
 }
