@@ -17,7 +17,31 @@
 
 
 const TwitterMonkey = {
+
+  template: `
+    <div class="twitter_monkey">
+      <div class="actions">
+        <span _onclick="addActionBtns">评论</span>
+      </div>
+    </div>
+  `,
+
   apiBaseUrl: 'https://node-gpt-h1b3.onrender.com',
+  dropdownMenu: null,
+  hideTimeout: null,
+  currentUrl: null,  // 保存当前 URL
+
+  render(){
+    var el = document.createElement('div');
+    el.innerHTML = this.template
+    document.body.appendChild(el)
+    el.addEventListener('click', e => {
+      let evt = e.target.getAttribute('_onclick')
+      if(evt){
+        this[evt]()
+      }      
+    })
+  },
 
   // 收集页面ajax请求
   collectAjaxs() {
@@ -29,19 +53,18 @@ const TwitterMonkey = {
 
       // 监听发起的 XMLHttpRequest 请求
       xhr.addEventListener("load", function() {
-        unsafeWindow.ajaxs[this.responseURL] = {
-          url: this.responseURL,
-          response: this.response,
-        };
+        const whiteList = ['SearchTimeline', 'HomeTimeline']
+        if(whiteList.some(n => this.responseURL.includes(n))){
+          unsafeWindow.ajaxs[this.responseURL] = {
+            url: this.responseURL,
+            response: this.response,
+          };
+        }
       });
 
       return xhr;
     };
   },
-
-  dropdownMenu: null,
-  hideTimeout: null,
-  currentUrl: null,  // 保存当前 URL
 
   // 创建下拉菜单的容器
   createDropdownMenu() {
@@ -84,16 +107,6 @@ const TwitterMonkey = {
   // 给每个帖子后面添加操作按钮和下拉菜单
   addActionBtns() {
     let els = document.querySelectorAll('time');
-    if (!location.href.includes('search?q')) {
-      return;
-    }
-
-    if (!els.length) {
-      setTimeout(() => {
-        this.addActionBtns();
-      }, 3000);
-      return;
-    }
 
     // 创建下拉菜单容器
     this.dropdownMenu = this.createDropdownMenu();
@@ -151,27 +164,41 @@ const TwitterMonkey = {
   },
 
   // 模拟回复功能（这里需要你实现具体的回复逻辑）
-  // temp1.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries[3].content.itemContent.tweet_results.result.legacy.full_text
   async reply(url) {
     // 帖子详情网址： https://x.com/linjuming_1/status/1833768406891548829
     console.log(url)
     const regex = /status\/(\d+)/;
     const postId = url.match(regex)[1];
     let post
+    let allPosts = []
+
     for(let i in unsafeWindow.ajaxs){
+      // 搜索路径
+      // temp1.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries[3].content.itemContent.tweet_results.result.legacy.full_text
       if(i.includes('SearchTimeline')){
         let res = JSON.parse(unsafeWindow.ajaxs[i].response)
         let posts = res.data.search_by_raw_query.search_timeline.timeline.instructions[0].entries // 帖子列表
-        posts = posts.filter(n => n.content.__typename === "TimelineTimelineItem")
-        posts = posts.map(n => {
-          if(n.content?.itemContent?.tweet_results?.result?.legacy){
-            return n.content.itemContent.tweet_results.result.legacy
-          } else {
-            return {}
-          }
-        })
-        post = posts.find(n => n.id_str === postId)
+        allPosts = [...posts, ...allPosts]
       }
+
+      // 首页路径
+      // data.home.home_timeline_urt.instructions[0].entries[1].content.itemContent.tweet_results.result.legacy.full_text
+      if(i.includes('HomeTimeline')){
+        let res = JSON.parse(unsafeWindow.ajaxs[i].response)
+        let posts = res.data.home.home_timeline_urt.instructions[0].entries // 帖子列表
+        allPosts = [...posts, ...allPosts]
+      }
+
+      allPosts = allPosts.filter(n => n.content.__typename === "TimelineTimelineItem")
+      allPosts = allPosts.map(n => {
+        if(n.content?.itemContent?.tweet_results?.result?.legacy){
+          return n.content.itemContent.tweet_results.result.legacy
+        } else {
+          return {}
+        }
+      })
+      post = allPosts.find(n => n.id_str === postId)
+     
     }
     console.log('post', post);
 
@@ -208,12 +235,28 @@ const TwitterMonkey = {
 
 // 初始化
 TwitterMonkey.collectAjaxs();
-setTimeout(() => {
-  TwitterMonkey.addActionBtns();
-}, 3000);
+TwitterMonkey.render();
+unsafeWindow.TwitterMonkey = TwitterMonkey
 
 // 添加 CSS 样式
 GM_addStyle(`
+  .twitter_monkey{
+    position: fixed;
+    right: 0;
+    top: 50%;
+  }
+  .twitter_monkey .actions span{
+    background-color: #005f34;
+    border: 1px solid #11633e;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+  }
+  .twitter_monkey .actions span:active{
+    background-color: #00a05e; /* 点击时的高亮颜色 */
+    border-color: #149e60;
+  }
+
   /* 操作按钮的样式 */
   .twitter-monkey-action-btn {
     cursor: pointer;
