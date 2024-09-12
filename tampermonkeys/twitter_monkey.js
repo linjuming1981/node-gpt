@@ -192,17 +192,17 @@ const TwitterMonkey = {
     console.log('gpt reply res', res);
     const {replyCont, imgPrompt} = JSON.parse(res)
 
-    const res = await Util.request({
-      url: `${apiBaseUrl}/twitterAiReply`,
+    const ret = await Util.request({
+      url: `${this.apiBaseUrl}/twitterAiReply`,
       method: 'post',
       data: {
         postId,
         postCont: post.full_text,
-        replyCont
+        replyCont,
         imgPrompt,
       }
     })
-    console.log('reply', res);
+    console.log('reply', ret);
   }
 };
 

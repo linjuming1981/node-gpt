@@ -118,7 +118,7 @@ class Twitter {
     const imgBuffer = await imgAi.createImg({prompt: imgPrompt})
 
     const res = await this.replyPost({tweetId: postId, replyText: replyCont, imgBuffer})
-    console.log(1111, res);
+    console.log('aiReplyPost', res);
     return res
   }
 
