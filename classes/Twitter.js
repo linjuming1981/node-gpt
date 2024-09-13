@@ -62,7 +62,7 @@ class Twitter {
       fs.unlinkSync(imgPath)
     }
 
-    const tweet = await client.v2.tweet(postData)
+    const tweet = await this.client.v2.tweet(postData)
     console.log('Twitter推文已生成：', tweet)
     return tweet
   }
