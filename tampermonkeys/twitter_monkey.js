@@ -189,7 +189,7 @@ const TwitterMonkey = {
         allPosts = [...posts, ...allPosts]
       }
 
-      allPosts = allPosts.filter(n => n.content.__typename === "TimelineTimelineItem")
+      allPosts = allPosts.filter(n => n?.content?.__typename === "TimelineTimelineItem")
       allPosts = allPosts.map(n => {
         if(n.content?.itemContent?.tweet_results?.result?.legacy){
           return n.content.itemContent.tweet_results.result.legacy
@@ -212,7 +212,7 @@ const TwitterMonkey = {
       ## 输入：
       - 1. 帖子内容会用"""<帖子内容>"""（三引号进行包裹）
       ## 输出格式：
-      - 1. 要用json格式输出内容，不要嵌套在markdown编辑器内，直接输出，不附加任何额外的说明或信息。
+      - 1. 要用json格式输出内容，不要嵌套在markdown编辑器内，不要用代码编辑器（代码高亮着色）输出，要直接输出，不附加任何额外的说明或信息。
       - 2. 格式示例如: {"replyCont": "<英文回复内容>","imgPrompt":"<英文prompt>"}
       ## 我提供的帖子内容如下："""\n${post.full_text}\n"""
     `, 'text')

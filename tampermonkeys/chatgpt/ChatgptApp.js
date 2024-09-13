@@ -40,10 +40,6 @@ const ChatgptApp = {
   },
   mounted(){  
     this.render(); 
-    // if(Store.get('isAutoTranslate')){
-    //   this.translate()
-    // }
-    this.toggleText()
     if(location.href.includes('action=createNovelOthers')){
       this.createNovelOthers()
     }
