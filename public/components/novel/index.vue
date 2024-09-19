@@ -67,7 +67,7 @@ export default {
           method: 'post',
           data: {
             // filter: {postedToBlogger: '0', enTitle: 'NOT_EMPTY'}, 
-            filter: {imgPrompt: 'NOT_EMPTY'},
+            filter: {imgPrompt: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'},
             count: 50,
           }
         })
