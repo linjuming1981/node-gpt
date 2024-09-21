@@ -398,6 +398,25 @@ app.post('/twitterAiReply', async (req, res) => {
   res.send({code: 200, data: ret})
 })
 
+app.get('/keepAlive', async (req, res) => {
+  // 获取当前日期和时间
+  const now = new Date();
+  
+  // 格式化日期和时间为 YYYY-MM-DD HH:MM:SS
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');  // 月份是从 0 开始的，需要加 1
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+  const nowDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  
+  console.log('防止render服务休眠', nowDateTime);
+  res.send(nowDateTime);
+})
+
+
 // 服务监听开启  
 const port = 8080
 app.listen(port, function(){
