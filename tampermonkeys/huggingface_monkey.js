@@ -8,11 +8,11 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=huggingface.co
 // @require      file://D:\www\leb\node-gpt\tampermonkeys\huggingface_monkey.js
 // @grant        unsafeWindow
-// ==/UserScript==
+// ==/UserScript==    
 
 
 const HuggingFaceMonkey = {
-  template: `
+  template: `   
     <div class="huggingface_monkey">
       <div class="actions">
         <span _onclick="addActionBtns">跳转</span>
