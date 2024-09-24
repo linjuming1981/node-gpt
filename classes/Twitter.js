@@ -19,10 +19,19 @@ const Util = require('./Util.js')
 
 class Twitter {
   constructor(){
-    this.appKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i'
-    this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
-    this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
-    this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
+
+    // linjuming账号，已被封杀
+    // this.appKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i'
+    // this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
+    // this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
+    // this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
+
+    // xqojxfnn@gongjua.com账号
+    this.appKey = 'XwaFOnU6OJCPhKdM2WVhiusMs'
+    this.appSecret = 'iT1v745mGbHBWstBCa2NjljwYE9FR6q3o97cN0XdAldLGIGeja'
+    this.accessToken = '1838607142821203971-sbsJtP0UqFx8G1isgN6YQezEU5Rb8D'
+    this.accessSecret = 'dMvz8pCwO1oeK7ATVHJVH3xERTTZgcQNyUx856fYnadqX'
+
     this.client = this.getClient()
   }
 
@@ -165,10 +174,10 @@ module.exports = Twitter
 if(module === require.main){
   (async () => {
     const twitter = new Twitter()
-    // await twitter.createPost({
-    //   text: 'The night was deep and pitch-black, rendering the landscape invisible.',
-    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
-    // })
+    await twitter.createPost({
+      text: 'The night was deep and pitch-black, rendering the landscape invisible.',
+      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
+    })
 
     // await twitter.replyPost({
     //   tweetId: '1833768406891548829',  // 我自己的帖子 https://x.com/linjuming_1/status/1833768406891548829
@@ -176,11 +185,11 @@ if(module === require.main){
     //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
     // })
 
-    await twitter.aiReplyPost({
-      postId: '1833768406891548829',
-      replyCont: 'very good !',
-      imgPrompt: 'Illustrate a comedic debate scene where two characters are arguing passionately.'
-    })
+    // await twitter.aiReplyPost({
+    //   postId: '1833768406891548829',
+    //   replyCont: 'very good !',
+    //   imgPrompt: 'Illustrate a comedic debate scene where two characters are arguing passionately.'
+    // })
 
   })()
 }
