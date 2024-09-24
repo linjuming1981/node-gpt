@@ -27,10 +27,16 @@ class Twitter {
     // this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
 
     // xqojxfnn@gongjua.com账号
-    this.appKey = 'XwaFOnU6OJCPhKdM2WVhiusMs'
-    this.appSecret = 'iT1v745mGbHBWstBCa2NjljwYE9FR6q3o97cN0XdAldLGIGeja'
-    this.accessToken = '1838607142821203971-sbsJtP0UqFx8G1isgN6YQezEU5Rb8D'
-    this.accessSecret = 'dMvz8pCwO1oeK7ATVHJVH3xERTTZgcQNyUx856fYnadqX'
+    // this.appKey = 'XwaFOnU6OJCPhKdM2WVhiusMs'
+    // this.appSecret = 'iT1v745mGbHBWstBCa2NjljwYE9FR6q3o97cN0XdAldLGIGeja'
+    // this.accessToken = '1838607142821203971-sbsJtP0UqFx8G1isgN6YQezEU5Rb8D'
+    // this.accessSecret = 'dMvz8pCwO1oeK7ATVHJVH3xERTTZgcQNyUx856fYnadqX'
+
+    // linjuming_1@163.com账号
+    this.appKey = 'zmCAGTID5QwRlPVws8W8YluiQ'
+    this.appSecret = 'FKxZntyUWAuR9bv8Igfr1LkvVQxTKjd9yxd64WvOS9ezSnMxxL'
+    this.accessToken = '1838630951255183366-Xn56wHAaWrPmWp8Mb4aSca6Rl7S9Oh'
+    this.accessSecret = 'rjFahwiXkpXEYv8W9uEky791WkdC7U62gEhANWcakxwPW'
 
     this.client = this.getClient()
   }
