@@ -216,6 +216,9 @@ app.post('/createBlogPost', async (req, res) => {
 
 app.post('/createNovelBlogPost', async (req, res) => {
   let {product} = req.body
+  if(typeof product === 'string'){
+    product = JSON.parse(product)
+  }
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   const ret = await novel.postToBlogger(product)
