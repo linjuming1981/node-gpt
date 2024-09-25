@@ -81,3 +81,10 @@ dash.cloudflare.com;www.cloudflare.com
    发twitter时带上博文链接
 
    
+使用make.com
+1、获取一章小说 /getNovelRows  filter: {imgPrompt: 'NOT_EMPTY', imgUrl: ''}
+2、生成章节图片 /createNovelChapterImg
+3、生成twitter文章 /postNovelToTwitter
+
+消耗3个点
+2 小时发一篇文章，每天12篇， 使用36个点，

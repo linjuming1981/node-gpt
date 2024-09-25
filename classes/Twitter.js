@@ -20,11 +20,11 @@ const Util = require('./Util.js')
 class Twitter {
   constructor(){
 
-    // linjuming账号，已被封杀
-    // this.appKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i'
-    // this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
-    // this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
-    // this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
+    // linjuming账号，已被封杀 -- 已解封
+    this.appKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i'
+    this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
+    this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
+    this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
 
     // xqojxfnn@gongjua.com账号
     // this.appKey = 'XwaFOnU6OJCPhKdM2WVhiusMs'
@@ -33,10 +33,10 @@ class Twitter {
     // this.accessSecret = 'dMvz8pCwO1oeK7ATVHJVH3xERTTZgcQNyUx856fYnadqX'
 
     // linjuming_1@163.com账号
-    this.appKey = 'zmCAGTID5QwRlPVws8W8YluiQ'
-    this.appSecret = 'FKxZntyUWAuR9bv8Igfr1LkvVQxTKjd9yxd64WvOS9ezSnMxxL'
-    this.accessToken = '1838630951255183366-Xn56wHAaWrPmWp8Mb4aSca6Rl7S9Oh'
-    this.accessSecret = 'rjFahwiXkpXEYv8W9uEky791WkdC7U62gEhANWcakxwPW'
+    // this.appKey = 'zmCAGTID5QwRlPVws8W8YluiQ'
+    // this.appSecret = 'FKxZntyUWAuR9bv8Igfr1LkvVQxTKjd9yxd64WvOS9ezSnMxxL'
+    // this.accessToken = '1838630951255183366-Xn56wHAaWrPmWp8Mb4aSca6Rl7S9Oh'
+    // this.accessSecret = 'rjFahwiXkpXEYv8W9uEky791WkdC7U62gEhANWcakxwPW'
 
     this.client = this.getClient()
   }
