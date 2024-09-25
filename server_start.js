@@ -352,7 +352,7 @@ app.get('/saveImgurOauth2Token', async (req, res) => {
 // 创建章节图片
 app.post('/createNovelChapterImg', async (req, res) => {
   let {product} = req.body
-  if(typeof product === 'object'){
+  if(typeof product === 'string'){
     product = JSON.parse(product)
   }
 
@@ -375,10 +375,10 @@ app.post('/createNovelChapterImg', async (req, res) => {
 // 发贴到twitter
 app.post('/postNovelToTwitter', async (req, res) => {
   let {product} = req.body
-  if(typeof product === 'object'){
+  if(typeof product === 'string'){
     product = JSON.parse(product)
   }
-  
+
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
 
@@ -389,7 +389,7 @@ app.post('/postNovelToTwitter', async (req, res) => {
 // 发贴到twitter
 app.post('/postNovelToTumblr', async (req, res) => {
   let {product} = req.body
-  if(typeof product === 'object'){
+  if(typeof product === 'string'){
     product = JSON.parse(product)
   }
   const Novel = require('./classes/Novel.js')
