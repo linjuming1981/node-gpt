@@ -216,10 +216,20 @@ app.post('/createBlogPost', async (req, res) => {
 })
 
 app.post('/createNovelBlogPost', async (req, res) => {
-  let {product} = req.body
-  if(typeof product === 'string'){
+  let {product, worker} = req.body
+  if(worker){ // cloudflare worker定时任务触发
+    let filter = {enTitle:'NOT_EMPTY', enCont: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}
+    let products = await novelSheet.getSheetDatas({filter})
+    product = products[0]
+  } else if(typeof product === 'string'){
     product = JSON.parse(product)
   }
+
+  if(!product){
+    console.log('/createNovelBlogPost -- 无product')
+    return
+  }
+
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   const ret = await novel.postToBlogger(product)
@@ -355,9 +365,18 @@ app.get('/saveImgurOauth2Token', async (req, res) => {
 
 // 创建章节图片
 app.post('/createNovelChapterImg', async (req, res) => {
-  let {product} = req.body
-  if(typeof product === 'string'){
+  let {product, worker} = req.body
+  if(worker){ // cloudflare worker定时任务触发
+    let filter = {imgPrompt: 'NOT_EMPTY', imgUrl: ''}
+    let products = await novelSheet.getSheetDatas({filter})
+    product = products[0]
+  } else if(typeof product === 'string'){
     product = JSON.parse(product)
+  }
+
+  if(!product){
+    console.log('/createNovelChapterImg -- 无product')
+    return
   }
 
   const {productId, imgPrompt} = product
@@ -378,9 +397,18 @@ app.post('/createNovelChapterImg', async (req, res) => {
 
 // 发贴到twitter
 app.post('/postNovelToTwitter', async (req, res) => {
-  let {product} = req.body
-  if(typeof product === 'string'){
+  let {product, worker} = req.body
+  if(worker){ // cloudflare worker定时任务触发
+    let filter = {subCont: 'NOT_EMPTY', bloggerPostUrl: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}
+    let products = await novelSheet.getSheetDatas({filter})
+    product = products[0]
+  } else if(typeof product === 'string'){
     product = JSON.parse(product)
+  }
+
+  if(!product){
+    console.log('/postNovelToTwitter -- 无product')
+    return
   }
 
   const Novel = require('./classes/Novel.js')
