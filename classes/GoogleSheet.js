@@ -151,7 +151,6 @@ class GoogleSheet {
           } else {
             const [headerRow, ...dataRows] = response.data.values;
             this.header = headerRow;
-            console.log('header', this.header);
       
             const datas = dataRows.map(row => {
               // 使用对象初始化语法直接构造对象

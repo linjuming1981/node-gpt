@@ -108,7 +108,6 @@ class Novel {
     const Imgur = require('./Imgur.js')
     const imgur = new Imgur()
     const imgurLink = await imgur.uploadImage({imageBuffer})
-    console.log('imgurLink', imgurLink)
     return imgurLink
   }
 
