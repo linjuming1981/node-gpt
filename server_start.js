@@ -233,6 +233,7 @@ app.post('/createNovelBlogPost', async (req, res) => {
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   const ret = await novel.postToBlogger(product)
+  console.log('/createNovelBlogPost success -- ', product.enTitle)
   res.send({code: 200, ret})
 })
 
@@ -392,6 +393,7 @@ app.post('/createNovelChapterImg', async (req, res) => {
     imgUrl
   }
   novelSheet.updateRow({product: _product})
+  console.log('/createNovelChapterImg sucess --- ', product.enTitle, imgUrl)
   res.send({code: 200, imgUrl})
 })
 
@@ -415,6 +417,7 @@ app.post('/postNovelToTwitter', async (req, res) => {
   const novel = new Novel()
 
   const ret = await novel.postToTwitter(product)
+  console.log('/postNovelToTwitter sucess --- ', product.enTitle)
   res.send({code: 200, data: ret})
 })
 
