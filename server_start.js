@@ -7,6 +7,7 @@ const app = express()
 
 const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
 const GoogleSheet = require('./classes/GoogleSheet.js')
+const Util = require('./classes/Util.js')
 const sheetId = AMAZON_SHEET_ID
 const sheetTabName = '工作表1'
 const gSheet = new GoogleSheet({sheetId, sheetTabName})
@@ -412,21 +413,24 @@ app.post('/twitterAiReply', async (req, res) => {
 })
 
 app.get('/keepAlive', async (req, res) => {
-  // 获取当前日期和时间
-  const now = new Date();
-  
-  // 格式化日期和时间为 YYYY-MM-DD HH:MM:SS
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');  // 月份是从 0 开始的，需要加 1
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  
-  const nowDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  
+  const nowDateTime = Util.getDateTime()
   console.log('防止render服务休眠', nowDateTime);
   res.send(nowDateTime);
+})
+
+// cloudflare 没法看woker日志，使用这个接口打印
+app.post('/workerLog', async (req, res) => {
+  const now = Util.getDateTime()
+  const {logs} = res.body
+  // logs.forEach((n, i) => {
+  //   if(typeof n === 'object' || Array.isArray(n)){
+  //     logs[i] = JSON.stringify(n, null, 2)
+  //   }
+  // })
+  
+  // let logStr = `${now} --- ${logs.join(' ')}`
+  console.log(now, ...logs)
+  res.send({code:200, logs})
 })
 
 

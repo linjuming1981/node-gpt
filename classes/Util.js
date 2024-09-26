@@ -131,7 +131,29 @@ var Util = {};
       }
       
       return urlObj.toString();
+    },
+
+    // 获取时间
+    getDateTime(time){
+      let dt
+      if(!time){
+        dt = new Date();
+      } else {
+        dt = new Date(time)
+      }
+      
+      // 格式化日期和时间为 YYYY-MM-DD HH:MM:SS
+      const year = dt.getFullYear();
+      const month = String(dt.getMonth() + 1).padStart(2, '0');  // 月份是从 0 开始的，需要加 1
+      const day = String(dt.getDate()).padStart(2, '0');
+      const hours = String(dt.getHours()).padStart(2, '0');
+      const minutes = String(dt.getMinutes()).padStart(2, '0');
+      const seconds = String(dt.getSeconds()).padStart(2, '0');
+      const dateTimeStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      return dateTimeStr
     }
+
+
 
   };
 
