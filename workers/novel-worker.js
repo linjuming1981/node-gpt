@@ -74,3 +74,51 @@ export const NovelWorker = {
 //     console.error('Error:', error);
 //   }
 // })();
+
+
+
+// worker代码
+// -----------------
+
+addEventListener("scheduled", (event) => {
+  event.waitUntil(handleCron(event));
+});
+
+addEventListener('fetch', event => {
+  event.respondWith(handleFetch(event));
+});
+
+async function handleFetch(event) {
+  return await handleCron(event); // 调试时直接调用
+}
+
+async function handleCron(event) {
+  const url = 'https://node-gpt-h1b3.onrender.com/createNovelChapterImg';
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { // post header传参对吗
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Content-Type': 'application/json' // 添加Content-Type
+      },
+      body: JSON.stringify({  // 使用body并转换为JSON字符串
+        worker: 1, 
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.text();
+      console.log(`Success: ${data}`);
+    } else {
+      console.error(`Fail: ${response.status}`);
+    }
+
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+  }
+}
