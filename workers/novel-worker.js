@@ -1,4 +1,4 @@
-const NovelWorker = {
+export const NovelWorker = {
   async request(url, method = 'GET', data = null) {
     const options = {
       method: method,
@@ -40,7 +40,7 @@ const NovelWorker = {
     }
     const res = await this.request(url, 'GET', data);
     const novel = res.data
-    this.workerLog(111111, novel)
+    await this.workerLog(111111, novel)
     return novel
   },
 
@@ -51,15 +51,24 @@ const NovelWorker = {
     //   content: '这里是小说的内容...' // 替换为实际内容
     // };
     // return await this.request(url, 'POST', novelData);
+  },
+
+  async run(){
+    try {
+      const novel = await this.getOneNovel();
+      console.log('Fetched novel:', novel);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 };
 
 // 示例调用
-(async () => {
-  try {
-    const novel = await NovelWorker.getOneNovel();
-    console.log('Fetched novel:', novel);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-})();
+// (async () => {
+//   try {
+//     const novel = await NovelWorker.getOneNovel();
+//     console.log('Fetched novel:', novel);
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// })();
