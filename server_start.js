@@ -418,21 +418,15 @@ app.get('/keepAlive', async (req, res) => {
   res.send(nowDateTime);
 })
 
-// cloudflare 没法看woker日志，使用这个接口打印
+// cloudflare 没法看woker日志，使用这个接口打印 --- 无用，废弃
 app.post('/workerLog', async (req, res) => {
   const now = Util.getDateTime()
   const {logs} = res.body
-  // logs.forEach((n, i) => {
-  //   if(typeof n === 'object' || Array.isArray(n)){
-  //     logs[i] = JSON.stringify(n, null, 2)
-  //   }
-  // })
-  
-  // let logStr = `${now} --- ${logs.join(' ')}`
   console.log(now, ...logs)
   res.send({code:200, logs})
 })
 
+app.post('/worker/')
 
 // 服务监听开启  
 const port = 8080

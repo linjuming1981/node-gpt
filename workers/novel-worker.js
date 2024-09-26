@@ -1,3 +1,5 @@
+// 实践无效，废弃
+
 export const NovelWorker = {
   async request(url, method = 'GET', data = null) {
     const options = {

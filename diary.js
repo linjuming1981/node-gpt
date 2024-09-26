@@ -88,3 +88,12 @@ dash.cloudflare.com;www.cloudflare.com
 
 消耗3个点
 2 小时发一篇文章，每天12篇， 使用36个点，
+
+
+/*
+
+1、找{imgPrompt: 'NOT_EMPTY', imgUrl: ''}的记录，生成图片。--- build
+
+
+
+*/
