@@ -92,8 +92,10 @@ dash.cloudflare.com;www.cloudflare.com
 
 /*
 
-1、找{imgPrompt: 'NOT_EMPTY', imgUrl: ''}的记录，生成图片。--- build
-
+单独3个work
+1、找{imgPrompt: 'NOT_EMPTY', imgUrl: ''}的记录，生成图片。 --- node-gpt/createNovelChapterImg
+2、找{enCont: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}的记录，发布blogger文章 --- node-gpt/createNovelBlogPost
+3、找{subCont: 'NOT_EMPTY', blogPostUrl: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}的记录，发布twitter --- node-gpt/postNovelToTwitter
 
 
 */
