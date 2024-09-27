@@ -16,6 +16,7 @@
               <div v-if="scope.row.imgUrl">
                 <el-tooltip>
                   <template #content>
+                    <div class="imgPrompt">{{scope.row.imgPrompt}}</div>
                     <img class="bigImg" :src="scope.row.imgUrl" />
                   </template>
                   <img :src="scope.row.imgUrl" />
@@ -191,5 +192,6 @@ export default {
 .bigImg{
   width: 500px;
   height: 500px;
+  display: block;
 }
 </style>
