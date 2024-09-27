@@ -1,6 +1,7 @@
 <template>
   <div class="novel">
     <div class="top">
+      <el-input v-model="filter"></el-input>
       <el-button type="primary" @click="getSheetRows(true)">刷新列表</el-button> 
     </div>
     <div class="body">
@@ -50,12 +51,22 @@ export default {
     return {
       novels: [],
       isPreview: false,
+      filter: `{"imgPrompt": "NOT_EMPTY", "imgUrl": ""}`,
+      count: 50,
     }
   },
   mounted(){
+    this.initFilter();
     this.getSheetRows();
   },
   methods: {
+    initFilter(){
+      const filter = window.localStorage.getItem('filter');
+      if(filter){
+        this.filter = filter;
+      }
+    },
+
     async getSheetRows(refresh=false){
       let novelsInStorage = window.localStorage.getItem('novels');
       if (refresh === false && novelsInStorage) {
@@ -66,13 +77,13 @@ export default {
           url: '/getNovelRows',
           method: 'post',
           data: {
-            // filter: {postedToBlogger: '0', enTitle: 'NOT_EMPTY'}, 
-            filter: {imgPrompt: 'NOT_EMPTY', imgUrl: ''},
-            count: 50,
+            filter: this.filter,
+            count: this.count,
           }
         })
         this.novels = res.data.data;
         window.localStorage.setItem('novels', JSON.stringify(this.novels));
+        window.localStorage.setItem('filter', this.filter);
         console.log(this.novels)
       }
     },
