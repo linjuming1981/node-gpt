@@ -1,7 +1,7 @@
 <template>
   <div class="novel">
     <div class="top">
-      <el-input v-model="filter"></el-input>
+      <el-input v-model="filter" class="filter"></el-input>
       <el-button type="primary" @click="getSheetRows(true)">刷新列表</el-button> 
     </div>
     <div class="body">
@@ -143,6 +143,10 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+}
+.top .filter{
+  width: 500px;
+  flex: 0;
 }
 .action{
   display: flex;
