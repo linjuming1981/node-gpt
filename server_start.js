@@ -401,7 +401,7 @@ app.post('/createNovelChapterImg', async (req, res) => {
 app.post('/postNovelToTwitter', async (req, res) => {
   let {product, worker} = req.body
   if(worker){ // cloudflare worker定时任务触发
-    let filter = {subCont: 'NOT_EMPTY', bloggerPostUrl: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}
+    let filter = {subCont: 'NOT_EMPTY', bloggerPostUrl: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY', twitterId: ''}
     let products = await novelSheet.getSheetDatas({filter})
     product = products[0]
   } else if(typeof product === 'string'){

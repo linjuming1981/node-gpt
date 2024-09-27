@@ -54,18 +54,20 @@ class Twitter {
   }
 
   async createPost({title, text, bloggerPostUrl, imgUrl}){
-
     // 加入标题和链接
     // const link = `... ${bloggerPostUrl}`
     const link = '...' // 带外链会被封杀
-
+    
     // 截取文本
     const truncatedText = Util.truncateText(text, 280, link);
-
+    
     const postData = {
       text: truncatedText,
     }
 
+    console.log({title, text, bloggerPostUrl, imgUrl})
+    return {}
+    
     // 上传图片到 twitter
     if(imgUrl){
       const imgur = new Imgur()
@@ -180,11 +182,11 @@ module.exports = Twitter
 
 if(module === require.main){
   (async () => {
-    const twitter = new Twitter()
-    await twitter.createPost({
-      text: 'The night was deep and pitch-black, rendering the landscape invisible.',
-      imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
-    })
+    // const twitter = new Twitter()
+    // await twitter.createPost({
+    //   text: 'The night was deep and pitch-black, rendering the landscape invisible.',
+    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
+    // })
 
     // await twitter.replyPost({
     //   tweetId: '1833768406891548829',  // 我自己的帖子 https://x.com/linjuming_1/status/1833768406891548829
