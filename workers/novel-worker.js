@@ -114,11 +114,15 @@ async function handleCron(event) {
     if (response.ok) {
       const data = await response.text();
       console.log(`Success: ${data}`);
+      return new Response(data);
     } else {
       console.error(`Fail: ${response.status}`);
+      return new Response(`Fail: ${response.status}`);
     }
 
   } catch (error) {
     console.error(`Error: ${error.message}`);
+    return new Response(`Error: ${error.message}`);
   }
 }
+
