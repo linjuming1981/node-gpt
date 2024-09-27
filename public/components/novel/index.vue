@@ -149,7 +149,7 @@ export default {
 }
 .top .filter{
   width: 500px;
-  flex: 0;
+  margin-right: 10px;
 }
 .action{
   display: flex;
