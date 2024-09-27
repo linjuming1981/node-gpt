@@ -87,7 +87,7 @@ class GoogleSheet {
                 case '<=':
                   return Number(n[key]) <= numValue;
                 case '!==':
-                  return n[key] !== value; // 注意：此处不需要转换为数字，因为可能是字符串比较
+                  return n[key] !== value; // 注意：此处不需要转换为数字，因为可能是字符串比较 
                 case '===':
                   return n[key] === value; // 同上
                 default:
