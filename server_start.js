@@ -417,6 +417,13 @@ app.post('/postNovelToTwitter', async (req, res) => {
   const novel = new Novel()
 
   const ret = await novel.postToTwitter(product)
+
+  const _product = {
+    productId,
+    twitterId: ret?.id || 'xxx1'
+  }
+  novelSheet.updateRow({product: _product})
+
   console.log('/postNovelToTwitter sucess --- ', product.enTitle)
   res.send({code: 200, data: ret})
 })
