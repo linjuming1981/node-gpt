@@ -218,7 +218,7 @@ app.post('/createBlogPost', async (req, res) => {
 app.post('/createNovelBlogPost', async (req, res) => {
   let {product, worker} = req.body
   if(worker){ // cloudflare worker定时任务触发
-    let filter = {enTitle:'NOT_EMPTY', enCont: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}
+    let filter = {enTitle:'NOT_EMPTY', enCont: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY', bloggerPostUrl:''}
     let products = await novelSheet.getSheetDatas({filter})
     product = products[0]
   } else if(typeof product === 'string'){
