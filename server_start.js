@@ -420,7 +420,7 @@ app.post('/postNovelToTwitter', async (req, res) => {
 
   const _product = {
     productId: product.productId,
-    twitterId: ret?.id || 'xxx1'
+    twitterId: ret?.data?.id || 'xxx1'
   }
   novelSheet.updateRow({product: _product})
 
