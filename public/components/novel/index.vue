@@ -16,7 +16,10 @@
               <div v-if="scope.row.imgUrl">
                 <el-tooltip>
                   <template #content>
-                    <div class="imgPrompt">{{scope.row.imgPrompt}}</div>
+                    <div class="imgPrompt">
+                      <div>{{scope.row.imgPrompt}}</div>
+                      <el-button type="primary" @click="createImgUrl(scope.row)">重新生成</el-button> 
+                    </div>
                     <img class="bigImg" :src="scope.row.imgUrl" />
                   </template>
                   <img :src="scope.row.imgUrl" />
@@ -192,6 +195,9 @@ export default {
 .imgUrl img{
   width: 50px;
   height: 50px;
+}
+.imgPrompt{
+  display: flex;
 }
 .bigImg{
   width: 500px;
