@@ -65,9 +65,6 @@ class Twitter {
       text: truncatedText,
     }
 
-    console.log({title, text, bloggerPostUrl, imgUrl})
-    return {}
-    
     // 上传图片到 twitter
     if(imgUrl){
       const imgur = new Imgur()
