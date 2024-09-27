@@ -198,10 +198,11 @@ export default {
 }
 .imgPrompt{
   display: flex;
+  width: 600px;
 }
 .bigImg{
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
   display: block;
 }
 </style>

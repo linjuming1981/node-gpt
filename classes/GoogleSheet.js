@@ -62,17 +62,45 @@ class GoogleSheet {
       }
 
       // 过滤数据  
-      if(Object.keys(filter).length){      
+      if (Object.keys(filter).length) {      
         datas = datas.filter(n => {
-          return Object.keys(filter).every( key => {
-            let val = filter[key]
-            if(val === 'NOT_EMPTY'){
-              return n[key] !== ''
+          return Object.keys(filter).every(key => {
+            let val = filter[key];
+
+            // 处理 'NOT_EMPTY'
+            if (val === 'NOT_EMPTY') {
+              return n[key] !== '';
             }
-            return n[key] === (val?.trim?.() || '') 
-          } )
-        })
+
+            // 处理比较操作符
+            if (typeof val === 'string' && val.includes(' ')) {
+              const [operator, value] = val.split(' ').map(v => v.trim());
+              const numValue = Number(value);
+
+              switch (operator) {
+                case '>':
+                  return Number(n[key]) > numValue;
+                case '<':
+                  return Number(n[key]) < numValue;
+                case '>=':
+                  return Number(n[key]) >= numValue;
+                case '<=':
+                  return Number(n[key]) <= numValue;
+                case '!==':
+                  return n[key] !== value; // 注意：此处不需要转换为数字，因为可能是字符串比较
+                case '===':
+                  return n[key] === value; // 同上
+                default:
+                  return n[key] === (val?.trim() || '');
+              }
+            }
+
+            // 默认直接比较
+            return n[key] === (val?.trim() || '');
+          });
+        });
       }
+
 
       // 返回指定条数
       if(count){
