@@ -2,6 +2,10 @@ const axios = require('axios');
 const fs = require('fs')
 const path = require('path')
 
+// 在线调试页面： 
+// https://huggingface.co/black-forest-labs/FLUX.1-schnell
+// https://yanze-pulid-flux.hf.space/?__theme=light
+
 class ImgAi {
 
   // 调用huggingface接口，返回图片二进制数据
@@ -11,7 +15,7 @@ class ImgAi {
       {
         inputs: params.prompt,
         guidance_scale: params.guidance_scale || 7.5, // 控制生成图像的多样性与提示词的相关性。较高的值会使生成的图像更贴近提示词，通常在 4 到 9 之间调整。
-        num_inference_steps: params.num_inference_steps || 10, // 指定模型生成图像所需的推理步骤数。FLUX.1 [schnell] 模型通常建议使用 1 到 4 步骤，以实现快速生成。
+        num_inference_steps: params.num_inference_steps || 4, // 指定模型生成图像所需的推理步骤数。FLUX.1 [schnell] 模型通常建议使用 1 到 4 步骤，以实现快速生成。
         max_sequence_length: params.max_sequence_length || 10000, // 设置输入提示的最大序列长度，通常为 256。
         generator: params.generator || {seed: 0}, // 用于设置随机种子，以确保生成的图像具有可重复性。例如，可以使用 torch.Generator("cpu").manual_seed(0) 来设置固定的随机种子。
         width: params.width || 1024,
