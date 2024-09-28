@@ -21,6 +21,7 @@ const novelSheet = new GoogleSheet({
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
 app.use(express.static('public'));
+app.use('/temp', express.static(path.join(__dirname, './temp'))) 
 
 // 自定义跨域中间件
 let cors = function(req, res, next) {
@@ -464,7 +465,16 @@ app.post('/workerLog', async (req, res) => {
   res.send({code:200, logs})
 })
 
-app.post('/worker/')
+app.post('/createImgByPrompt', async (req, res) => {
+  const {imgPrompt} = req.body
+  const ImgAi = require('./classes/ImgAi.js')
+  const imgAi = new ImgAi()
+  const imgPath = './temp/img_by_prompt.jpeg'
+  const imgPathAbs = path.resolve(__dirname, imgPath)
+  imgAi.createImg({prompt: imgPrompt, savePath: imgPathAbs})
+  res.send({code:200, imgUrl: imgPath})
+})
+
 
 // 服务监听开启  
 const port = 8080
