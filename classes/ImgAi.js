@@ -59,7 +59,7 @@ class ImgAi {
       {
         headers: {
           // Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
-          Authorization: token, // 替换为你的 Hugging Face API 密钥
+          Authorization: `Bearer ${token}`, // 替换为你的 Hugging Face API 密钥
           'Content-Type': 'application/json',
         },
         responseType: 'arraybuffer', // 将响应数据类型设置为 arraybuffer 以处理二进制数据
