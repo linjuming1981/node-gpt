@@ -471,7 +471,7 @@ app.post('/createImgByPrompt', async (req, res) => {
   const imgAi = new ImgAi()
   const imgPath = './temp/img_by_prompt.jpeg'
   const imgPathAbs = path.resolve(__dirname, imgPath)
-  imgAi.createImg({prompt: imgPrompt, savePath: imgPathAbs})
+  imgAi.createImg({prompt: imgPrompt}, imgPathAbs)
   res.send({code:200, imgUrl: imgPath})
 })
 
