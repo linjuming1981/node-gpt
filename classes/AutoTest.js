@@ -35,24 +35,47 @@ class AutoTest {
   async gptFillQuery(text, returnType='html') {
     try {
       const page = await this.getPage('chatgpt.com');
-      await page.fill('#prompt-textarea', text);
+      await page.fill('#prompt-textarea', text); // 这一步怎么等到#prompt-textare出现再fill？
 
       // 等待2秒后再执行后续操作
       await page.waitForTimeout(2000);
 
       await page.click('[data-testid="send-button"]');
       
-      try {
-        // 等待 stop-button 可见
-        const stopBtn = page.locator('[data-testid="stop-button"]');
-        await stopBtn.waitFor({ state: 'visible', timeout: 600000 });
-        console.log('GPT 在回答中...');
+      // 使用 Promise.race 来处理异步检查
+      const stopBtn = page.locator('[data-testid="stop-button"]');
+      const stopButtonVisiblePromise = stopBtn.waitFor({ state: 'visible', timeout: 600000 });
+      
+      // 检查是否有“生成回复时出错”的提示
+      const errorCheckPromise = (async () => {
+        const errorElement = page.locator('text=生成回复时出错');
+        try {
+          await errorElement.waitFor({ state: 'visible', timeout: 5000 });
+          console.log('检测到错误：生成回复时出错');
+          
+          // 获取当前页面的 JavaScript 变量，并根据它决定跳转
+          await page.evaluate(() => {
+            const curAction = window.curAction; 
+            location.href = `https://chatgpt.com/?action=${curAction}`
+          });
 
-        // 等待 stop-button 消失（即变成 send-button）
-        await stopBtn.waitFor({ state: 'hidden', timeout: 600000 });
-      } catch(err) {
-        console.log('未检测到 stop-button，继续执行');
+          return '生成回复时出错';
+        } catch {
+          return null; // 如果没有检测到错误，返回 null
+        }
+      })();
+
+      // 通过 Promise.race 来进行并行处理
+      const result = await Promise.race([stopButtonVisiblePromise, errorCheckPromise]);
+
+      // 如果 result 是一个错误消息，返回
+      if (result === '生成回复时出错') {
+        return false;
       }
+
+      console.log('GPT 在回答中...');
+      // 等待 stop-button 消失（即变成 send-button）
+      await stopBtn.waitFor({ state: 'hidden', timeout: 600000 });
 
       // 抓取最后一个 conversation-turn 元素的 HTML 内容
       const elements = page.locator('article[data-testid^="conversation-turn-"]');
@@ -84,6 +107,7 @@ class AutoTest {
       return false;
     }
   }
+
 
   async diaFillQuery(text){
     try {
@@ -179,14 +203,19 @@ if(module === require.main){
     // await autoTest.getPage('chatgpt.com');
     
     // await autoTest.refreshGptPage();
-    const text = '今天星期几'
-    const unswer = await autoTest.gptFillQuery(text)
-    console.log(unswer);
+    // const text = '今天星期几'
+    // const unswer = await autoTest.gptFillQuery(text)
+    // console.log(unswer);
 
     // 调用 sendHttpRequest
     // const apiUrl = 'https://8080-cs-239467590834-default.cs-europe-west4-pear.cloudshell.dev/test';
     // const response = await autoTest.sendHttpRequest(apiUrl);
     // console.log(response);
+    
+    // const page = await autoTest.getPage('chatgpt.com');
+    // const el = page.locator('text=生成回复时出错');
+    // const el1 = page.locator('[data-testid="send-button"]');
+    // console.log({el,el1})
 
     await autoTest.closeBrowser();
   })();

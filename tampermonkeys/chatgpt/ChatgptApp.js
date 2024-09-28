@@ -111,6 +111,7 @@ const ChatgptApp = {
   },
 
   async translate(count=0) {
+    unsafeWindow.curAction = 'translate'
     if(count >= 1 ){
       location.href = Util.addUrlParams('action', 'translate', location.origin)
       return
@@ -295,6 +296,7 @@ const ChatgptApp = {
 
   // 生成其他字段
   async createNovelOthers(count=0){
+    unsafeWindow.curAction = 'createNovelOthers'
     if(count >= 5 ){
       location.href = 'https://chatgpt.com/?action=createNovelOthers'
       return
