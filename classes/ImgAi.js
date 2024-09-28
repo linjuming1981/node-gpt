@@ -50,6 +50,7 @@ class ImgAi {
       }
     )
     
+    console.log(111111, savePath)
     if(savePath){
       const filePath = path.join(__dirname, savePath);
       fs.writeFileSync(filePath, response.data);
