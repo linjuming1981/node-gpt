@@ -30,7 +30,7 @@ export default {
           imgPrompt: this.imgPrompt
         }
       })
-      this.imgUrl = `${res.imgUrl}?t=${Date.now()}`
+      this.imgUrl = `${res.data.imgUrl}?t=${Date.now()}`
     }
   }
 }
