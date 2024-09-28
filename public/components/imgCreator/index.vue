@@ -38,6 +38,7 @@ export default {
 <style scoped>
 .imgCreator{}
 .preview_line{}
+.preview_line img{width: 750px;}
 .prompt_line{
   display: flex;
   position: fixed;
