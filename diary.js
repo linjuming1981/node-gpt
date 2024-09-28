@@ -98,4 +98,80 @@ dash.cloudflare.com;www.cloudflare.com
 3、找{subCont: 'NOT_EMPTY', blogPostUrl: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY'}的记录，发布twitter --- node-gpt/postNovelToTwitter
 
 
+
+你是一个音乐家，同时也是小说家，同时也是画家，同时你精通ai生产图片，知道怎么设置图片api模型FLUX.1-schnell的prompt。
+以下我提供歌曲的详细资料给你，请你根据歌曲资料浮想联翩，根据歌曲前后播放顺序生成5张图片需要的prompt，需要添加写实风格，每个prompt需要100以上英文单词，可以补充歌词中没有的情节，尽可能增加细节。
+不一定非要跟歌词描述一模一样，发挥你的想象，只要有关联就行。
+用英文输出5个prompt。
+每个prompt中都要有一个花栗鼠在躲猫猫，花栗鼠只占据整个图片非常小一点点位置，让人不容易发现，需要仔细寻找才能发现。
+
+
+歌名：Disappear..
+参数：emotional ethereal woman power voice,  electronic pop,  sad,  depress,   ethereal,  powerful
+
+歌词(用三引号包裹)：
+"""
+If I’m became a ghost
+would you notice anymore?
+If I vanish with fear
+would you even care?.
+
+Would you call out my name
+Or just let it all stay the same?
+I’m falling apart, can you feel it?
+Or am I lost in the wind, just a secret?
+
+If I disappear, will you come for me
+Or leave me out where I used to be
+Would you trace my steps in the rain
+Or just let me fade away again
+Tell me, would you look, would you try
+If I disappear, would you still ask why
+
+I’ve been hiding in plain view
+Doubting if you ever knew
+That I’m barely holding on
+While you're thinking I’m strong
+
+Would you call out my name
+Or just let it all stay the same?
+I’m falling apart, can you feel it?
+Or am I lost in the wind, just a secret?
+
+If I disappear, will you come for me
+Or leave me out where I used to be
+Would you trace my steps in the rain
+Or just let me fade away again
+Tell me, would you look, would you try
+If I disappear, would you still ask why
+
+Would you chase after me
+Or let it all be history
+I’m breaking down, do you see it
+Or am I just someone to forget
+
+If I disappear, will you come for me
+Or leave me out where I used to be
+Would you trace my steps in the rain
+Or just let me fade away again
+Tell me, would you look, would you try
+If I disappear, would you still ask why
+
+If I disappear...
+Would you ask why?
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 */
