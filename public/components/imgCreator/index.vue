@@ -6,6 +6,8 @@
     <div class="prompt_line">
       <span>prompt:</span>
       <el-input class="imgPrompt" type="textarea" v-model="imgPrompt"></el-input>
+      <span>options:</span>
+      <el-input class="options" type="textarea" v-model="optionsStr"></el-input>
       <el-button type="primary" @click="createImg">生成</el-button>
     </div>
   </div>
@@ -16,6 +18,7 @@ export default {
     return {
       imgUrl: '',
       imgPrompt: '',
+      optionsStr: `{"num_inference_steps": 4, "guidance_scale": 7.5}`
     }
   },
   methods: {
@@ -27,7 +30,8 @@ export default {
         url: '/createImgByPrompt',
         method: 'post',
         data: {
-          imgPrompt: this.imgPrompt
+          imgPrompt: this.imgPrompt,
+          options: JSON.parse(this.optionsStr),
         }
       })
       this.imgUrl = `${res.data.imgUrl}?t=${Date.now()}`

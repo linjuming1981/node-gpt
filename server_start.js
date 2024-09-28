@@ -466,12 +466,12 @@ app.post('/workerLog', async (req, res) => {
 })
 
 app.post('/createImgByPrompt', async (req, res) => {
-  const {imgPrompt} = req.body
+  const {imgPrompt, options} = req.body
   const ImgAi = require('./classes/ImgAi.js')
   const imgAi = new ImgAi()
   const imgPath = './temp/img_by_prompt.jpeg'
   const imgPathAbs = path.resolve(__dirname, imgPath)
-  imgAi.createImg({prompt: imgPrompt}, imgPathAbs)
+  imgAi.createImg({prompt: imgPrompt, options}, imgPathAbs)
   res.send({code:200, imgUrl: imgPath})
 })
 
