@@ -6,10 +6,25 @@ const path = require('path')
 // https://huggingface.co/black-forest-labs/FLUX.1-schnell
 // https://yanze-pulid-flux.hf.space/?__theme=light
 
+
 class ImgAi {
+
+  getToken(){
+    const accounts = {
+      'linjuming': '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',
+      'g2g2qlmy@maillazy.com': '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', // inHeart@007
+      'qt7ifsi0@maillazy.com': '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', // inHeart@007
+    }
+    const accountKeys = Object.keys(accounts); // 获取所有账号的键
+    const randomIndex = Math.floor(Math.random() * accountKeys.length); // 生成随机索引
+    const randomAccount = accountKeys[randomIndex]; // 获取随机账号
+    console.log('use hf_account:', randomAccount)
+    return accounts[randomAccount]; // 返回对应的 API 密钥
+  }
 
   // 调用huggingface接口，返回图片二进制数据
   async createImg(params, savePath=''){
+    const token = this.getToken();
     const response = await axios.post(
       'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
       {
@@ -43,7 +58,8 @@ class ImgAi {
       },
       {
         headers: {
-          Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
+          // Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
+          Authorization: token, // 替换为你的 Hugging Face API 密钥
           'Content-Type': 'application/json',
         },
         responseType: 'arraybuffer', // 将响应数据类型设置为 arraybuffer 以处理二进制数据
