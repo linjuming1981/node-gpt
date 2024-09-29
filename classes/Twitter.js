@@ -169,9 +169,26 @@ class Twitter {
       return [];
     }
   }
-  
 
+  async getTweetReplies(tweetId){
+    try {
+      // 获取回复
+      const replies = await this.client.v2.search({
+        query: `conversation_id:${tweetId}`,
+        max_results: 5, // 每次请求的最大结果数
+        'tweet.fields': 'author_id,created_at,in_reply_to_user_id',
+        'user.fields': 'name,username',
+        expansions: 'author_id',
+      });
   
+      // 处理回复
+      for await (const tweet of replies) {
+        console.log(`Reply from ${tweet.author_id}: ${tweet.text}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
 }
 
@@ -179,7 +196,7 @@ module.exports = Twitter
 
 if(module === require.main){
   (async () => {
-    // const twitter = new Twitter()
+    const twitter = new Twitter()
     // await twitter.createPost({
     //   text: 'The night was deep and pitch-black, rendering the landscape invisible.',
     //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
@@ -196,6 +213,8 @@ if(module === require.main){
     //   replyCont: 'very good !',
     //   imgPrompt: 'Illustrate a comedic debate scene where two characters are arguing passionately.'
     // })
+
+    await twitter.getTweetReplies('1837988517659500566')
 
   })()
 }
