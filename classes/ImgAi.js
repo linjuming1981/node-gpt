@@ -5,6 +5,7 @@ const path = require('path')
 // 在线调试页面： 
 // https://huggingface.co/black-forest-labs/FLUX.1-schnell
 // https://yanze-pulid-flux.hf.space/?__theme=light
+// https://deepinfra.com/black-forest-labs/FLUX-1-schnell
 
 
 class ImgAi {
