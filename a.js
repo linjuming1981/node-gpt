@@ -33,7 +33,10 @@ class ImgAi {
     const response = await axios.post(
       'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
       {
-        inputs: params.prompt,
+        inputs: {
+          prompt: params.prompt,
+          image: base64Image,
+        },
         guidance_scale: params.guidance_scale || 7.5, // 控制生成图像的多样性与提示词的相关性。较高的值会使生成的图像更贴近提示词，通常在 4 到 9 之间调整。
         num_inference_steps: params.num_inference_steps || 4, // 指定模型生成图像所需的推理步骤数。FLUX.1 [schnell] 模型通常建议使用 1 到 4 步骤，以实现快速生成。
         max_sequence_length: params.max_sequence_length || 10000, // 设置输入提示的最大序列长度，通常为 256。
