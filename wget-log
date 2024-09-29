@@ -1,0 +1,11 @@
+--2024-09-29 03:05:49--  https://pbs.twimg.com/media/GYa_MpvbYAEI680?format=jpg
+Resolving pbs.twimg.com (pbs.twimg.com)... 151.101.36.159, 2a04:4e42:9::159
+Connecting to pbs.twimg.com (pbs.twimg.com)|151.101.36.159|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 90313 (88K) [image/jpeg]
+Saving to: ‘twitter_1.jpg’
+
+twitter_1.jpg                                                  0%[                                                                                                                                              ]       0  --.-KB/s               twitter_1.jpg                                                100%[=============================================================================================================================================>]  88.20K  --.-KB/s    in 0.009s  
+
+2024-09-29 03:05:49 (9.90 MB/s) - ‘twitter_1.jpg’ saved [90313/90313]
+
