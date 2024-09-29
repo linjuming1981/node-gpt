@@ -63,6 +63,18 @@ var Util = {};
       })
       if(!res.data){
         console.log('gptAsk返回false');
+
+        // const isUnswerErr = Array.from(document.querySelectorAll('.text-xs'))
+        //   .filter(n => n.innerText.trim() === '生成回复时出错').length > 0
+
+        // if(isUnswerErr){
+        // }
+        
+        setTimeout(() => {
+          const curAction = unsafeWindow.curAction
+          location.href = `https://chatgpt.com/?action=${curAction}`
+        }, 3000)
+
       }
       return res.data
     },
