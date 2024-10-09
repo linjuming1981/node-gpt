@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 const { parseStringPromise } = require('xml2js');
 
 class Yahoo {
@@ -9,8 +9,8 @@ class Yahoo {
   async getArticlesFromRss() {
     try {
       // 获取 RSS feed
-      const response = await fetch(this.rssUrl);
-      const rssText = await response.text();
+      const response = await axios.get(this.rssUrl);
+      const rssText = response.data;
 
       // 将 RSS XML 转换为 JavaScript 对象
       const rssJson = await parseStringPromise(rssText);
