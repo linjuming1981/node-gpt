@@ -197,7 +197,9 @@ Would you ask why?
   
 ----------
 收录文章到google sheet
-   id
+   表名：yahoo_nba
+   productId(guid) title link description pubData imgUrl orgImgUrl category 
+   额外补充字段 imgPrompt twitterId
 
 
 
