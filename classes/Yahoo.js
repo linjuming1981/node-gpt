@@ -44,7 +44,7 @@ class Yahoo {
   }
 }
 
-module.exports = Yahoo;
+module.exports = Yahoo;  
 
 if (module === require.main) {
   let rssUrl = 'https://sports.yahoo.com/nba/rss/';
