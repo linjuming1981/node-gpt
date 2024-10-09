@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { parseStringPromise } = require('xml2js');
+const dayjs = require('dayjs');  // 用于日期格式化
 
 class Yahoo {
   constructor({ rssUrl }) {
@@ -15,24 +16,32 @@ class Yahoo {
       // 将 RSS XML 转换为 JavaScript 对象
       const rssJson = await parseStringPromise(rssText);
 
-      // 提取文章列表，并提取文章中的图片链接
+      // 提取文章列表
       const articles = rssJson.rss.channel[0].item.map(item => {
         let imgUrl = '';
+        let orgImgUrl = '';
 
         // 检查是否有内容并提取图片链接
         if (item['content:encoded'] && item['content:encoded'][0]) {
           const match = item['content:encoded'][0].match(/<img src="([^"]+)"/);
           if (match && match[1]) {
             imgUrl = match[1];
+            orgImgUrl = imgUrl.replace(/\/res\/.*\/https/, 'https');
           }
         }
+
+        // 格式化 pubDate
+        const pubDate = dayjs(item.pubDate[0]).format('YYYY-MM-DD HH:mm:ss');
 
         return {
           title: item.title[0],
           link: item.link[0],
           description: item.description[0],
-          pubDate: item.pubDate[0],
-          imgUrl: imgUrl  // 添加 imgUrl 属性
+          pubDate: pubDate,
+          imgUrl: imgUrl,  // 添加 imgUrl 属性
+          orgImgUrl: orgImgUrl, // 原始图片链接
+          guid: item.guid[0]._,  // 添加 guid
+          category: item.category ? item.category[0] : 'Uncategorized'  // 添加 category
         };
       });
 
