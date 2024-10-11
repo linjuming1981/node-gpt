@@ -79,12 +79,31 @@ class Yahoo {
       console.error('Error fetching article content:', error);
     }
   }
+
+  // 获取google sheet中所有记录
+  async getArticlesInSheet(){
+    const GoogleSheet = require('./GoogleSheet');
+    const gSheet = new GoogleSheet({ sheetName: this.sheetName });
+    const articles = await gSheet.getAllDatas()
+    return articles
+  }
+
+  async postNewArticleToTwitter(){
+    const articles = await this.getArticlesFromRss()
+    const articlesInSheet = await this.getArticlesInSheet()
+    const sheetProductIds = articlesInSheet.map(n => n.productId)
+    const newArticle = articles.find(n => {
+      return !sheetProductIds.includes(n.productId)
+    })
+
+    // 做到这里
+  }
 }
 
 module.exports = Yahoo;
 
 if (module === require.main) {
   let rssUrl = 'https://sports.yahoo.com/nba/rss/';
-  const yahoo = new Yahoo({ rssUrl, sheetName: 'Sheet1' });
+  const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
   yahoo.getArticlesFromRss();
 }
