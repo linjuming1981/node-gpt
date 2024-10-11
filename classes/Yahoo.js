@@ -1,11 +1,12 @@
 const axios = require('axios');
 const { parseStringPromise } = require('xml2js');
 const dayjs = require('dayjs');  // 用于日期格式化
+const cheerio = require('cheerio'); // 用于 HTML 解析
 
 class Yahoo {
   constructor({ rssUrl, sheetName }) {
     this.rssUrl = rssUrl;
-    this.sheetName = sheetName
+    this.sheetName = sheetName;
   }
 
   async getArticlesFromRss() {
@@ -56,16 +57,37 @@ class Yahoo {
   }
 
   async addArticlesToGoogleSheet(articles) {
-    const GoogleSheet = require('./GoogleSheet')
-    const gSheet = new GoogleSheet({sheetName: this.sheetName})
-    gSheet.addSheetDatas({datas: articles})
+    const GoogleSheet = require('./GoogleSheet');
+    const gSheet = new GoogleSheet({ sheetName: this.sheetName });
+    gSheet.addSheetDatas({ datas: articles });
+  }
+
+  async getArticleContent(article) {
+    const { link } = article;
+
+    try {
+      // 发送请求以获取页面内容
+      const response = await axios.get(link);
+      const html = response.data;
+
+      // 使用 cheerio 解析 HTML
+      const $ = cheerio.load(html);
+
+      // 获取 .caas-body 内部的 HTML
+      const content = $('.caas-body').html();
+
+      console.log('Article content:', content);
+      return content;
+    } catch (error) {
+      console.error('Error fetching article content:', error);
+    }
   }
 }
 
-module.exports = Yahoo;  
+module.exports = Yahoo;
 
 if (module === require.main) {
   let rssUrl = 'https://sports.yahoo.com/nba/rss/';
-  const yahoo = new Yahoo({ rssUrl, sheetName });
+  const yahoo = new Yahoo({ rssUrl, sheetName: 'Sheet1' });
   yahoo.getArticlesFromRss();
 }
