@@ -2,10 +2,22 @@ const GoogleAuthHelper = require('./GoogleAuthHelper.js');
 const { google } = require("googleapis");
 
 class GoogleSheet {
-  constructor({sheetId, sheetTabName}){
+  constructor({sheetId, sheetName, sheetTabName='工作表1'}){
     this.sheetId = sheetId;
+    if(sheetName){
+      this.sheetId = this.getSheetId(sheetName)
+    }
+
     this.sheetTabName = sheetTabName;
     this.authHelper = new GoogleAuthHelper(["https://www.googleapis.com/auth/spreadsheets"]);
+  }
+
+  getSheetId(sheetName){
+    const map = {
+      'yahoo_nba': '1gkRAY9q80hpca7Hs_wOvEEswkhcKnnM90UI7JbvikoQ',
+      'perfect_world': '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
+    }
+    return map[sheetName]
   }
 
   async getSheetHeaders({ sheetId, sheetTabName }){

@@ -3,8 +3,9 @@ const { parseStringPromise } = require('xml2js');
 const dayjs = require('dayjs');  // 用于日期格式化
 
 class Yahoo {
-  constructor({ rssUrl }) {
+  constructor({ rssUrl, sheetName }) {
     this.rssUrl = rssUrl;
+    this.sheetName = sheetName
   }
 
   async getArticlesFromRss() {
@@ -32,15 +33,17 @@ class Yahoo {
 
         // 格式化 pubDate
         const pubDate = dayjs(item.pubDate[0]).format('YYYY-MM-DD HH:mm:ss');
+        const guid = item.guid[0]._;
 
         return {
+          productId: guid,
           title: item.title[0],
           link: item.link[0],
           description: item.description[0],
           pubDate: pubDate,
           imgUrl: imgUrl,  // 添加 imgUrl 属性
           orgImgUrl: orgImgUrl, // 原始图片链接
-          guid: item.guid[0]._,  // 添加 guid
+          guid: guid,  // 添加 guid
           category: item.category ? item.category[0] : 'Uncategorized'  // 添加 category
         };
       });
@@ -51,12 +54,18 @@ class Yahoo {
       console.error('Error fetching or parsing RSS feed:', error);
     }
   }
+
+  async addArticlesToGoogleSheet(articles) {
+    const GoogleSheet = require('./GoogleSheet')
+    const gSheet = new GoogleSheet({sheetName: this.sheetName})
+    gSheet.addSheetDatas({datas: articles})
+  }
 }
 
 module.exports = Yahoo;  
 
 if (module === require.main) {
   let rssUrl = 'https://sports.yahoo.com/nba/rss/';
-  const yahoo = new Yahoo({ rssUrl });
+  const yahoo = new Yahoo({ rssUrl, sheetName });
   yahoo.getArticlesFromRss();
 }
