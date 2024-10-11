@@ -56,24 +56,21 @@ class Yahoo {
     }
   }
 
+  // 添加文章到googlesheet
   async addArticlesToGoogleSheet(articles) {
     const GoogleSheet = require('./GoogleSheet');
     const gSheet = new GoogleSheet({ sheetName: this.sheetName });
     gSheet.addSheetDatas({ datas: articles });
   }
 
+  // 获取google文章内容
   async getArticleContent(article) {
     const { link } = article;
 
     try {
-      // 发送请求以获取页面内容
       const response = await axios.get(link);
       const html = response.data;
-
-      // 使用 cheerio 解析 HTML
       const $ = cheerio.load(html);
-
-      // 获取 .caas-body 内部的 HTML
       const content = $('.caas-body').html();
 
       console.log('Article content:', content);
