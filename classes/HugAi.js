@@ -32,8 +32,9 @@ class HugAi {
         { headers: { Authorization: `Bearer ${apiToken}`, 'Content-Type': 'application/json', }, }
       );
 
-      console.log('Summary:', response.data);
-      return response.data[0].summary_text;
+      const summary_text = response.data[0].summary_text
+      console.log('Summary:', summary_text);
+      return summary_text
     } catch (error) {
       console.error('Error fetching summary:', error.response ? error.response.data : error.message);
     }
