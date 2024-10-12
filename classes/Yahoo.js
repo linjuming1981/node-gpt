@@ -32,9 +32,9 @@ class Yahoo {
             // orgImgUrl = imgUrl.replace(/\/res\/.*\/https/, 'https');
 
             const firstIndex = imgUrl.indexOf('https://');
-            const secondIndex = url.indexOf('https://', firstIndex + 1);
+            const secondIndex = imgUrl.indexOf('https://', firstIndex + 1);
             if (secondIndex !== -1) {
-              orgImgUrl = url.substring(secondIndex);
+              orgImgUrl = imgUrl.substring(secondIndex);
             } else {
               orgImgUrl = imgUrl
             }
