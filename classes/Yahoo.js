@@ -133,11 +133,13 @@ class Yahoo {
     // 下载原图
     const Imgur = require('./Imgur.js')
     const imgur = new Imgur()
-    const imgPath = path.relative(__dirname, '../temp/temp_img_down_from_yahoo.jpeg')
+    const imgPath = path.resolve(__dirname, '../temp/temp_img_down_from_yahoo.jpeg')
     const isSuccess = await imgur.downloadImage(newArticle.orgImgUrl, imgPath)
     if(!isSuccess){
       console.log({'下载原图失败': newArticle.orgImgUrl})
       return
+    } else {
+      console.log({'下载原图成功': newArticle.orgImgUrl, imgPath})
     }
 
     // const Twitter = require('./Twitter.js')
