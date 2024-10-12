@@ -144,9 +144,8 @@ class Yahoo {
 
     const Twitter = require('./Twitter.js')
     const twitter = new Twitter()
-    const res = twitter.createPost({text: summary, imgPath})
+    const res = await twitter.createPost({text: summary, imgPath})
     const twitterId = res?.data?.id || ''
-    console.log(1111, res)
 
     // 将文章记录到google sheet
     newArticle = {
