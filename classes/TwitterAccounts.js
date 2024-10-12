@@ -7,9 +7,9 @@ module.exports = {
   },
   'hello_abc1@gongjua.com': {
     pwd: 'inHeart@007',
-    appKey: '1SPE4BZBl6q9Ibkx5j9iuTZb3',
-    appSecret: 'K7dUyR4Ur5qPWFyFiGdRlZ6Icmb62ZYXgm6pCAt0aX595aK4ae',
-    accessToken: '1844988407375638536-mWMtVbo38XssFf9ZCN5SBxtvYuLrTo',
-    accessSecret: 'aI3i7nlKYh52qRfr2Kt1kHc4FJelLCaIqkr4Himpzbw6N',
+    appKey: 'nuEgY0Vi0ySPrWLStmA0z7ZRs',
+    appSecret: 'hswZdN7pADWEHgcU6ls9Ou33FhYkBcbD7Y6rLutzgLuAspcXIf',
+    accessToken: '1844988407375638536-JGHNdnduAYrtLoZw8ZqWOthJezia2y',
+    accessSecret: 'lEtfJg4UNF3rJ4QZPcKef5mXniKxjOjhAF501gFa1v0kd',
   },
 }
