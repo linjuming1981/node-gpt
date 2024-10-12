@@ -71,7 +71,7 @@ class Yahoo {
       const response = await axios.get(link);
       const html = response.data;
       const $ = cheerio.load(html);
-      const content = $('.caas-body').html();
+      const content = $('.caas-body').text();
 
       console.log('Article content:', content);
       return content;
@@ -96,7 +96,28 @@ class Yahoo {
       return !sheetProductIds.includes(n.productId)
     })
 
-    // 做到这里
+    if(!newArticle){
+      console.log('没有新文章')
+      return false
+    }
+
+    // 或者文章内容
+    const content = await this.getArticleContent(newArticle)
+
+    // 概括文章
+    const HugAi = require('./HugAi.js')
+    const hugAi = new HugAi()
+    const summary = hugAi.summary(content)
+
+    // 生成ai图片
+    const ImgAi = require('./ImgAi.js');
+    const imgAi = new ImgAi()
+    const imgPath = '../temp/img_yahoo_ai.jpeg'
+    const imgPathAbs = path.resolve(__dirname, imgPath)
+    await imgAi.createImg({prompt: summary}, imgPathAbs)
+
+    // 将文章
+
   }
 }
 
