@@ -1,4 +1,5 @@
 const axios = require('axios');
+const Util = require('./Util.js')
 
 class HugAi {
   getToken() {
@@ -25,19 +26,20 @@ class HugAi {
     // 书籍或章节摘要：总结书籍、章节或研究论文的主要要点。
     // 生成式文本总结：不仅限于提取关键句子，还能生成新的句子来总结重要信息。
 
+    text = Util.truncateText(text, 4000); //bart-large-cnn 模型最多只能处理1024个token（约4096字节）
     try {
       const response = await axios.post(
         `https://api-inference.huggingface.co/models/${model}`,
         { 
           inputs: text, 
-          max_length: 100,  // 设置摘要的最大长度（可以根据需求调整）
-          min_length: 30,   // 设置摘要的最小长度
-          parameters: {
-            max_length: 100,  // 设置摘要的最大长度（可以根据需求调整）
-            min_length: 30,   // 设置摘要的最小长度
-            // truncation: true, // 开启文本截断
-            // do_sample: false,  // 禁用采样，确保生成的摘要更加一致
-          }
+          // max_length: 100,  // 设置摘要的最大长度（可以根据需求调整）
+          // min_length: 30,   // 设置摘要的最小长度
+          // parameters: {
+          //   max_length: 100,  // 设置摘要的最大长度（可以根据需求调整）
+          //   min_length: 30,   // 设置摘要的最小长度
+          //   // truncation: true, // 开启文本截断
+          //   // do_sample: false,  // 禁用采样，确保生成的摘要更加一致
+          // }
         },
         { headers: { Authorization: `Bearer ${apiToken}`, 'Content-Type': 'application/json', }, }
       );
