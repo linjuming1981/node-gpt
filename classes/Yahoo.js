@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { parseStringPromise } = require('xml2js');
 const dayjs = require('dayjs');  // 用于日期格式化
+const path = require('path');
 const cheerio = require('cheerio'); // 用于 HTML 解析
 
 class Yahoo {
