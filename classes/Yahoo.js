@@ -110,6 +110,7 @@ class Yahoo {
     const HugAi = require('./HugAi.js')
     const hugAi = new HugAi()
     const summary = hugAi.summary(content)
+    return
 
     // 生成ai图片
     const ImgAi = require('./ImgAi.js');
