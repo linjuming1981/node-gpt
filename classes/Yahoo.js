@@ -29,7 +29,16 @@ class Yahoo {
           const match = item['content:encoded'][0].match(/<img src="([^"]+)"/);
           if (match && match[1]) {
             imgUrl = match[1];
-            orgImgUrl = imgUrl.replace(/\/res\/.*\/https/, 'https');
+            // orgImgUrl = imgUrl.replace(/\/res\/.*\/https/, 'https');
+
+            const firstIndex = imgUrl.indexOf('https://');
+            const secondIndex = url.indexOf('https://', firstIndex + 1);
+            if (secondIndex !== -1) {
+              orgImgUrl = url.substring(secondIndex);
+            } else {
+              orgImgUrl = imgUrl
+            }
+
           }
         }
 
