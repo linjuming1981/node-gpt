@@ -95,7 +95,7 @@ class Yahoo {
     const articlesInSheet = await this.getArticlesInSheet()
     console.log({articlesInSheet})
     const sheetProductIds = articlesInSheet.map(n => n.productId)
-    const newArticle = articles.find(n => {
+    let newArticle = articles.find(n => {
       return !sheetProductIds.includes(n.productId)
     })
 

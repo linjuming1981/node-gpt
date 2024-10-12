@@ -28,5 +28,8 @@
     "tumblr.js": "^5.0.0",
     "twitter-api-v2": "^1.17.2",
     "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "eslint": "^9.12.0"
   }
 }
