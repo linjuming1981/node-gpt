@@ -146,6 +146,7 @@ class Yahoo {
     const twitter = new Twitter()
     const res = twitter.createPost({text: summary, imgPath})
     const twitterId = res?.data?.id || ''
+    console.log(1111, res)
 
     // 将文章记录到google sheet
     newArticle = {
