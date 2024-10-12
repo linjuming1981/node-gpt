@@ -28,7 +28,14 @@ class HugAi {
     try {
       const response = await axios.post(
         `https://api-inference.huggingface.co/models/${model}`,
-        { inputs: text, },
+        { 
+          inputs: text, 
+          parameters: {
+            max_length: 150,  // 设置摘要的最大长度（可以根据需求调整）
+            min_length: 30,   // 设置摘要的最小长度
+            // do_sample: false  // 禁用采样，确保生成的摘要更加一致
+          }
+        },
         { headers: { Authorization: `Bearer ${apiToken}`, 'Content-Type': 'application/json', }, }
       );
 
