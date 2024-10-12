@@ -134,12 +134,12 @@ class Yahoo {
     const Imgur = require('./Imgur.js')
     const imgur = new Imgur()
     const imgPath = path.resolve(__dirname, '../temp/temp_img_down_from_yahoo.jpeg')
-    const isSuccess = await imgur.downloadImage(newArticle.orgImgUrl, imgPath)
+    const isSuccess = await imgur.downloadImage(newArticle.previewImgUrl, imgPath) // 不能用orgImgUrl, 会下载失败
     if(!isSuccess){
-      console.log({'下载原图失败': newArticle.orgImgUrl})
+      console.log({'下载原图失败': newArticle.previewImgUrl})
       return
     } else {
-      console.log({'下载原图成功': newArticle.orgImgUrl, imgPath})
+      console.log({'下载原图成功': newArticle.previewImgUrl, imgPath})
     }
 
     // const Twitter = require('./Twitter.js')
