@@ -31,9 +31,9 @@ class HugAi {
         { 
           inputs: text, 
           parameters: {
-            max_length: 150,  // 设置摘要的最大长度（可以根据需求调整）
-            // min_length: 30,   // 设置摘要的最小长度
-            truncation: true, // 开启文本截断
+            max_length: 130,  // 设置摘要的最大长度（可以根据需求调整）
+            min_length: 30,   // 设置摘要的最小长度
+            // truncation: true, // 开启文本截断
             // do_sample: false,  // 禁用采样，确保生成的摘要更加一致
           }
         },
