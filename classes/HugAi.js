@@ -30,6 +30,8 @@ class HugAi {
         `https://api-inference.huggingface.co/models/${model}`,
         { 
           inputs: text, 
+          max_length: 130,  // 设置摘要的最大长度（可以根据需求调整）
+          min_length: 30,   // 设置摘要的最小长度
           parameters: {
             max_length: 130,  // 设置摘要的最大长度（可以根据需求调整）
             min_length: 30,   // 设置摘要的最小长度
