@@ -116,7 +116,8 @@ class Yahoo {
     const imgAi = new ImgAi()
     const imgPath = '../temp/img_yahoo_ai.jpeg'
     const imgPathAbs = path.resolve(__dirname, imgPath)
-    const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
+    console.log(2123132, summary)
+    // const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
     // const imgUrl = await imgAi.upload(imageBuffer)
     // console.log(2222222, {imgUrl})
 
