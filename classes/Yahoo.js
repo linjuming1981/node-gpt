@@ -93,6 +93,7 @@ class Yahoo {
   async postNewArticleToTwitter(){
     const articles = await this.getArticlesFromRss()
     const articlesInSheet = await this.getArticlesInSheet()
+    console.log({articlesInSheet})
     const sheetProductIds = articlesInSheet.map(n => n.productId)
     const newArticle = articles.find(n => {
       return !sheetProductIds.includes(n.productId)
@@ -114,23 +115,18 @@ class Yahoo {
     // 生成ai图片
     const ImgAi = require('./ImgAi.js');
     const imgAi = new ImgAi()
-    const imgPath = '../temp/img_yahoo_ai.jpeg'
-    const imgPathAbs = path.resolve(__dirname, imgPath)
-    console.log(2123132, summary)
-    const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
+    const imageBuffer = await imgAi.createImg({prompt: summary})
     const imgUrl = await imgAi.upload(imageBuffer)
-    console.log(2222222, {imgUrl})
 
     // 发布到twitter --- todo
 
     // 将文章记录到google sheet
-    // newArticle = {
-    //   ...newArticle,
-    //   subCont: summary,
-    //   imgUrl,
-    // }
-    // this.addArticlesToGoogleSheet([newArticle])
-
+    newArticle = {
+      ...newArticle,
+      subCont: summary,
+      imgUrl,
+    }
+    this.addArticlesToGoogleSheet([newArticle])
   }
 }
 
