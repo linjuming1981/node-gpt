@@ -88,6 +88,7 @@ class Yahoo {
     return articles
   }
 
+  // 抓取最新文章发布到twitter
   async postNewArticleToTwitter(){
     const articles = await this.getArticlesFromRss()
     const articlesInSheet = await this.getArticlesInSheet()
@@ -116,17 +117,17 @@ class Yahoo {
     const imgPathAbs = path.resolve(__dirname, imgPath)
     const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
     const imgUrl = await imgAi.upload(imageBuffer)
+    console.log(2222222, {imgUrl})
 
     // 发布到twitter --- todo
 
     // 将文章记录到google sheet
-    newArticle = {
-      ...newArticle,
-      subCont: summary,
-      imgUrl,
-    }
-
-    this.addArticlesToGoogleSheet([newArticle])
+    // newArticle = {
+    //   ...newArticle,
+    //   subCont: summary,
+    //   imgUrl,
+    // }
+    // this.addArticlesToGoogleSheet([newArticle])
 
   }
 }
@@ -136,5 +137,6 @@ module.exports = Yahoo;
 if (module === require.main) {
   let rssUrl = 'https://sports.yahoo.com/nba/rss/';
   const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
-  yahoo.getArticlesFromRss();
+  // yahoo.getArticlesFromRss();
+  yahoo.postNewArticleToTwitter()
 }
