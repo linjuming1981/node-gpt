@@ -23,6 +23,13 @@ class Twitter {
     for(let i in Accounts[mail]){
       this[i] = Accounts[mail][i]
     }
+
+    console.log(1111122222, {
+      appKey: this.appKey,
+      appSecret: this.appSecret,
+      accessToken: this.accessToken,
+      accessSecret: this.accessSecret,
+    })
     this.client = this.getClient()
   }
 
