@@ -48,12 +48,17 @@ app.all('*', function(req, res, next) {
   next();
 });
 
+// 路由分解
+const workersRouter = require('./routes/workers.js');
+app.use(workersRouter)
+
+
 app.get('/test', async (req, res) => {
-  let rssUrl = 'https://sports.yahoo.com/nba/rss/';
-  const Yahoo = require('./classes/Yahoo.js')
-  const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
-  const article = await yahoo.postNewArticleToTwitter()
-  res.send(article)
+  // let rssUrl = 'https://sports.yahoo.com/nba/rss/';
+  // const Yahoo = require('./classes/Yahoo.js')
+  // const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
+  // const article = await yahoo.postNewArticleToTwitter()
+  // res.send(article)
 })
 
 app.post('/addProductsToSheet', async (req, res) => {
