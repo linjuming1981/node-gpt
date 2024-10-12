@@ -8,6 +8,7 @@ router.get('/worker/yahoo-nba-to-twitter', async(req, res) => {
   // const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
   // const article = await yahoo.postNewArticleToTwitter()
   const article = {'kkk':'jjj'}
+  console.log(article)
   res.send({code: 200, article})
 })
 
