@@ -48,7 +48,7 @@ class Twitter {
   async createPost({title, text, bloggerPostUrl, imgUrl, imgPath}){
     // 加入标题和链接
     // const link = `... ${bloggerPostUrl}`
-    const link = '...' // 带外链会被封杀
+    const link = '...' // 带外链会被封杀 
     
     // 截取文本
     const truncatedText = Util.truncateText(text, 280, link);
