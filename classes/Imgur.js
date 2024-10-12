@@ -64,17 +64,26 @@ class Imgur{
   }
 
   // 下载图片到本地
-  async downloadImage(imgUrl, filePath){
-    const res = await axios({
-      url: imgUrl,
-      responseType: 'stream',
-    })
-    return new Promise((resolve, reject) => {
-      const writer = fs.createWriteStream(filePath)
-      res.data.pipe(writer)
-      writer.on('finish', resolve)
-      writer.on('error', reject)
-    })
+  async downloadImage(imgUrl, filePath) {
+    try {
+      const res = await axios({
+        url: imgUrl,
+        responseType: 'stream',
+      });
+  
+      return new Promise((resolve, reject) => {
+        const writer = fs.createWriteStream(filePath);
+        res.data.pipe(writer);
+        writer.on('finish', () => resolve(true));
+        writer.on('error', () => {
+          writer.close();  // 确保在发生错误时关闭写入流
+          resolve(false);   // 出错时返回 false
+        });
+      });
+    } catch (error) {
+      console.error('图片下载失败:', error.message);
+      return false;  // 如果 Axios 请求失败，返回 false
+    }
   }
 
   // oauth2授权入口： https://api.imgur.com/oauth2/authorize?client_id=5b6d29b81f42b6e&response_type=code

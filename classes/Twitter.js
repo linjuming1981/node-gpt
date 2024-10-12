@@ -16,28 +16,13 @@ const fs = require('fs');
 const path = require('path')
 const Imgur = require('./Imgur.js')
 const Util = require('./Util.js')
+const Accounts = require('./TwitterAccounts.js');
 
 class Twitter {
-  constructor(){
-
-    // linjuming账号，已被封杀 -- 已解封
-    this.appKey = 'GnmPjOvbpvIHf8N0ggAeDAY0i'
-    this.appSecret = 'sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7'
-    this.accessToken = '420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe'
-    this.accessSecret = '7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI'
-
-    // xqojxfnn@gongjua.com账号
-    // this.appKey = 'XwaFOnU6OJCPhKdM2WVhiusMs'
-    // this.appSecret = 'iT1v745mGbHBWstBCa2NjljwYE9FR6q3o97cN0XdAldLGIGeja'
-    // this.accessToken = '1838607142821203971-sbsJtP0UqFx8G1isgN6YQezEU5Rb8D'
-    // this.accessSecret = 'dMvz8pCwO1oeK7ATVHJVH3xERTTZgcQNyUx856fYnadqX'
-
-    // linjuming_1@163.com账号
-    // this.appKey = 'zmCAGTID5QwRlPVws8W8YluiQ'
-    // this.appSecret = 'FKxZntyUWAuR9bv8Igfr1LkvVQxTKjd9yxd64WvOS9ezSnMxxL'
-    // this.accessToken = '1838630951255183366-Xn56wHAaWrPmWp8Mb4aSca6Rl7S9Oh'
-    // this.accessSecret = 'rjFahwiXkpXEYv8W9uEky791WkdC7U62gEhANWcakxwPW'
-
+  constructor(mail = 'hello_abc1@gongjua.com'){
+    for(let i in Accounts[mail]){
+      this[i] = Accounts[mail][i]
+    }
     this.client = this.getClient()
   }
 
@@ -53,7 +38,7 @@ class Twitter {
     return client
   }
 
-  async createPost({title, text, bloggerPostUrl, imgUrl}){
+  async createPost({title, text, bloggerPostUrl, imgUrl, imgPath}){
     // 加入标题和链接
     // const link = `... ${bloggerPostUrl}`
     const link = '...' // 带外链会被封杀
@@ -65,11 +50,14 @@ class Twitter {
       text: truncatedText,
     }
 
-    // 上传图片到 twitter
-    if(imgUrl){
+    if(imgUrl && !imgPath){
       const imgur = new Imgur()
-      const imgPath = path.resolve(__dirname, '../temp/temp_img.jpeg')
+      imgPath = path.resolve(__dirname, '../temp/temp_img.jpeg')
       await imgur.downloadImage(imgUrl, imgPath)
+    }
+
+    // 上传图片到 twitter
+    if(imgPath){
       const mediaId = await this.client.v1.uploadMedia(imgPath)
       postData.media ||= {}
       postData.media.media_ids ||= []

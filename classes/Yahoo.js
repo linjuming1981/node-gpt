@@ -121,7 +121,19 @@ class Yahoo {
     }
     const imgUrl = await imgAi.upload(imageBuffer)
 
-    // 发布到twitter --- todo
+    // 下载原图
+    const Imgur = require('./Imgur.js')
+    const imgur = new Imgur()
+    const imgPath = path.relative(__dirname, '../temp/temp_img_down_from_yahoo.jpeg')
+    const isSuccess = await imgur.downloadImage(newArticle.orgImgUrl, imgPath)
+    if(!isSuccess){
+      console.log({'下载原图失败': newArticle.orgImgUrl})
+      return
+    }
+
+    // const Twitter = require('./Twitter.js')
+    // const twitter = new Twitter()
+    // const res = twitter.createPost({text: summary, imgPath})
 
     // 将文章记录到google sheet
     newArticle = {
