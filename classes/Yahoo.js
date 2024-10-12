@@ -42,7 +42,7 @@ class Yahoo {
           link: item.link[0],
           description: item.description[0],
           pubDate: pubDate,
-          imgUrl: imgUrl,  // 添加 imgUrl 属性
+          previewImgUrl: imgUrl,  // 添加 imgUrl 属性
           orgImgUrl: orgImgUrl, // 原始图片链接
           guid: guid,  // 添加 guid
           category: item.category ? item.category[0] : 'Uncategorized'  // 添加 category
@@ -60,7 +60,7 @@ class Yahoo {
   async addArticlesToGoogleSheet(articles) {
     const GoogleSheet = require('./GoogleSheet');
     const gSheet = new GoogleSheet({ sheetName: this.sheetName });
-    gSheet.addSheetDatas({ datas: articles });
+    await gSheet.addSheetDatas({ datas: articles });
   }
 
   // 获取google文章内容
@@ -114,9 +114,19 @@ class Yahoo {
     const imgAi = new ImgAi()
     const imgPath = '../temp/img_yahoo_ai.jpeg'
     const imgPathAbs = path.resolve(__dirname, imgPath)
-    await imgAi.createImg({prompt: summary}, imgPathAbs)
+    const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
+    const imgUrl = await imgAi.upload(imageBuffer)
 
-    // 将文章
+    // 发布到twitter --- todo
+
+    // 将文章记录到google sheet
+    newArticle = {
+      ...newArticle,
+      subCont: summary,
+      imgUrl,
+    }
+
+    this.addArticlesToGoogleSheet([newArticle])
 
   }
 }

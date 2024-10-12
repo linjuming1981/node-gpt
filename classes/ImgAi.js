@@ -74,6 +74,14 @@ class ImgAi {
 
     return response.data
   }
+
+  async upload(imageBuffer){
+    const Imgur = require('./Imgur.js')
+    const imgur = new Imgur()
+    const imgurLink = await imgur.uploadImage({imageBuffer})
+    console.log('imgurLink', imgurLink)
+    return imgurLink
+  }
 }
 
 module.exports = ImgAi
