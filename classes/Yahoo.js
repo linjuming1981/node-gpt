@@ -142,9 +142,9 @@ class Yahoo {
       console.log({'下载原图成功': newArticle.previewImgUrl, imgPath})
     }
 
-    // const Twitter = require('./Twitter.js')
-    // const twitter = new Twitter()
-    // const res = twitter.createPost({text: summary, imgPath})
+    const Twitter = require('./Twitter.js')
+    const twitter = new Twitter()
+    const res = twitter.createPost({text: summary, imgPath})
 
     // 将文章记录到google sheet
     newArticle = {
