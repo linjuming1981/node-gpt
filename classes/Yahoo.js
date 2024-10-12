@@ -84,7 +84,7 @@ class Yahoo {
   async getArticlesInSheet(){
     const GoogleSheet = require('./GoogleSheet');
     const gSheet = new GoogleSheet({ sheetName: this.sheetName });
-    const articles = await gSheet.getAllDatas()
+    const articles = await gSheet.getAllDatas({})
     return articles
   }
 
