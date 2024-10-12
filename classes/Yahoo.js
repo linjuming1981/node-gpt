@@ -109,7 +109,7 @@ class Yahoo {
     // 概括文章
     const HugAi = require('./HugAi.js')
     const hugAi = new HugAi()
-    const summary = hugAi.summary(content)
+    const summary = await hugAi.summary(content)
 
     // 生成ai图片
     const ImgAi = require('./ImgAi.js');
@@ -117,9 +117,9 @@ class Yahoo {
     const imgPath = '../temp/img_yahoo_ai.jpeg'
     const imgPathAbs = path.resolve(__dirname, imgPath)
     console.log(2123132, summary)
-    // const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
-    // const imgUrl = await imgAi.upload(imageBuffer)
-    // console.log(2222222, {imgUrl})
+    const imageBuffer = await imgAi.createImg({prompt: summary}, imgPathAbs)
+    const imgUrl = await imgAi.upload(imageBuffer)
+    console.log(2222222, {imgUrl})
 
     // 发布到twitter --- todo
 
