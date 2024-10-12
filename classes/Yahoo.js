@@ -116,6 +116,9 @@ class Yahoo {
     const ImgAi = require('./ImgAi.js');
     const imgAi = new ImgAi()
     const imageBuffer = await imgAi.createImg({prompt: summary})
+    if(!imageBuffer){
+      return
+    }
     const imgUrl = await imgAi.upload(imageBuffer)
 
     // 发布到twitter --- todo
