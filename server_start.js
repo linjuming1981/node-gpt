@@ -50,6 +50,7 @@ app.all('*', function(req, res, next) {
 
 app.get('/test', async (req, res) => {
   let rssUrl = 'https://sports.yahoo.com/nba/rss/';
+  const Yahoo = require('./classes/Yahoo.js')
   const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
   const article = await yahoo.postNewArticleToTwitter()
   res.send(article)
