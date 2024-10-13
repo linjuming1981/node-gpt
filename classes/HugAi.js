@@ -26,7 +26,7 @@ class HugAi {
     // 书籍或章节摘要：总结书籍、章节或研究论文的主要要点。
     // 生成式文本总结：不仅限于提取关键句子，还能生成新的句子来总结重要信息。
 
-    text = Util.truncateText(text, 4000); //bart-large-cnn 模型最多只能处理1024个token（约4096字节）
+    text = Util.truncateText(text, 3500); //bart-large-cnn 模型最多只能处理1024个token（约4096字节）
     try {
       const response = await axios.post(
         `https://api-inference.huggingface.co/models/${model}`,

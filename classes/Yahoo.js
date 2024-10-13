@@ -59,7 +59,6 @@ class Yahoo {
         };
       });
 
-      console.log(articles);
       return articles;
     } catch (error) {
       console.error('Error fetching or parsing RSS feed:', error);
@@ -136,7 +135,7 @@ class Yahoo {
     const imgPath = path.resolve(__dirname, '../temp/temp_img_down_from_yahoo.jpeg')
     const isSuccess = await imgur.downloadImage(newArticle.previewImgUrl, imgPath) // 不能用orgImgUrl, 会下载失败
     if(!isSuccess){
-      console.log({'下载原图失败': newArticle.previewImgUrl})
+      console.error({'下载原图失败': newArticle.previewImgUrl})
       return
     } else {
       console.log({'下载原图成功': newArticle.previewImgUrl, imgPath})
