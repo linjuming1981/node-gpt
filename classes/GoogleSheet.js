@@ -15,6 +15,7 @@ class GoogleSheet {
   getSheetId(sheetName){
     const map = {
       'yahoo_nba': '1gkRAY9q80hpca7Hs_wOvEEswkhcKnnM90UI7JbvikoQ',
+      'yahoo_nhl': '1zLFtOQy4YD50UOMDYqT9VC6kvG09ZbFcx238Q7hHV1M',
       'perfect_world': '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
     }
     return map[sheetName]

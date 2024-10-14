@@ -83,7 +83,7 @@ class Yahoo {
       const $ = cheerio.load(html);
       const content = $('.caas-body').text();
 
-      console.log('Article content:', content);
+      // console.log('Article content:', content);
       return content;
     } catch (error) {
       console.error('Error fetching article content:', error);

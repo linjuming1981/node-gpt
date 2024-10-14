@@ -16,7 +16,7 @@ router.get('/worker/yahoo-nba-to-twitter', async(req, res) => {
 router.get('/worker/yahoo-nhl-to-twitter', async(req, res) => {
   let rssUrl = 'https://sports.yahoo.com/nhl/rss/';
   const Yahoo = require('../classes/Yahoo.js')
-  const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba', twitterAccount:'nhl_2024@gongjua.com' });
+  const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nhl', twitterAccount:'nhl_2024@gongjua.com' });
   const article = await yahoo.postNewArticleToTwitter()
   console.log('/worker/yahoo-nhl-to-twitter', article)
   res.send({code: 200, article})
