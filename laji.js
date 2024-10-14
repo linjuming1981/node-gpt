@@ -1,27 +1,27 @@
 const axios = require('axios');
 
-// 替换为您的 Bearer Token
-const BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAAHB2wQEAAAAA45RVKnoO9sN7HRQRBtdg74N4YhQ%3DAOmmQTrA8RD3kBSrI299FqcWXekKhgtFVXLj48ASwGOJVdBuid';
+async function test(){
+    const axios = require('axios');
 
-// 函数：获取用户的推文
-async function getUserTweets(userId, maxResults = 5) {
-    const url = `https://api.twitter.com/2/users/${userId}/tweets?max_results=${maxResults}&tweet.fields=created_at`;
-
+    const options = {
+      method: 'GET',
+      url: 'https://twitter-api45.p.rapidapi.com/search.php',
+      params: {
+        query: 'nba',
+        search_type: 'Top'
+      },
+      headers: {
+        'x-rapidapi-key': '4a8ab52526msh8046b902b12588cp199e12jsnb0e2e078aeaf',
+        'x-rapidapi-host': 'twitter-api45.p.rapidapi.com'
+      }
+    };
+    
     try {
-        const response = await axios.get(url, {
-            headers: {
-                'Authorization': `Bearer ${BEARER_TOKEN}`
-            }
-        });
-        return response.data;
+        const response = await axios.request(options);
+        console.log(response.data);
     } catch (error) {
-        console.error('Error fetching tweets:', error.response ? error.response.data : error.message);
+        console.error(error);
     }
 }
 
-// 示例：获取指定用户的推文
-const userId = '1844988407375638536'; // 替换为目标用户的 ID
-getUserTweets(userId)
-    .then(tweets => {
-        console.log('Fetched tweets:', tweets);
-    });
+test()
