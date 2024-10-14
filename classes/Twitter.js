@@ -180,20 +180,74 @@ class Twitter {
 
   async searchUser(username) {
     try {
+      const options = {
+        "user.fields": [
+            "affiliation",
+            "connection_status",
+            "created_at",
+            "description",
+            "entities",
+            "id",
+            "location",
+            "most_recent_tweet_id",
+            "name",
+            "pinned_tweet_id",
+            "profile_banner_url",
+            "profile_image_url",
+            "protected",
+            "public_metrics",
+            "receives_your_dm",
+            "subscription_type",
+            "url",
+            "username",
+            "verified",
+            "verified_type",
+            "withheld"
+        ],
+        "expansions": [
+            "affiliation.user_id",
+            "most_recent_tweet_id",
+            "pinned_tweet_id"
+        ],
+        "tweet.fields": [
+            "article",
+            "attachments",
+            "author_id",
+            "card_uri",
+            "context_annotations",
+            "conversation_id",
+            "created_at",
+            "display_text_range",
+            "edit_controls",
+            "edit_history_tweet_ids",
+            "entities",
+            "geo",
+            "id",
+            "in_reply_to_user_id",
+            "lang",
+            "media_metadata",
+            "non_public_metrics",
+            "note_tweet",
+            "organic_metrics",
+            "possibly_sensitive",
+            "promoted_metrics",
+            "public_metrics",
+            "referenced_tweets",
+            "reply_settings",
+            "scopes",
+            "source",
+            "text",
+            "withheld"
+        ]
+      }
+
       // 调用 Twitter API 获取用户信息
-      const user = await this.client.v2.userByUsername(username);
+      const user = await this.client.v2.userByUsername(username, options);
   
       // 检查用户是否存在
       if (user && user.data) {
-        const userInfo = {
-          id: user.data.id,
-          name: user.data.name,
-          username: user.data.username,
-          createdAt: user.data.created_at,
-        };
-  
-        console.log('用户信息:', userInfo);
-        return userInfo;
+        console.log('用户信息:', user);
+        return user;
       } else {
         console.log('未找到该用户。');
         return null;
