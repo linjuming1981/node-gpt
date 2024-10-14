@@ -178,6 +178,32 @@ class Twitter {
     }
   }
 
+  async searchUser(username) {
+    try {
+      // 调用 Twitter API 获取用户信息
+      const user = await this.client.v2.userByUsername(username);
+  
+      // 检查用户是否存在
+      if (user && user.data) {
+        const userInfo = {
+          id: user.data.id,
+          name: user.data.name,
+          username: user.data.username,
+          createdAt: user.data.created_at,
+        };
+  
+        console.log('用户信息:', userInfo);
+        return userInfo;
+      } else {
+        console.log('未找到该用户。');
+        return null;
+      }
+    } catch (error) {
+      console.error('获取用户信息时出错:', error);
+      return null;
+    }
+  }
+
 }
 
 module.exports = Twitter
@@ -185,24 +211,7 @@ module.exports = Twitter
 if(module === require.main){
   (async () => {
     const twitter = new Twitter()
-    // await twitter.createPost({
-    //   text: 'The night was deep and pitch-black, rendering the landscape invisible.',
-    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg',
-    // })
-
-    // await twitter.replyPost({
-    //   tweetId: '1833768406891548829',  // 我自己的帖子 https://x.com/linjuming_1/status/1833768406891548829
-    //   replyText: 'very good',
-    //   imgUrl: 'https://i.imgur.com/DHggfzN.jpeg'
-    // })
-
-    // await twitter.aiReplyPost({
-    //   postId: '1833768406891548829',
-    //   replyCont: 'very good !',
-    //   imgPrompt: 'Illustrate a comedic debate scene where two characters are arguing passionately.'
-    // })
-
-    await twitter.getTweetReplies('1837988517659500566')
+    await twitter.searchUser('hello_abc_1')
 
   })()
 }
