@@ -1,17 +1,3 @@
-// Consumer Keys
-// - API Key: GnmPjOvbpvIHf8N0ggAeDAY0i
-// - API Key Secret: sTjRupEtH5CnZNliOyzH8hkxatZS2Kxp3TCXTmK00JWDgy1Hm7
-
-// Authentication Tokens
-// - Bearer Token: AAAAAAAAAAAAAAAAAAAAAKnLvgEAAAAAe6u2h5K9KNMLS049UtCzsxaYpSA%3DLsGgBCsfiIIRrEaZkxfbuNwTV1z4gKBkFOtKHmKtIZ8miKzkSA
-// - Access Token: 420767326-kDd7iYAfc7gWmBAe6klHAZV3nLG3g1VHHa2rWRAe
-// - Access Token Secret: 7xj35VWwEr7McM42t4fdXskFxGToCKJ6wWV6cXvMjwBCI
-
-// OAuth 2.0 Client ID and Client Secret
-// - Client ID : dHdLRzhleUo2aDlrcDh1bUlKM206MTpjaQ
-// - Client Secret: Bz5tAWxstfF-HyuF3S6qQLtGF-2_LUD1a__3zvCup6_wk_Sa22
-
-
 const fs = require('fs');
 const path = require('path')
 const Imgur = require('./Imgur.js')
@@ -259,6 +245,30 @@ class Twitter {
     }
   }
 
+  // 获取推文统计数据
+  async getMetrics(tweetId) {
+    try {
+      // 请求推文的统计数据
+      const tweet = await this.client.v2.tweet(tweetId, {
+        'tweet.fields': 'public_metrics',
+      });
+  
+      // 检查推文是否存在
+      if (tweet && tweet.data) {
+        const metrics = tweet;
+        console.log(`推文ID: ${tweetId} 的统计数据:`, metrics);
+        return metrics;
+      } else {
+        console.log('未找到该推文。');
+        return null;
+      }
+    } catch (error) {
+      console.error('获取推文统计数据时出错:', error);
+      return null;
+    }
+  }
+  
+
 }
 
 module.exports = Twitter
@@ -266,7 +276,7 @@ module.exports = Twitter
 if(module === require.main){
   (async () => {
     const twitter = new Twitter()
-    await twitter.searchUser('hello_abc_1')
+    await twitter.getMetrics('1845642998736171039')
 
   })()
 }
