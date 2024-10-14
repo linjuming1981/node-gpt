@@ -20,7 +20,7 @@ async function getUserTweets(userId, maxResults = 5) {
 }
 
 // 示例：获取指定用户的推文
-const userId = 'USER_ID'; // 替换为目标用户的 ID
+const userId = '1844988407375638536'; // 替换为目标用户的 ID
 getUserTweets(userId)
     .then(tweets => {
         console.log('Fetched tweets:', tweets);
