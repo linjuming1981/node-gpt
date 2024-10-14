@@ -24,4 +24,31 @@ async function test(){
     }
 }
 
-test()
+// test()
+
+
+async function test1(){
+    const axios = require('axios');
+
+    const options = {
+      method: 'GET',
+      url: 'https://twitter-api47.p.rapidapi.com/v2/search',
+      params: {
+        query: 'spacex',
+        type: 'Top'
+      },
+      headers: {
+        'x-rapidapi-key': '4a8ab52526msh8046b902b12588cp199e12jsnb0e2e078aeaf',
+        'x-rapidapi-host': 'twitter-api47.p.rapidapi.com'
+      }
+    };
+    
+    try {
+        const response = await axios.request(options);
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+test1()
