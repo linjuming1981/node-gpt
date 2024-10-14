@@ -55,7 +55,7 @@ app.use(workersRouter)
 app.get('/test', async (req, res) => {
   const RapidApi = require('./classes/RapidApi.js')
   const rapidApi = new RapidApi()
-  const data = await rapidApi.searchTwitterPosts('NBA')
+  const data = await rapidApi.searchTwitterPosts({keyword: 'NBA'})
   res.send({code: 200, data})
 })
 
