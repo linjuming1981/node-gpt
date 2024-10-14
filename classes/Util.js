@@ -163,9 +163,15 @@ var Util = {};
       const seconds = String(dt.getSeconds()).padStart(2, '0');
       const dateTimeStr = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
       return dateTimeStr
-    }
+    },
 
-
+    // 从对象中随机抽取一个属性的值
+    getObjRandItem(obj){
+      const keys = Object.keys(obj);
+      const randomIndex = Math.floor(Math.random() * keys.length); // 生成随机索引
+      const key = keys[randomIndex];
+      return obj[key]
+    },
 
   };
 
