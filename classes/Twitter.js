@@ -24,10 +24,17 @@ class Twitter {
     return client
   }
 
-  async createPost({title, text, bloggerPostUrl, imgUrl, imgPath}){
+  async createPost({title, text, bloggerPostUrl, imgUrl, imgPath, tags}){
     // 加入标题和链接
     // const link = `... ${bloggerPostUrl}`
     const link = '...' // 带外链会被封杀 
+
+    if (tags && tags.length > 0) {
+      // 随机抽取2个tag
+      const selectedTags = tags.sort(() => 0.5 - Math.random()).slice(0, 2);
+      const tagText = selectedTags.map(tag => `#${tag}`).join(' ');
+      text = `${tagText} ${text}`;
+    }
     
     // 截取文本
     const truncatedText = Util.truncateText(text, 280, link);

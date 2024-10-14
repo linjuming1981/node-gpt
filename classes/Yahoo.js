@@ -99,10 +99,9 @@ class Yahoo {
   }
 
   // 抓取最新文章发布到twitter
-  async postNewArticleToTwitter(){
+  async postNewArticleToTwitter({tags}){
     const articles = await this.getArticlesFromRss()
     const articlesInSheet = await this.getArticlesInSheet()
-    console.log({articlesInSheet})
     const sheetProductIds = articlesInSheet.map(n => n.productId)
     let newArticle = articles.find(n => {
       return !sheetProductIds.includes(n.productId)
@@ -133,7 +132,7 @@ class Yahoo {
     // 下载原图
     const Imgur = require('./Imgur.js')
     const imgur = new Imgur()
-    const imgPath = path.resolve(__dirname, '../temp/temp_img_down_from_yahoo.jpeg')
+    const imgPath = path.resolve(__dirname, `../temp/temp_img_down_from_yahoo_${Date.now()}.jpeg`)
     const isSuccess = await imgur.downloadImage(newArticle.previewImgUrl, imgPath) // 不能用orgImgUrl, 会下载失败
     if(!isSuccess){
       console.error({'下载原图失败': newArticle.previewImgUrl})
@@ -144,7 +143,7 @@ class Yahoo {
 
     const Twitter = require('./Twitter.js')
     const twitter = new Twitter(this.twitterAccount)
-    const res = await twitter.createPost({text: summary, imgPath})
+    const res = await twitter.createPost({text: summary, imgPath, tags})
     const twitterId = res?.data?.id || ''
 
     // 将文章记录到google sheet
