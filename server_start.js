@@ -52,13 +52,11 @@ app.all('*', function(req, res, next) {
 const workersRouter = require('./routes/workers.js');
 app.use(workersRouter)
 
-
 app.get('/test', async (req, res) => {
-  // let rssUrl = 'https://sports.yahoo.com/nba/rss/';
-  // const Yahoo = require('./classes/Yahoo.js')
-  // const yahoo = new Yahoo({ rssUrl, sheetName: 'yahoo_nba' });
-  // const article = await yahoo.postNewArticleToTwitter()
-  // res.send(article)
+  const RapidApi = require('./classes/RapidApi.js')
+  const rapidApi = new RapidApi()
+  const data = await rapidApi.searchTwitterPosts('NBA')
+  res.send({code: 200, data})
 })
 
 app.post('/addProductsToSheet', async (req, res) => {
