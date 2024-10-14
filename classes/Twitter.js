@@ -3,6 +3,7 @@ const path = require('path')
 const Imgur = require('./Imgur.js')
 const Util = require('./Util.js')
 const Accounts = require('./TwitterAccounts.js');
+const { Client } = require('twitter-api-sdk'); // 使用 require 导入模块
 
 class Twitter {
   constructor(mail = 'hello_abc1@gongjua.com'){
@@ -245,27 +246,115 @@ class Twitter {
     }
   }
 
-  // 获取推文统计数据
+  // 获取推文相关信息
   async getMetrics(tweetId) {
-    try {
-      // 请求推文的统计数据
-      const tweet = await this.client.v2.tweet(tweetId, {
-        'tweet.fields': 'public_metrics',
-      });
-  
-      // 检查推文是否存在
-      if (tweet && tweet.data) {
-        const metrics = tweet;
-        console.log(`推文ID: ${tweetId} 的统计数据:`, metrics);
-        return metrics;
-      } else {
-        console.log('未找到该推文。');
-        return null;
-      }
-    } catch (error) {
-      console.error('获取推文统计数据时出错:', error);
-      return null;
-    }
+    const client = new Client(this.bearerToken);
+
+    const response = await client.tweets.findTweetById(tweetId, {
+      "tweet.fields": [
+        "article",
+        "attachments",
+        "author_id",
+        "card_uri",
+        "context_annotations",
+        "conversation_id",
+        "created_at",
+        "display_text_range",
+        "edit_controls",
+        "edit_history_tweet_ids",
+        "entities",
+        "geo",
+        "id",
+        "in_reply_to_user_id",
+        "lang",
+        "media_metadata",
+        "non_public_metrics",
+        "note_tweet",
+        "organic_metrics",
+        "possibly_sensitive",
+        "promoted_metrics",
+        "public_metrics",
+        "referenced_tweets",
+        "reply_settings",
+        "scopes",
+        "source",
+        "text",
+        "withheld"
+      ],
+      "expansions": [
+        "article.cover_media",
+        "article.media_entities",
+        "attachments.media_keys",
+        "attachments.media_source_tweet",
+        "attachments.poll_ids",
+        "author_id",
+        "edit_history_tweet_ids",
+        "entities.mentions.username",
+        "geo.place_id",
+        "in_reply_to_user_id",
+        "entities.note.mentions.username",
+        "referenced_tweets.id",
+        "referenced_tweets.id.author_id"
+      ],
+      "media.fields": [
+        "alt_text",
+        "duration_ms",
+        "height",
+        "media_key",
+        "non_public_metrics",
+        "organic_metrics",
+        "preview_image_url",
+        "promoted_metrics",
+        "public_metrics",
+        "type",
+        "url",
+        "variants",
+        "width"
+      ],
+      "poll.fields": [
+        "duration_minutes",
+        "end_datetime",
+        "id",
+        "options",
+        "voting_status"
+      ],
+      "user.fields": [
+        "affiliation",
+        "connection_status",
+        "created_at",
+        "description",
+        "entities",
+        "id",
+        "location",
+        "most_recent_tweet_id",
+        "name",
+        "pinned_tweet_id",
+        "profile_banner_url",
+        "profile_image_url",
+        "protected",
+        "public_metrics",
+        "receives_your_dm",
+        "subscription_type",
+        "url",
+        "username",
+        "verified",
+        "verified_type",
+        "withheld"
+      ],
+      "place.fields": [
+        "contained_within",
+        "country",
+        "country_code",
+        "full_name",
+        "geo",
+        "id",
+        "name",
+        "place_type"
+      ]
+    });
+    
+    console.log("response", response);
+    // console.log("response", JSON.stringify(response, null, 2));
   }
   
 

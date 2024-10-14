@@ -11,5 +11,6 @@ module.exports = {
     appSecret: 'hswZdN7pADWEHgcU6ls9Ou33FhYkBcbD7Y6rLutzgLuAspcXIf',
     accessToken: '1844988407375638536-JGHNdnduAYrtLoZw8ZqWOthJezia2y',
     accessSecret: 'lEtfJg4UNF3rJ4QZPcKef5mXniKxjOjhAF501gFa1v0kd',
+    bearerToken: 'AAAAAAAAAAAAAAAAAAAAAHB2wQEAAAAA45RVKnoO9sN7HRQRBtdg74N4YhQ%3DAOmmQTrA8RD3kBSrI299FqcWXekKhgtFVXLj48ASwGOJVdBuid',
   },
 }
