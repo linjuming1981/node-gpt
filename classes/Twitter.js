@@ -178,6 +178,7 @@ class Twitter {
     }
   }
 
+  // 搜索用户，接口文档：https://developer.x.com/en/docs/x-api/users/lookup/api-reference/get-users-by-username-username#tab1
   async searchUser(username) {
     try {
       const options = {
