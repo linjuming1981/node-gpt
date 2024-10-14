@@ -37,5 +37,5 @@ if(module === require.main){
   (async() => {
     const rapidApi = new RapidApi()
     await rapidApi.searchTwitterPosts('NBA')
-  })
+  })();
 }
