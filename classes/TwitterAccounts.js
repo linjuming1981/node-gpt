@@ -13,4 +13,11 @@ module.exports = {
     accessSecret: 'lEtfJg4UNF3rJ4QZPcKef5mXniKxjOjhAF501gFa1v0kd',
     bearerToken: 'AAAAAAAAAAAAAAAAAAAAAHB2wQEAAAAA45RVKnoO9sN7HRQRBtdg74N4YhQ%3DAOmmQTrA8RD3kBSrI299FqcWXekKhgtFVXLj48ASwGOJVdBuid',
   },
+  'nhl_2024@gongjua.com': { // 冰球运动
+    pwd: 'inHeart@007',
+    appKey: 'YDn0A6CAUzME1xDdtD9gWT21h',
+    appSecret: 'PM4UAFJKa6pVwgY9x8Jod8svdbnkkDfLLiK3u76sSvhSva62vI',
+    accessToken: '1845704935813640192-o0skqIvvNN3tVWAIrA6rrcInIYAG2Z',
+    accessSecret: 'JQ05pM76UYq1lR2ms85Zs7h8pUkv6O7j8UUYQJLSsAJZW',
+  },
 }
