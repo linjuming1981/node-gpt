@@ -3,7 +3,6 @@ const path = require('path')
 const Imgur = require('./Imgur.js')
 const Util = require('./Util.js')
 const Accounts = require('./TwitterAccounts.js');
-const { Client } = require('twitter-api-sdk'); // 使用 require 导入模块
 
 class Twitter {
   constructor(mail = 'hello_abc1@gongjua.com'){

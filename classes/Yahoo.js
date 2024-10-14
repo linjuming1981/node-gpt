@@ -5,9 +5,10 @@ const path = require('path');
 const cheerio = require('cheerio'); // 用于 HTML 解析
 
 class Yahoo {
-  constructor({ rssUrl, sheetName }) {
+  constructor({ rssUrl, sheetName, twitterAccount }) {
     this.rssUrl = rssUrl;
     this.sheetName = sheetName;
+    this.twitterAccount = twitterAccount;
   }
 
   async getArticlesFromRss() {
@@ -142,7 +143,7 @@ class Yahoo {
     }
 
     const Twitter = require('./Twitter.js')
-    const twitter = new Twitter()
+    const twitter = new Twitter(this.twitterAccount)
     const res = await twitter.createPost({text: summary, imgPath})
     const twitterId = res?.data?.id || ''
 
