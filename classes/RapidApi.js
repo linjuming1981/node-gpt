@@ -15,6 +15,7 @@ class RapidApi{
     return apiKey
   }
 
+  // 查询帖子列表
   // 调试地址： https://rapidapi.com/restocked-gAGxip8a_/api/twitter-api47/playground/apiendpoint_d9a2ab0a-aaad-45e1-a9fe-8d6db286f0b4
   async searchTwitterPosts({keyword}){
     const apiKey = this.getApiKey()
@@ -50,14 +51,50 @@ class RapidApi{
         }
       })
       return list;
-
-      // return response.data
     } catch (error) {
       console.error('searchTwitterPosts', error);
       return false
     }
 
   }
+
+  // 查询回复列表
+  async getTwitterReplies(tweetId){
+    const apiKey = this.getApiKey()
+    console.log('getTwitterReplies使用apiKey', apiKey)
+
+    const options = {
+      method: 'GET',
+      url: `https://twitter-api47.p.rapidapi.com/v2/tweet/details`,
+      params: {
+        tweetId,
+      },
+      headers: {
+        'x-rapidapi-key': apiKey,
+        'x-rapidapi-host': 'twitter-api47.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      const replies = []
+      response.data.threadContent.forEach(n => {
+        n.forEach(n1 => {
+          const full_text = n1?.legacy?.full_text
+          if(full_text){
+            replies.push(full_text)
+          }
+        })
+      })
+
+      return replies
+
+    } catch (error) {
+      console.error(error);
+      return false
+    }
+  }
+
 }
 
 module.exports = RapidApi
@@ -67,5 +104,9 @@ if(module === require.main){
     const rapidApi = new RapidApi()
     const list = await rapidApi.searchTwitterPosts({keyword: 'NBA'})
     console.log(list)
+
+    console.log('------')
+    const replies = await rapidApi.getTwitterReplies(list[0].id)
+    console.log(replies)
   })();
 }
