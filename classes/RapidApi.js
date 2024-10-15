@@ -9,6 +9,7 @@ class RapidApi{
   getApiKey(){
     const apiKeys = {
       'linjuming@gmail.com': '4a8ab52526msh8046b902b12588cp199e12jsnb0e2e078aeaf',
+      'mingfish1@126.com': 'db197dae92msh038d1f762111b0cp1d6d51jsn812bba5dbc6f',
     }
     const apiKey = Util.getObjRandItem(apiKeys)
     return apiKey
