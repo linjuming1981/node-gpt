@@ -25,10 +25,11 @@ class ImgAi {
 
   // 调用huggingface接口，返回图片二进制数据
   async createImg(params, savePath=''){
+    const model = params.model || 'black-forest-labs/FLUX.1-schnell'; // 还有可选模型：alimama-creative/FLUX.1-Turbo-Alpha
     const token = this.getToken();
     try{
       const response = await axios.post(
-        'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
+        `https://api-inference.huggingface.co/models/${model}`,
         {
           inputs: params.prompt,
           guidance_scale: params.guidance_scale || 7.5, // 控制生成图像的多样性与提示词的相关性。较高的值会使生成的图像更贴近提示词，通常在 4 到 9 之间调整。

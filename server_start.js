@@ -452,7 +452,15 @@ app.post('/createImgByPrompt', async (req, res) => {
   const imgPath = './temp/img_by_prompt.jpeg'
   const imgPathAbs = path.resolve(__dirname, imgPath)
   await imgAi.createImg({prompt: imgPrompt, options}, imgPathAbs)
-  res.send({code:200, imgUrl: imgPath})
+
+  const imgPath2 = './temp/img_by_prompt2.jpeg'
+  const imgPathAbs2 = path.resolve(__dirname, imgPath2)
+  await imgAi.createImg({prompt: imgPrompt, options, 
+    model: 'alimama-creative/FLUX.1-Turbo-Alpha',
+    num_inference_steps: 8,
+  }, imgPathAbs2)
+
+  res.send({code:200, imgUrl: imgPath, imgUrl2: imgPath2})
 })
 
 
