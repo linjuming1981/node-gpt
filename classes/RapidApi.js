@@ -44,6 +44,7 @@ class RapidApi{
           const item = {
             user_id: n.legacy.user_id_str,
             id: n.legacy.id_str, // 帖子id
+            img_url: n.legacy.entities.media?.[0]?.media_url_https || '',
             full_text: n.legacy.full_text, // 帖子文本内容
             created_at: Util.getDateTime(n.created_at),
           }
