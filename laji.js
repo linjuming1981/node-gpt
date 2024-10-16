@@ -7,28 +7,24 @@ async function query(data) {
       data,
       {
         headers: {
-          Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
+          Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
           'Content-Type': 'application/json',
         },
-        responseType: 'blob', // 将响应类型设置为 blob 来处理二进制数据
       }
     );
 
-    return response.data; // 返回 blob 数据  
+    return response.data; // 返回响应数据
   } catch (error) {
-    console.error('Error querying the API:', error);
+    console.error('查询 API 时出错:', error);
     return null;
   }
 }
 
+// 调用示例
 query({ "inputs": "Astronaut riding a horse" }).then((response) => {
   if (response) {
-    // 处理图像的二进制数据
-    console.log('Image blob received');
-    // 在浏览器环境中可以将 blob 转换为 URL 以显示图片
-    // const url = URL.createObjectURL(response);
-    // img.src = url;
+    console.log('接收到的响应:', response);
   } else {
-    console.log('Failed to get image');
+    console.log('获取图像失败');
   }
 });
