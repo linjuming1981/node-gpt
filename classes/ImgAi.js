@@ -25,7 +25,7 @@ class ImgAi {
 
   // 调用huggingface接口，返回图片二进制数据
   async createImg(params, savePath=''){
-    const model = params.model || 'black-forest-labs/FLUX.1-schnell'; // 还有可选模型：alimama-creative/FLUX.1-Turbo-Alpha
+    const model = params.model || 'black-forest-labs/FLUX.1-schnell'; // 还有可选模型：alimama-creative/FLUX.1-Turbo-Alpha （调不通）
     const token = this.getToken();
     try{
       const response = await axios.post(
