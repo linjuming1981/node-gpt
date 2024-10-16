@@ -10,6 +10,9 @@
       <el-tab-pane label="imgCreator" name="imgCreator">
         <slot name="imgCreator"></slot>
       </el-tab-pane>
+      <el-tab-pane label="twitterTrends" name="twitterTrends">
+        <slot name="twitterTrends"></slot>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>

@@ -30,11 +30,13 @@ const app = Vue.createApp({
     // Amazon: Vue.defineAsyncComponent( () => loadModule('./components/amazon/index.vue', options) ),
     Novel: Vue.defineAsyncComponent( () => loadModule('./components/novel/index.vue', options) ),
     ImgCreator: Vue.defineAsyncComponent( () => loadModule('./components/imgCreator/index.vue', options) ),
+    TwitterTrends: Vue.defineAsyncComponent( () => loadModule('./components/twitterTrends/index.vue', options) ),
   },
   template: `
     <Home>
       <template #novel><Novel /></template>
       <template #imgCreator><ImgCreator /></template>
+      <template #twitterTrends><TwitterTrends /></template>
     </Home>
   `
 });

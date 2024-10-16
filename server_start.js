@@ -4,19 +4,23 @@ const path = require('path')
 const fs = require('fs')
 const bodyParser = require('body-parser')
 const app = express()
-
-const AMAZON_SHEET_ID = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
-const GoogleSheet = require('./classes/GoogleSheet.js')
 const Util = require('./classes/Util.js')
-const sheetId = AMAZON_SHEET_ID
-const sheetTabName = '工作表1'
-const gSheet = new GoogleSheet({sheetId, sheetTabName})
+
+const gSheet = () => {
+  const GoogleSheet = require('./classes/GoogleSheet.js')
+  const sheetId = '1vJ8n1n6nrAv8YO4wSpI3AhFddAaWuq06UzHDxVE9pKQ'
+  const sheetTabName = '工作表1'
+  return new GoogleSheet({sheetId, sheetTabName})
+}
 
 // 完美世界小说sheet
-const novelSheet = new GoogleSheet({
-  sheetId: '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
-  sheetTabName: '工作表1'
-})
+const novelSheet = () => {
+  const GoogleSheet = require('./classes/GoogleSheet.js')
+  return new GoogleSheet({
+    sheetId: '1QWY7q2HxQMq2D2DhDSxXjErWbRgZIEtpQqELnMVd0QY',
+    sheetTabName: '工作表1'
+  })
+}
 
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.urlencoded({limit:'50mb',extended:false}));
@@ -68,12 +72,12 @@ app.post('/addProductsToSheet', async (req, res) => {
       }
     }
   });
-  await gSheet.addSheetDatas({datas: products})
+  await gSheet().addSheetDatas({datas: products})
   res.send(req.body)
 })
 
 app.get('/getAllSheetRows', async (req, res) => {
-  let datas = await gSheet.getSheetDatas()
+  let datas = await gSheet().getSheetDatas()
   res.send({code: 200, data: datas})
 })
 
@@ -87,11 +91,11 @@ app.post('/getSheetRows', async (req, res) => {
     update = JSON.parse(update)
   }
 
-  let datas = await gSheet.getSheetDatas({filter, count})
+  let datas = await gSheet().getSheetDatas({filter, count})
 
   if(update){ // 获取到的记录做更新操作111
     datas.forEach(product => {
-      gSheet.updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
+      gSheet().updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
     })
   }
 
@@ -109,7 +113,7 @@ app.post('/getOneRow', async (req, res) => {
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
   }
-  let datas = await gSheet.getSheetDatas({filter})
+  let datas = await gSheet().getSheetDatas({filter})
   let item = datas[0]
   res.send({code: 200, data: item})
 })
@@ -120,13 +124,13 @@ app.post('/updateRow', async (req, res) => {
   if(typeof product === 'string'){
     product = JSON.parse(product)
   }
-  gSheet.updateRow({product})
+  gSheet().updateRow({product})
   res.send({code: 200, data: product})
 })
 
 app.get('/preview/:id', async (req, res) => {
   const productId = req.params.id
-  let datas = await gSheet.getSheetDatas({filter:{productId}})
+  let datas = await gSheet().getSheetDatas({filter:{productId}})
   const ContentRender = require('./classes/ContentRender.js')
   const render = new ContentRender()
   let html = render.productToHtml(datas[0])
@@ -136,7 +140,7 @@ app.get('/preview/:id', async (req, res) => {
 
 app.get('/json/:id', async (req, res) => {
   const productId = req.params.id
-  let datas = await gSheet.getSheetDatas({filter:{productId}})
+  let datas = await gSheet().getSheetDatas({filter:{productId}})
   let product = datas[0]
   if(!req.full){
     delete product.markdownCode
@@ -192,7 +196,7 @@ app.post('/createBlogPost', async (req, res) => {
   const blogger = new GoogleBlogger()
   const ret = await blogger.createPost({title, content: html})
   product.postedToBlogger = '1'
-  gSheet.updateRow({product})
+  gSheet().updateRow({product})
   res.send({code: 200, ret})
 })
 
@@ -200,7 +204,7 @@ app.post('/createNovelBlogPost', async (req, res) => {
   let {product, worker} = req.body
   if(worker){ // cloudflare worker定时任务触发
     let filter = {enTitle:'NOT_EMPTY', enCont: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY', bloggerPostUrl:''}
-    let products = await novelSheet.getSheetDatas({filter})
+    let products = await novelSheet().getSheetDatas({filter})
     product = products[0]
   } else if(typeof product === 'string'){
     product = JSON.parse(product)
@@ -228,10 +232,10 @@ app.post('/getNovelRows', async (req, res) => {
     update = JSON.parse(update)
   }
 
-  let datas = await novelSheet.getSheetDatas({filter, count})
+  let datas = await novelSheet().getSheetDatas({filter, count})
   if(update){ // 获取到的记录做更新操作
     datas.forEach(product => {
-      novelSheet.updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
+      novelSheet().updateRow({product: {...product, ...update}});  // update是个对象，如 {status: 0}
       // 做到这里，todo 2024-7-15
     })
   }
@@ -258,7 +262,7 @@ app.post('/getOneNovel', async (req, res) => {
   if(typeof filter === 'string'){
     filter = JSON.parse(filter)
   }
-  let datas = await novelSheet.getSheetDatas({filter})
+  let datas = await novelSheet().getSheetDatas({filter})
 
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
@@ -281,7 +285,7 @@ app.post('/updateNovel', async (req, res) => {
   if(typeof novel === 'string'){
     novel = JSON.parse(novel)
   }
-  novelSheet.updateRow({product: novel})
+  novelSheet().updateRow({product: novel})
   res.send({code: 200, data: novel})
 })
 
@@ -294,7 +298,7 @@ app.get('/cronPostNovelToBlogger', async (req, res) => {
     postedToBlogger: '0', 
     enTitle: 'NOT_EMPTY'
   }  
-  let datas = await novelSheet.getSheetDatas({filter})
+  let datas = await novelSheet().getSheetDatas({filter})
   const rets = []
   datas = datas.slice(0, 2)
 
@@ -311,7 +315,7 @@ app.get('/cronPostNovelToBlogger', async (req, res) => {
 app.get('/novelPreview/:id', async (req, res) => {
   console.log('/novelPreview')   
   const productId = req.params.id
-  let datas = await novelSheet.getSheetDatas({filter:{productId}})
+  let datas = await novelSheet().getSheetDatas({filter:{productId}})
   const Novel = require('./classes/Novel.js')
   const novel = new Novel()
   let cnHtml = novel.renderHtml(datas[0], 'cn')
@@ -350,7 +354,7 @@ app.post('/createNovelChapterImg', async (req, res) => {
   let {product, worker} = req.body
   if(worker){ // cloudflare worker定时任务触发
     let filter = {imgPrompt: 'NOT_EMPTY', imgUrl: ''}
-    let products = await novelSheet.getSheetDatas({filter})
+    let products = await novelSheet().getSheetDatas({filter})
     product = products[0]
   } else if(typeof product === 'string'){
     product = JSON.parse(product)
@@ -373,7 +377,7 @@ app.post('/createNovelChapterImg', async (req, res) => {
     productId,
     imgUrl
   }
-  novelSheet.updateRow({product: _product})
+  novelSheet().updateRow({product: _product})
   console.log('/createNovelChapterImg sucess --- ', product.enTitle, imgUrl)
   res.send({code: 200, imgUrl})
 })
@@ -383,7 +387,7 @@ app.post('/postNovelToTwitter', async (req, res) => {
   let {product, worker} = req.body
   if(worker){ // cloudflare worker定时任务触发
     let filter = {subCont: 'NOT_EMPTY', bloggerPostUrl: 'NOT_EMPTY', imgUrl: 'NOT_EMPTY', twitterId: ''}
-    let products = await novelSheet.getSheetDatas({filter})
+    let products = await novelSheet().getSheetDatas({filter})
     product = products[0]
   } else if(typeof product === 'string'){
     product = JSON.parse(product)
@@ -403,7 +407,7 @@ app.post('/postNovelToTwitter', async (req, res) => {
     productId: product.productId,
     twitterId: ret?.data?.id || 'xxx1'
   }
-  novelSheet.updateRow({product: _product})
+  novelSheet().updateRow({product: _product})
 
   console.log('/postNovelToTwitter sucess --- ', product.enTitle)
   res.send({code: 200, data: ret})
