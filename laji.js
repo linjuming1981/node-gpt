@@ -1,54 +1,34 @@
 const axios = require('axios');
 
-async function test(){
-    const axios = require('axios');
-
-    const options = {
-      method: 'GET',
-      url: 'https://twitter-api45.p.rapidapi.com/search.php',
-      params: {
-        query: 'nba',
-        search_type: 'Top'
-      },
-      headers: {
-        'x-rapidapi-key': '4a8ab52526msh8046b902b12588cp199e12jsnb0e2e078aeaf',
-        'x-rapidapi-host': 'twitter-api45.p.rapidapi.com'
+async function query(data) {
+  try {
+    const response = await axios.post(
+      'https://api-inference.huggingface.co/models/alimama-creative/FLUX.1-Turbo-Alpha',
+      data,
+      {
+        headers: {
+          Authorization: 'Bearer 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', // 替换为你的 Hugging Face API 密钥
+          'Content-Type': 'application/json',
+        },
+        responseType: 'blob', // 将响应类型设置为 blob 来处理二进制数据
       }
-    };
-    
-    try {
-        const response = await axios.request(options);
-        console.log(response.data);
-    } catch (error) {
-        console.error(error);
-    }
+    );
+
+    return response.data; // 返回 blob 数据  
+  } catch (error) {
+    console.error('Error querying the API:', error);
+    return null;
+  }
 }
 
-// test()
-
-
-async function test1(){
-    const axios = require('axios');
-
-    const options = {
-      method: 'GET',
-      url: 'https://twitter-api47.p.rapidapi.com/v2/search',
-      params: {
-        query: 'spacex',
-        type: 'Top'
-      },
-      headers: {
-        'x-rapidapi-key': '4a8ab52526msh8046b902b12588cp199e12jsnb0e2e078aeaf',
-        'x-rapidapi-host': 'twitter-api47.p.rapidapi.com'
-      }
-    };
-    
-    try {
-        const response = await axios.request(options);
-        console.log(response.data);
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-test1()
+query({ "inputs": "Astronaut riding a horse" }).then((response) => {
+  if (response) {
+    // 处理图像的二进制数据
+    console.log('Image blob received');
+    // 在浏览器环境中可以将 blob 转换为 URL 以显示图片
+    // const url = URL.createObjectURL(response);
+    // img.src = url;
+  } else {
+    console.log('Failed to get image');
+  }
+});
