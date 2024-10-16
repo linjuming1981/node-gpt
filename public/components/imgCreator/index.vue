@@ -2,7 +2,6 @@
   <div class="imgCreator">
     <div class="preview_line">
       <img :src="imgUrl" />
-      <img :src="imgUrl2" />
     </div>
     <div class="prompt_line">
       <span>prompt:</span>
@@ -18,7 +17,6 @@ export default {
   data(){
     return {
       imgUrl: '',
-      imgUrl2: '',
       imgPrompt: '',
       optionsStr: `{"num_inference_steps": 4, "guidance_scale": 7.5}`
     }
@@ -37,7 +35,6 @@ export default {
         }
       })
       this.imgUrl = `${res.data.imgUrl}?t=${Date.now()}`
-      this.imgUrl2 = `${res.data.imgUrl2}?t=${Date.now()}`
     }
   }
 }
