@@ -1,5 +1,6 @@
 const axios = require('axios')
 const Util = require('./Util.js')
+const Cache = require('./Cache.js')
 
 class RapidApi{
   constructor(){
@@ -18,6 +19,12 @@ class RapidApi{
   // 查询帖子列表
   // 调试地址： https://rapidapi.com/restocked-gAGxip8a_/api/twitter-api47/playground/apiendpoint_d9a2ab0a-aaad-45e1-a9fe-8d6db286f0b4
   async searchTwitterPosts({keyword}){
+    const cacheKey = `searchTwitterPosts_${keyword}`
+    if(Cache.get(cacheKey)){
+      console.log('使用缓存', cacheKey)
+      return Cache.get(cacheKey)
+    }
+
     const apiKey = this.getApiKey()
     console.log('searchTwitterPosts使用apiKey', apiKey)
     
@@ -36,8 +43,6 @@ class RapidApi{
 
     try {
       const response = await axios.request(options);
-      // console.log(response.data);
-
       const list = []
       response.data.tweets.forEach(n => {
         if(n.legacy){
@@ -51,6 +56,7 @@ class RapidApi{
           list.push(item)
         }
       })
+      Cache.set(cacheKey, list)
       return list;
     } catch (error) {
       console.error('searchTwitterPosts', error);
@@ -61,6 +67,12 @@ class RapidApi{
 
   // 查询回复列表
   async getTwitterReplies(tweetId){
+    const cacheKey = `getTwitterReplies_${tweetId}`
+    if(Cache.get(cacheKey)){
+      console.log('使用缓存', cacheKey)
+      return Cache.get(cacheKey)
+    }
+
     const apiKey = this.getApiKey()
     console.log('getTwitterReplies使用apiKey', apiKey)
 
@@ -88,6 +100,7 @@ class RapidApi{
         })
       })
 
+      Cache.set(cacheKey, replies)
       return replies
 
     } catch (error) {
