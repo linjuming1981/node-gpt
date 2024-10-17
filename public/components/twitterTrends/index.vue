@@ -21,10 +21,12 @@
       <el-table-column type="expand">
         <template v-slot="scope">
           <div class="detail">
-            <div><img class="bigImg" :src="scope.row.img_url" /></div>
-            <div>{{scope.row.full_text}}</div>
-            <div class="replies">
-              <p v-for="(n, i) in scope.row.replies">{{n}}</p>
+            <div class="img_box"><img class="bigImg" :src="scope.row.img_url" /></div>
+            <div class="text_box">
+              <div class="tweet_full_text">{{scope.row.full_text}}</div>
+              <div class="replies">
+                <p v-for="(n, i) in scope.row.replies">{{n}}</p>
+              </div>
             </div>
           </div>
         </template>
@@ -81,4 +83,21 @@ export default {
   width: 400px;
   height: 400px;
 }
+.detail{
+  display: flex;
+}
+.detail .img_box{
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 400px;
+}
+.detail .img_box .bigImg{}
+.detail .text_box{}
+.detail .text_box .tweet_full_text{
+  color: tan;
+  font-size: 15px;
+}
+.detail .text_box .replies{}
+.detail .text_box .replies p{}
+
 </style>
