@@ -85,16 +85,19 @@ export default {
 }
 .detail{
   display: flex;
+  background-color: #edf0f3;
+  padding: 20px;
 }
 .detail .img_box{
   flex-grow: 0;
   flex-shrink: 0;
   width: 400px;
+  margin-right: 40px;
 }
 .detail .img_box .bigImg{}
 .detail .text_box{}
 .detail .text_box .tweet_full_text{
-  color: tan;
+  color: #0a8f22;
   font-size: 15px;
 }
 .detail .text_box .replies{}
