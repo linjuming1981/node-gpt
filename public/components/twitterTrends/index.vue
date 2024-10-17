@@ -1,12 +1,24 @@
 <template>
   <div class="twitterTrends">
+    <div class="cur_tag">
+      <span class="label">当前tag: </span>
+      <el-input v-model="curTag" :title="curTag">
+        <template #append>
+          <el-button @click="getTrendTreetList(curTag)">搜索</el-button>
+        </template>
+      </el-input>
+    </div>
     <el-table
       :data="tweetList"
       @row-click="handleRowClick"
       style="width: 100%"
       ref="table"
     >
-      <el-table-column prop="id" label="id" width="180"></el-table-column>
+      <el-table-column prop="id" label="id" width="180">
+        <template #default="scope">
+          <a :href="`https://x.com/xxx/status/${scope.row.id}`" target="_blank">{{scope.row.id}}</a>
+        </template>
+      </el-table-column>
       <el-table-column prop="full_text" label="full_text" width="500"></el-table-column>
       <el-table-column prop="img_url" label="img_url">
         <template #default="scope">
@@ -38,22 +50,24 @@
 export default {
   data(){
     return {
-      tweetList: []
+      curTag: '',
+      tweetList: [],
     }
   },
   created(){
     this.getTrendTreetList()
   },
   methods: {
-    async getTrendTreetList(){
+    async getTrendTreetList(tag=''){
       let res = await axios({
         url: '/getTrendTreetList',
         method: 'post',
         data: {
-          tag: '' // 不填则随机
+          tag, // 不填则随机
         }
       })
       this.tweetList = res.data.tweetList
+      this.curTag = res.data.tag
     }, 
 
     async getTweetReplies(tweetItem){
@@ -75,6 +89,15 @@ export default {
 }
 </script>
 <style scoped>
+.cur_tag{
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: hsl(205deg 100% 95%);
+}
+.cur_tag .label{
+  width:  100px;
+}
 .smallImg{
   width: 50px;
   height: 50px;

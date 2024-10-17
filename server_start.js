@@ -475,7 +475,7 @@ app.post('/getTrendTreetList', async (req, res) => {
   const Twitter = require('./classes/Twitter.js')
   tag = tag || Twitter.getRadomTag()
   const tweetList = await rapidApi.searchTwitterPosts({keyword: tag})
-  res.send({code: 200, tweetList})
+  res.send({code: 200, tweetList, tag})
 })
 
 // 获取twitter帖子的回复列表  
@@ -483,7 +483,6 @@ app.post('/getTweetReplies', async (req, res) => {
   const {tweetId} = req.body
   const RapidApi = require('./classes/RapidApi.js')
   const rapidApi = new RapidApi()
-  console.log(11111, tweetId)
   const replies = await rapidApi.getTwitterReplies(tweetId)
   res.send({code: 200, replies})
 })
