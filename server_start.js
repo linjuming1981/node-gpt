@@ -483,7 +483,7 @@ app.post('/getTweetReplies', async (req, res) => {
   const {tweetId} = req.body
   const RapidApi = require('./classes/RapidApi.js')
   const rapidApi = new RapidApi()
-  const replies = await rapidApi.searchTwitterPosts(tweetId)
+  const replies = await rapidApi.getTwitterReplies(tweetId)
   res.send({code: 200, replies})
 })
 

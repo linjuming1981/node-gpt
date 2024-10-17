@@ -7,7 +7,7 @@
       ref="table"
     >
       <el-table-column prop="id" label="id" width="180"></el-table-column>
-      <el-table-column prop="full_text" label="full_text" width="300"></el-table-column>
+      <el-table-column prop="full_text" label="full_text" width="500"></el-table-column>
       <el-table-column prop="img_url" label="img_url">
         <template #default="scope">
           <el-tooltip>
@@ -78,7 +78,7 @@ export default {
   height: 50px;
 }
 .bigImg{
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 </style>
