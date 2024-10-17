@@ -72,4 +72,13 @@ export default {
   }
 }
 </script>
-<style scoped></style>
+<style scoped>
+.smallImg{
+  width: 50px;
+  height: 50px;
+}
+.bigImg{
+  width: 300px;
+  height: 300px;
+}
+</style>
