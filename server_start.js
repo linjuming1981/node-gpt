@@ -478,7 +478,7 @@ app.post('/getTrendTreetList', async (req, res) => {
   res.send({code: 200, tweetList})
 })
 
-// 获取twitter帖子的回复列表
+// 获取twitter帖子的回复列表  
 app.post('/getTweetReplies', async (req, res) => {
   const {tweetId} = req.body
   const RapidApi = require('./classes/RapidApi.js')
