@@ -474,7 +474,7 @@ app.post('/getTrendTreetList', async (req, res) => {
   const rapidApi = new RapidApi()
   const Twitter = require('./classes/Twitter.js')
   tag = tag || Twitter.getRadomTag()
-  const tweetList = rapidApi.searchTwitterPosts({keyword: tag})
+  const tweetList = await rapidApi.searchTwitterPosts({keyword: tag})
   res.send({code: 200, tweetList})
 })
 
@@ -483,7 +483,7 @@ app.post('/getTweetReplies', async (req, res) => {
   const {tweetId} = req.body
   const RapidApi = require('./classes/RapidApi.js')
   const rapidApi = new RapidApi()
-  const replies = rapidApi.searchTwitterPosts(tweetId)
+  const replies = await rapidApi.searchTwitterPosts(tweetId)
   res.send({code: 200, replies})
 })
 
