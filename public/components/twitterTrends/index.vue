@@ -66,7 +66,7 @@ export default {
     },
 
     async handleRowClick(row) {
-      await this.getTweetReplies(row.id)
+      await this.getTweetReplies(row)
       this.$refs.table.toggleRowExpansion(row); // 切换展开/收起行  
     }
   }
