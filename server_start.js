@@ -467,6 +467,26 @@ app.post('/createImgByPrompt', async (req, res) => {
   res.send({code:200, imgUrl: imgPath})
 })
 
+// 随机获取twitter一个tag下面的帖子列表
+app.post('/getTrendTreetList', async (req, res) => {
+  let {tag} = req.body
+  const RapidApi = require('./classes/RapidApi.js')
+  const rapidApi = new RapidApi()
+  const Twitter = require('./classes/Twitter.js')
+  tag = tag || Twitter.getRadomTag()
+  const tweetList = rapidApi.searchTwitterPosts({keyword: tag})
+  res.send({code: 200, tweetList})
+})
+
+// 获取twitter帖子的回复列表
+app.post('/getTweetReplies', async (req, res) => {
+  const {tweetId} = req.body
+  const RapidApi = require('./classes/RapidApi.js')
+  const rapidApi = new RapidApi()
+  const replies = rapidApi.searchTwitterPosts(tweetId)
+  res.send({code: 200, replies})
+})
+
 
 // 服务监听开启  
 const port = 8080

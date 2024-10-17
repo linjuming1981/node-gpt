@@ -12,6 +12,18 @@ class Twitter {
     this.client = this.getClient()
   }
 
+  // 获取随机一个tag
+  static getRadomTag() {
+    const trendingTags = require('./TwitterTags.js');
+    const allTags = Object.values(trendingTags)
+      .join(',')
+      .split(',');
+  
+    // 随机抽取一个标签
+    const randomIndex = Math.floor(Math.random() * allTags.length);
+    return allTags[randomIndex];
+  }
+
   getClient(){
     const { TwitterApi } = require('twitter-api-v2');
     // 替换成你自己的 API 密钥和令牌

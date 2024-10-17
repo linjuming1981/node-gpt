@@ -4,6 +4,7 @@
       :data="tweetList"
       @row-click="handleRowClick"
       style="width: 100%"
+      ref="table"
     >
       <el-table-column prop="id" label="id" width="180"></el-table-column>
       <el-table-column prop="full_text" label="full_text" width="300"></el-table-column>
@@ -39,11 +40,31 @@ export default {
     }
   },
   methods: {
-    getTweetList(){
-
+    async getTrendTreetList(){
+      let res = await axios({
+        url: '/getTrendTreetList',
+        method: 'post',
+        data: {
+          tag: '' // 不填则随机
+        }
+      })
+      this.tweetList = res.data.tweetList
     }, 
-    handleRowClick(){
 
+    async getTweetReplies(tweetItem){
+      let res = await axios({
+        url: '/getTweetReplies',
+        method: 'post',
+        data: {
+          tweetId: tweetItem.id
+        }
+      })
+      tweetItem.replies = res.data.replies
+    },
+
+    async handleRowClick(row) {
+      await this.getTweetReplies(row.id)
+      this.$refs.table.toggleRowExpansion(row); // 切换展开/收起行
     }
   }
 }
