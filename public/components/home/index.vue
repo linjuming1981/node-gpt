@@ -5,13 +5,19 @@
         <slot name="amazon"></slot>
       </el-tab-pane> -->
       <el-tab-pane label="novel" name="novel">
-        <slot name="novel"></slot>
+        <div v-if="page === 'novel'">
+          <slot name="novel"></slot>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="imgCreator" name="imgCreator">
-        <slot name="imgCreator"></slot>
+        <div v-if="page === 'imgCreator'">
+           <slot name="imgCreator"></slot>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="twitterTrends" name="twitterTrends">
-        <slot name="twitterTrends"></slot>
+        <div v-if="page === 'twitterTrends'">
+          <slot name="twitterTrends"></slot>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -20,7 +26,7 @@
 export default {
   data(){
     return {
-      page: 'novel'
+      page: 'twitterTrends'
     }
   },
   methods: {
