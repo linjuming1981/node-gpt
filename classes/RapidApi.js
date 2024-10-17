@@ -111,7 +111,7 @@ class RapidApi{
 
 }
 
-module.exports = RapidApi
+module.exports = RapidApi  
 
 if(module === require.main){
   (async() => {
