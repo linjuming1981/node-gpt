@@ -39,6 +39,9 @@ export default {
       tweetList: []
     }
   },
+  created(){
+    this.getTrendTreetList()
+  },
   methods: {
     async getTrendTreetList(){
       let res = await axios({
